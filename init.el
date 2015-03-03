@@ -405,16 +405,11 @@
     (add-to-list 'company-backends 'company-ghc)))
 
 
-;;;;;;;;;;;;;;;;;;;
-;; @python
-;;;;;;;;;;;;;;;;;;;
-
-
 ;;;;;;;;;;;;;;;;;;
 ;; @C lang
 ;;;;;;;;;;;;;;;;;;
 (setq c-basic-offset 4)
-
+(add-hook 'c-mode-common-hook 'google-set-c-style)
 
 ;;;;;;;;;;;;;;;
 ;; @Sphinx
