@@ -4,7 +4,8 @@
 (message (format "Startup time: %s" (format-time-string "%Y/%m/%d %H:%M:%S")))
 
 ;; Cask
-(require 'cask)
+(unless (require 'cask nil t)
+  (require 'cask "~/.cask/cask"))
 (cask-initialize)
 (require 'pallet)
 
