@@ -77,6 +77,7 @@
 (depends-on "smooth-scroll")
 (depends-on "tangotango-theme")
 (depends-on "tuareg")
+(depends-on "twittering-mode")
 (depends-on "undo-tree")
 (depends-on "use-package")
 (depends-on "web-mode")

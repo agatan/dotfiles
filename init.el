@@ -206,6 +206,18 @@
   :mode (("\\.php\\'" . web-mode)
          ("\\.html?\\'" . web-mode)))
 
+;; twitter
+(use-package twittering-mode
+  :commands (twittering-mode)
+  :config
+  (progn
+    (setq twittering-account-authorization 'authorized)
+    (setq twittering-oauth-access-token-alist
+          '(("oauth_token" . "2266023746-F0kQaxHYXWt7q596SMotb2rPfYCXNsIKDFGCjBm")
+            ("oauth_token_secret" . "qll8TjpFRcrTdRViB3h86DTVj8XPFviQBRG6c5BVa3x1K")
+            ("user_id" . "2266023746")
+            ("screen_name" . "_agatan")))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; @appearance
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -411,6 +423,9 @@
 ;;;;;;;;;;;;;;;;;;
 (setq c-basic-offset 4)
 (add-hook 'c-mode-common-hook 'google-set-c-style)
+(setq auto-mode-alist
+      (cons '("\\.h$" . c++-mode) auto-mode-alist))
+(add-hook 'c++-mode-hook (lambda () (setq flycheck-clang-language-standard "c++11")))
 
 ;;;;;;;;;;;;;;;
 ;; @Sphinx
