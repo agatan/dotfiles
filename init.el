@@ -88,7 +88,9 @@
   :config
   (progn
     (require 'auto-complete-config)
-    (global-auto-complete-mode t)))
+    (global-auto-complete-mode t)
+    (setq-default ac-sources '(ac-source-words-in-same-mode-buffers ac-source-symbols))
+    (add-to-list 'ac-sources 'ac-source-filename)))
 
 ;; helm
 (use-package helm-config
