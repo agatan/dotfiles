@@ -216,6 +216,12 @@ function! s:hooks.on_post_source(bundle)
         let g:marching_clang_command = ""
     endif
 
+    let g:marching_include_paths = filter(
+                \ split(glob('/usr/include/c++/*'), '\n') +
+                \ split(glob('/usr/include/*/c++/*'), '\n') +
+                \ split(glob('/usr/include/*'), '\n'),
+                \ 'isdirectory(v:val)')
+
     let g:marching#clang_command#options = {
                 \ 'cpp': '-std=c++1y'
                 \ }
@@ -270,7 +276,7 @@ let g:quickrun_config = {
 \   },
 \   "cpp" : {
 \       "command": "clang++",
-\       "cmdopt": "--std=c++1y --stdlib=libc++"
+\       "cmdopt": "--std=c++1y "
 \   },
 \   "c" : {
 \       "command": "gcc"
@@ -364,7 +370,12 @@ if executable("clang++")
 "    let g:quickrun_config['cpp'] = { 'type': 'cpp/clang++11' }
 endif
 
+let g:syntastic_cpp_include_dirs = ['/usr/include/c++/4.9.2']
 
+augroup cpp-path
+    autocmd!
+    autocmd FileType cpp setlocal path=.,/usr/include,/usr/include/c++/4.9.2/
+augroup END
 
 call neobundle#call_hook("on_source")
     
@@ -432,6 +443,8 @@ autocmd FileType eruby set ts=2 sw=2 softtabstop=2
 " 数字のインクリメント
 nnoremap + <C-a>
 nnoremap - <C-x>
+nnoremap ; :
+nnoremap : ;
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
