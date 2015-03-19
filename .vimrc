@@ -443,8 +443,6 @@ autocmd FileType eruby set ts=2 sw=2 softtabstop=2
 " 数字のインクリメント
 nnoremap + <C-a>
 nnoremap - <C-x>
-nnoremap ; :
-nnoremap : ;
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
