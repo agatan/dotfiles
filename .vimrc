@@ -421,6 +421,8 @@ set expandtab
 set smarttab
 set laststatus=2
 set foldlevel=100
+set list
+set lcs=tab:>_,trail:_
 " 補完ポップアップの高さ設定
 set pumheight=10
 syntax on
