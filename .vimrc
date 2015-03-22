@@ -425,6 +425,9 @@ set foldlevel=100
 set pumheight=10
 syntax on
 
+au BufWritePost * mkview
+autocmd BufReadPost * loadview
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 検索置換
