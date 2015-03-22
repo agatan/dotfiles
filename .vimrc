@@ -428,6 +428,9 @@ syntax on
 au BufWritePost * mkview
 autocmd BufReadPost * loadview
 
+" 開いているファイルと同じディレクトリに常に移動する
+au BufEnter * execute 'lcd ' . fnameescape(expand('%:p:h'))
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 検索置換
