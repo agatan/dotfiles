@@ -3,6 +3,7 @@ scriptencoding utf-8
 
 " F1で.vimrcの編集に
 nnoremap <F1> :edit ~/.vimrc<CR>
+nnoremap <Space>. :edit $MYVIMRC<CR>
 " :ReloadVimrcで設定を反映
 command! ReloadVimrc source ~/.vimrc
 
