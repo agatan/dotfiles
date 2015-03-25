@@ -234,7 +234,7 @@ function! s:hooks.on_post_source(bundle)
                 \ 'isdirectory(v:val)')
 
     let g:marching#clang_command#options = {
-                \ 'cpp': '-std=c++1y'
+                \ 'cpp': '-std=c++14'
                 \ }
 
     if !neobundle#is_sourced("neocomplete.vim")
@@ -287,7 +287,7 @@ let g:quickrun_config = {
 \   },
 \   "cpp" : {
 \       "command": "clang++",
-\       "cmdopt": "--std=c++1y "
+\       "cmdopt": "--std=c++14 "
 \   },
 \   "c" : {
 \       "command": "gcc"
@@ -373,7 +373,7 @@ set completeopt=menu,preview
 
 if executable("clang++")
     let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '--std=c++1y --stdlib=libc++'
+    let g:syntastic_cpp_compiler_options = '--std=c++14 --stdlib=libc++'
 "    let g:quickrun_config['cpp/clang+11'] = {
 "                \ 'cmdopt' : '--std=c++11 --stdlib=libc++',
 "                \ 'type' : 'cpp/clang++'
@@ -381,7 +381,9 @@ if executable("clang++")
 "    let g:quickrun_config['cpp'] = { 'type': 'cpp/clang++11' }
 endif
 
-let g:syntastic_cpp_include_dirs = ['/usr/include/c++/4.9.2']
+let g:syntastic_cpp_include_dirs =
+            \ filter(split(glob('/usr/include/**/c++/**'), '\n'),
+            \        'isdirectory(v:val)')
 
 augroup cpp-path
     autocmd!
