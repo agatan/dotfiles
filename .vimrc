@@ -385,7 +385,10 @@ let g:syntastic_cpp_include_dirs = ['/usr/include/c++/4.9.2']
 
 augroup cpp-path
     autocmd!
-    autocmd FileType cpp setlocal path=.,/usr/include,/usr/include/c++/4.9.2/
+    autocmd FileType cpp execute 'setlocal path=.,/usr/include,' .
+                \ join(filter(split(glob('/usr/include/**/c++/*'), '\n'),
+                \             'isdirectory(v:val)'),
+                \      ',')
 augroup END
 
 call neobundle#call_hook("on_source")
