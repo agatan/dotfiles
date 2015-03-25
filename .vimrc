@@ -297,13 +297,13 @@ let g:quickrun_config = {
 \	"runner/wandbox/compiler" : "clang-head",
 \	"runner/wandbox/options" : "warning,c++1y,boost-1.55",
 \   },
-\	"cpp/watchdogs_checker" : {
-\		"type" : "watchdogs_checker/clang++",
-\	},
-\	"watchdogs_checker/clang++" : {
-\                       "command": "clang++",
-\	"cmdopt" : "-Wall --std=c++14",
-\	},
+\    "cpp/watchdogs_checker" : {
+\    	"type" : "watchdogs_checker/clang++",
+\    },
+\    "watchdogs_checker/clang++" : {
+\       "command": "clang++",
+\       "cmdopt" : "-Wall --std=c++14",
+\    },
 \}
 
 
