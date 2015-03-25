@@ -31,7 +31,7 @@ if !isdirectory(s:neobundle_plugins_dir . "/neobundle.vim")
                 call mkdir(s:neobundle_plugins_dir, "p")
             endif
 
-            execute "!git clone git://github.com/Shougo/neobundle.vim"
+            execute "!git clone git://github.com/Shougo/neobundle.vim "
                         \ . s:neobundle_plugins_dir . "/neobundle.vim"
             echo "neobundle installed. Please restart vim"
         else
