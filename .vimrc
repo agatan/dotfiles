@@ -69,7 +69,6 @@ NeoBundle 'tyru/caw.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/vimshell.vim'
-NeoBundle 'scrooloose/syntastic.git'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'itchyny/lightline.vim'
@@ -297,13 +296,15 @@ let g:quickrun_config = {
 \	"runner/wandbox/compiler" : "clang-head",
 \	"runner/wandbox/options" : "warning,c++1y,boost-1.55",
 \   },
-\    "cpp/watchdogs_checker" : {
-\    	"type" : "watchdogs_checker/clang++",
-\    },
-\    "watchdogs_checker/clang++" : {
-\       "command": "clang++",
-\       "cmdopt" : "-Wall --std=c++14",
-\    },
+\   "cpp/watchdogs_checker" : {
+\   	"type" : "watchdogs_checker/clang++03",
+\   },
+\   "watchdogs_checker/clang++03" : {
+\      "cmdopt" : "-Wall --std=c++14",
+\   },
+\   "watchdogs_checker/g++" : {
+\       "cmdopt" : "-Wall -std=c++14",
+\   },
 \}
 
 
@@ -350,11 +351,6 @@ let g:indentLine_color_term = 238
 let g:indentLine_color_gui = '#708090'
 let g:indentLine_char = '¦'
 
-let g:syntastic_python_checkers=['flake8']
-
-" ruby系
-let g:syntastic_ruby_checkers = ['rubocop']
-
 " golang
 
 filetype off
@@ -371,8 +367,6 @@ set completeopt=menu,preview
 " C++
 
 if executable("clang++")
-    let g:syntastic_cpp_compiler = 'clang++'
-    let g:syntastic_cpp_compiler_options = '--std=c++14 --stdlib=libc++'
 "    let g:quickrun_config['cpp/clang+11'] = {
 "                \ 'cmdopt' : '--std=c++11 --stdlib=libc++',
 "                \ 'type' : 'cpp/clang++'
@@ -380,9 +374,6 @@ if executable("clang++")
 "    let g:quickrun_config['cpp'] = { 'type': 'cpp/clang++11' }
 endif
 
-let g:syntastic_cpp_include_dirs =
-            \ filter(split(glob('/usr/include/**/c++/**'), '\n'),
-            \        'isdirectory(v:val)')
 
 augroup cpp-path
     autocmd!
