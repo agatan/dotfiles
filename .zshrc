@@ -133,7 +133,7 @@ bindkey '^R' history-incremental-pattern-search-backward
 alias la='ls -a'
 alias ll='ls -l'
 
-alias rm='rm -i'
+alias rm='rm'
 alias cp='cp -i'
 alias mv='mv -i'
 
