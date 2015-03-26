@@ -124,6 +124,13 @@ NeoBundleLazy 'Yggdroot/indentLine',
 NeoBundleLazy 'jmcantrell/vim-virtualenv',
             \ {"autoload": {"filetypes": ["python"]}}
 
+" markdown
+NeoBundleLazy 'kannokanno/previm',
+            \ {"autoload" : {"filetypes": ["markdown"]}}
+NeoBundleLazy 'plasticboy/vim-markdown',
+            \ {"autoload" : {"filetypes": ["markdown"]}}
+NeoBundleLazy 'tyru/open-browser.vim',
+            \ {"autoload" : {"filetypes": ["markdown"]}}
 
 "" color
 NeoBundle 'w0ng/vim-hybrid'
@@ -385,6 +392,12 @@ augroup END
 
 call neobundle#call_hook("on_source")
     
+
+" markdown
+augroup PrevimSettings
+    autocmd!
+    autocmd BufNewFile,BufRead *.{md,mdwn,mkdn,mark*} set filetype=markdown
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 全般
