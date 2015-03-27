@@ -135,16 +135,18 @@ NeoBundleLazy 'tyru/open-browser.vim',
 
 "" color
 NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'croaker/mustang-vim'
-NeoBundle 'jeffreyiacono/vim-colors-wombat'
+"NeoBundle 'altercation/vim-colors-solarized'
+"NeoBundle 'croaker/mustang-vim'
+"NeoBundle 'jeffreyiacono/vim-colors-wombat'
 NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'vim-scripts/Lucius'
-NeoBundle 'vim-scripts/Zenburn'
-NeoBundle 'mrkn/mrkn256.vim'
-NeoBundle 'jpo/vim-railscasts-theme'
-NeoBundle 'therubymug/vim-pyte'
-NeoBundle 'tomasr/molokai'
+"NeoBundle 'vim-scripts/Lucius'
+"NeoBundle 'vim-scripts/Zenburn'
+"NeoBundle 'mrkn/mrkn256.vim'
+"NeoBundle 'jpo/vim-railscasts-theme'
+"NeoBundle 'therubymug/vim-pyte'
+"NeoBundle 'tomasr/molokai'
+NeoBundle 'cocopon/iceberg.vim'
+
 NeoBundle 'ujihisa/unite-colorscheme'
 
 
@@ -416,7 +418,7 @@ set noerrorbells
 if !has('gui_running')
     set t_Co=256
 endif
-colorscheme hybrid
+colorscheme iceberg
 set number
 set scrolloff=5
 set wrap
