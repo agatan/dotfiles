@@ -77,6 +77,7 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
+NeoBundle 'vim-jp/vimdoc-ja'
 
 " +luaならばneocomplete
 if has('lua')
@@ -413,12 +414,13 @@ set visualbell
 set noerrorbells
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 表示関連
+" display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 if !has('gui_running')
     set t_Co=256
 endif
 colorscheme iceberg
+set hidden
 set number
 set scrolloff=5
 set wrap
@@ -434,7 +436,7 @@ set smarttab
 set laststatus=2
 set foldlevel=100
 set list
-set lcs=tab:>_,trail:_
+set listchars=tab:>_,trail:-,eol:$
 " 補完ポップアップの高さ設定
 set pumheight=10
 syntax on
@@ -447,13 +449,14 @@ au BufEnter * execute 'lcd ' . fnameescape(expand('%:p:h'))
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 検索置換
+" search
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 set incsearch
 set ignorecase
 set smartcase
 set nohlsearch
 set gdefault
+set keywordprg=:help
 if !exists('loaded_matchit')
   " matchitを有効化
   runtime macros/matchit.vim
@@ -481,4 +484,5 @@ nnoremap - <C-x>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! Todo edit ~/Dropbox/memo/todo.md
 command! Memo edit ~/Dropbox/memo/memo.md
+
 
