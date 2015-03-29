@@ -66,6 +66,8 @@ NeoBundle 'Shougo/vimproc.vim', {
 "" 必須系
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
+NeoBundle 'tsukkee/unite-tag'
+
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
