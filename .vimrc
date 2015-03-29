@@ -79,6 +79,9 @@ NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'vim-jp/vimdoc-ja'
 
+NeoBundle 'Lokaltog/vim-easymotion'
+nmap mm <Plug>(easymotion-s2)
+
 " +luaならばneocomplete
 if has('lua')
     NeoBundle "Shougo/neocomplete.vim"
@@ -463,7 +466,7 @@ if !exists('loaded_matchit')
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 入力関係
+" input
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 set backspace=indent,eol,start
 set autoindent
@@ -477,6 +480,10 @@ autocmd FileType eruby set ts=2 sw=2 softtabstop=2
 " 数字のインクリメント
 nnoremap + <C-a>
 nnoremap - <C-x>
+
+" 英字配列だとコロンがつらい
+nnoremap ; :
+nnoremap : ;
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
