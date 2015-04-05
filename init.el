@@ -115,14 +115,14 @@
 
 ;; smartparens
 ;; かっこを入力した時にその中身をハイライトしてくれるのがうざいので無効化
-;(use-package smartparens-config
-;  :config
-;  (progn
-;    (smartparens-global-mode t)
-;    ;; `と'を自動補完対象から削除
-;    (sp-pair "'" nil :actions :rem)
-                                        ;    (sp-pair "`" nil :actions :rem)))
-(electric-pair-mode t)
+(use-package smartparens-config
+  :config
+  (progn
+    (smartparens-global-mode t)
+    ;; `と'を自動補完対象から削除
+    (sp-pair "'" nil :actions :rem)
+    (sp-pair "`" nil :actions :rem)))
+;(electric-pair-mode t)
 
 ;; powerline
 (use-package powerline
@@ -440,6 +440,11 @@
   :config
   (setq frame-background-mode 'dark))
 
+;;;;;;;;;;;;;;
+;; @golang
+;;;;;;;;;;;;;;
+(use-package go-autocomplete
+  :mode (("\\.go$" . go-mode)))
 
 ;;;;;;;;;;;;;;
 ;; @rust

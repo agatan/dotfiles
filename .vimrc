@@ -374,7 +374,7 @@ if $GOROOT != ''
 endif
 filetype plugin indent on
 syntax on
-autocmd FileType go autocmd BufWritePre <buffer> Fmt
+autocmd FileType go autocmd BufWritePre <buffer> GoImports
 exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
 set completeopt=menu,preview
 
@@ -432,7 +432,7 @@ set cursorline
 set cursorcolumn
 set colorcolumn=80
 set ruler
-set tabstop=8
+set tabstop=4
 set softtabstop=4
 set expandtab
 set smarttab
