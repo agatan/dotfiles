@@ -23,7 +23,7 @@ set -x PATH /usr/local/sbin /usr/local/bin $PATH
 #############################################
 
 # for atom
-set -x ATOM_PATH /opt/homebew-cask/Caskroom/atom/latest
+set -x ATOM_PATH /opt/homebrew-cask/Caskroom/atom/latest
 
 
 #############################################
