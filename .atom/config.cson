@@ -1,11 +1,15 @@
 "*":
-  editor: {}
-  core:
-    themes: [
-      "one-dark-ui"
-      "one-dark-syntax"
-    ]
+  editor:
+    invisibles: {}
+    fontFamily: "Ricty"
+    showIndentGuide: true
+    softWrapAtPreferredLineLength: true
+  core: {}
   "exception-reporting":
     userId: "acaee6ff-2b13-f3b7-ce7b-9de6f5a2030c"
   welcome:
     showOnStartup: false
+  "go-plus":
+    goPath: "~/go"
+    goInstallation: "/usr/local/opt/go/libexec/bin/go"
+  "autocomplete-plus": {}
