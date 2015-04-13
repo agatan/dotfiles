@@ -114,7 +114,18 @@ NeoBundleLazy 'fatih/vim-go', {
             \ "autoload": {"filetypes": ["go"]}}
 
 " rust
-NeoBundle 'wting/rust.vim'
+NeoBundle 'rust-lang/rust.vim'
+if executable("cargo")
+    NeoBundle 'phildawes/racer', {
+                \ 'build': {
+                \   'mac': 'cargo build --release',
+                \   'unix': 'cargo build --release',
+                \ }
+                \}
+    set hidden
+    let g:racer_cmd = expand("~/.vim/bundle/racer/target/release/racer")
+    "let $RUST_SRC_PATH=expand("~/rust/rust/src/")
+endif
 
 " sphinx
 NeoBundleLazy 'Rykka/riv.vim',
