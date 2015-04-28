@@ -30,6 +30,9 @@ set -x ATOM_PATH /opt/homebrew-cask/Caskroom/atom/latest
 # for languages
 #############################################
 
+# for rust
+set -x RUST_SRC_PATH ~/rust/rust/src
+
 # for golang
 set -x GOPATH ~/go
 set -x PATH $GOPATH/bin $PATH
