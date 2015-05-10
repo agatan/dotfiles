@@ -45,8 +45,8 @@ set -x PATH $CABAL_HOME/bin $PATH
 
 # for ocaml ( not useful )
 if [ -e ~/.opam/opam-init/init.fish ]
-  #source ~/.opam/opam-init/init.fish > /dev/null ^ /dev/null; or true
-  #eval (opam config env)
+  source ~/.opam/opam-init/init.fish > /dev/null ^ /dev/null; or true
+  eval (opam config env)
 end
 
 set -x OCAMLPARAM "_,bin-annot=1"

@@ -79,6 +79,7 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
+NeoBundle 'scrooloose/syntastic'
 NeoBundle 'vim-jp/vimdoc-ja'
 
 NeoBundle 'Lokaltog/vim-easymotion'
