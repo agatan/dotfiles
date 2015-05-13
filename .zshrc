@@ -213,6 +213,7 @@ export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 
 # For Haskell (Cabal)
+export PATH=/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:$PATH
 CABAL_HOME=$HOME/.cabal/
 export CABAL_HOME
 PATH=${CABAL_HOME}bin:$PATH
