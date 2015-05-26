@@ -128,6 +128,11 @@ if executable("cargo") && isdirectory(expand("~/rust/rust/src"))
     set hidden
     let g:racer_cmd = expand("~/.vim/bundle/racer/target/release/racer")
     let $RUST_SRC_PATH=expand("~/rust/rust/src/")
+
+    NeoBundleLazy 'rhysd/rust-doc.vim', {
+                \ 'autoload': {'filetypes': 'rust' }
+                \ }
+    let g:rust_doc#downloaded_rust_doc_dir = "~/rust/rust-1.0.0-i686-unknown-linux-gnu/rust-docs"
 endif
 
 
