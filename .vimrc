@@ -8,6 +8,11 @@ nnoremap <Space>. :edit $MYVIMRC<CR>
 command! ReloadVimrc source ~/.vimrc
 command! W w
 
+" reset autogroup
+augroup vimrc
+    autocmd!
+augroup END
+
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
@@ -150,6 +155,16 @@ NeoBundleLazy 'Yggdroot/indentLine',
             \ {"autoload": {"filetypes": ["python"]}}
 NeoBundleLazy 'jmcantrell/vim-virtualenv',
             \ {"autoload": {"filetypes": ["python"]}}
+
+" haskell
+NeoBundleLazy 'dag/vim2hs',
+            \ {"autoload": {"filetypes": ["haskell"]}}
+NeoBundleLazy 'eagletmt/ghcmod-vim',
+            \ {"autoload": {"filetypes": ["haskell"]}}
+augroup vimrc
+    autocmd FileType haskell nnoremap <Space>t :<C-u>GhcModType<CR>
+augroup END
+
 
 " markdown
 NeoBundleLazy 'kannokanno/previm',
@@ -361,9 +376,10 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 
 " python系
-
-autocmd FileType python setlocal omnifunc=jedi#completions
-autocmd FileType python setlocal completeopt-=preview
+augroup vimrc
+    autocmd FileType python setlocal omnifunc=jedi#completions
+    autocmd FileType python setlocal completeopt-=preview
+augroup END
 
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
@@ -396,7 +412,7 @@ if $GOROOT != ''
 endif
 filetype plugin indent on
 syntax on
-autocmd FileType go autocmd BufWritePre <buffer> GoImports
+autocmd vimrc FileType go autocmd BufWritePre <buffer> GoImports
 exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
 set completeopt=menu,preview
 
@@ -466,11 +482,13 @@ set listchars=tab:>_,trail:-,eol:$
 set pumheight=10
 syntax on
 
-au BufWritePost * mkview
-autocmd BufReadPost * loadview
+augroup vimrc
+    autocmd BufWritePost * mkview
+    autocmd BufReadPost * loadview
+augroup END
 
 " 開いているファイルと同じディレクトリに常に移動する
-au BufEnter * execute 'lcd ' . fnameescape(expand('%:p:h'))
+autocmd vimrc BufEnter * execute 'lcd ' . fnameescape(expand('%:p:h'))
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -496,8 +514,10 @@ set shiftwidth=4
 set showmatch
 set whichwrap=b,s,h,l,<,>,[,]
 set smarttab
-autocmd FileType ruby set ts=2 sw=2 softtabstop=2
-autocmd FileType eruby set ts=2 sw=2 softtabstop=2
+augroup vimrc
+    autocmd FileType ruby set ts=2 sw=2 softtabstop=2
+    autocmd FileType eruby set ts=2 sw=2 softtabstop=2
+augroup END
 
 " 数字のインクリメント
 nnoremap + <C-a>
