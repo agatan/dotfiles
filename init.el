@@ -430,12 +430,14 @@
 ;;;;;;;;;;;;;;
 ;; @rust
 ;;;;;;;;;;;;;;
-(when (file-exists-p "~/rust/racer/target/release/racer")
+(when (file-exists-p "/Users/nao/rust/racer/target/release/racer")
   (setq racer-rust-src-path "/Users/nao/rust/rust/src")
   (setq racer-cmd "/Users/nao/rust/racer/target/release/racer")
   (add-to-list 'load-path "/Users/nao/rust/racer/editors")
   (require 'racer)
   (add-hook 'rust-mode-hook 'company-mode))
+(with-eval-after-load 'flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;;;;;;;;;;;;;
 ;; @org

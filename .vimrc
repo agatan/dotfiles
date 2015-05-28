@@ -460,7 +460,7 @@ set noerrorbells
 if !has('gui_running')
     set t_Co=256
 endif
-colorscheme iceberg
+colorscheme hybrid
 set hidden
 set number
 set scrolloff=5
