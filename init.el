@@ -1,8 +1,5 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; indent-tabs-mode: nil -*-
 
-(cd "~/")
-(message (format "Startup time: %s" (format-time-string "%Y/%m/%d %H:%M:%S")))
-
 ;; Cask
 (unless (require 'cask nil t)
   (require 'cask "~/.cask/cask"))
@@ -60,8 +57,8 @@
 
 ;; expand-region
 (use-package expand-region
-  :bind (("C-@" . er/expand-region)
-         ("C-M-@" . er/contract-region))
+  :bind (("C-;" . er/expand-region)
+         ("C-M-;" . er/contract-region))
   :config
   (transient-mark-mode t))
 
@@ -163,10 +160,6 @@
     ;; Connections
     (push '(slime-connection-list-mode) popwin:special-display-config)))
 
-;; js2-mode
-(use-package js2-mode
-  :mode (("\\.js\\'" . js2-mode)))
-
 ;; slime
 (use-package slime
   :commands (slime)
@@ -208,24 +201,12 @@
   :mode (("\\.php\\'" . web-mode)
          ("\\.html?\\'" . web-mode)))
 
-;; twitter
-(use-package twittering-mode
-  :commands (twittering-mode)
-  :config
-  (progn
-    (setq twittering-account-authorization 'authorized)
-    (setq twittering-oauth-access-token-alist
-          '(("oauth_token" . "2266023746-F0kQaxHYXWt7q596SMotb2rPfYCXNsIKDFGCjBm")
-            ("oauth_token_secret" . "qll8TjpFRcrTdRViB3h86DTVj8XPFviQBRG6c5BVa3x1K")
-            ("user_id" . "2266023746")
-            ("screen_name" . "_agatan")))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; @appearance
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; カラーテーマ
-(load-theme 'ample t)
+(load-theme 'zenburn t)
 
 
 ;; スタートアップ非表示
@@ -287,13 +268,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; @input
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; 日本語入力
-(setq default-input-method "MacOSX")
-
 
 ;; cmdキーをmetaに
-; (setq ns-command-modifier (quote meta))
-; (setq ns-alternate-modifier (quote super))
+;; 日本語入力
+(when (eq system-type 'darwin)
+  (setq default-input-method "MacOSX")
+  (setq ns-command-modifier (quote meta))
+  (setq ns-alternate-modifier (quote super)))
 
 
 ;; ctrl-hをバックスペースに
@@ -327,7 +308,7 @@
 ;; @その他
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; バックアップファイルを作らない
-(setq baskup-inhibited t)
+;(setq baskup-inhibited t)
 
 ;; 終了時にオートセーブファイルを消す
 (setq delete-auto-save-files t)
