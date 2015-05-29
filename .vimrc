@@ -360,6 +360,14 @@ let g:quickrun_config = {
 \   "watchdogs_checker/g++" : {
 \       "cmdopt" : "-Wall -std=c++14",
 \   },
+\   'watchdogs_checker/cargo' : {
+\       'command' : 'cargo',
+\       'cmdopt' : 'build',
+\       'exec' : '%c %o',
+\   },
+\   'rust/watchdogs_checker' : {
+\       'type' : 'watchdogs_checker/cargo',
+\   },
 \}
 
 
