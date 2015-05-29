@@ -71,6 +71,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'Shougo/neomru.vim'
 
 NeoBundle 'Shougo/vimfiler.vim'
 
@@ -216,7 +217,7 @@ filetype plugin indent on
 let g:unite_enable_split_vertically = 1
 nnoremap ,uf :<C-u>Unite<space>file<CR>
 nnoremap ,ub :<C-u>Unite<space>buffer<CR>
-"nnoremap ,um :<C-u>Unite<space>file_mru<CR>
+nnoremap ,um :<C-u>Unite<space>file_mru<CR>
 
 " neocomplete
 let s:hooks = neobundle#get_hooks("neocomplete.vim")
