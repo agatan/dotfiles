@@ -372,11 +372,11 @@ let g:quickrun_config = {
 
 
 " vim-watchdogs
-let s:hooks = neobundle#get_hooks("vim-watchdogs")
-function! s:hooks.on_source(bundle)
-    let g:watchdogs_check_BufWritePost_enable = 1
-endfunction
-unlet s:hooks
+" let s:hooks = neobundle#get_hooks("vim-watchdogs")
+" function! s:hooks.on_source(bundle)
+"     let g:watchdogs_check_BufWritePost_enable = 1
+" endfunction
+" unlet s:hooks
 
 
 " neosnippet
