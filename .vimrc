@@ -6,7 +6,11 @@ nnoremap <F1> :edit ~/.vimrc<CR>
 nnoremap <Space>. :edit $MYVIMRC<CR>
 " :ReloadVimrcで設定を反映
 command! ReloadVimrc source ~/.vimrc
-command! W w
+
+" reset autogroup
+augroup vimrc
+    autocmd!
+augroup END
 
 if has('vim_starting')
 	set runtimepath+=~/.vim/bundle/neobundle.vim
@@ -67,6 +71,9 @@ NeoBundle 'Shougo/vimproc.vim', {
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'Shougo/neomru.vim'
+
+NeoBundle 'Shougo/vimfiler.vim'
 
 NeoBundle 'Shougo/vimfiler.vim'
 
@@ -74,11 +81,9 @@ NeoBundle 'tyru/caw.vim'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'Shougo/vimshell.vim'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'thinca/vim-ref'
 NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'mattn/emmet-vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
@@ -129,6 +134,11 @@ if executable("cargo") && isdirectory(expand("~/rust/rust/src"))
     set hidden
     let g:racer_cmd = expand("~/.vim/bundle/racer/target/release/racer")
     let $RUST_SRC_PATH=expand("~/rust/rust/src/")
+
+    NeoBundleLazy 'rhysd/rust-doc.vim', {
+                \ 'autoload': {'filetypes': 'rust' }
+                \ }
+    let g:rust_doc#downloaded_rust_doc_dir = "~/rust/rust-1.0.0-i686-unknown-linux-gnu/rust-docs"
 endif
 
 
@@ -147,6 +157,16 @@ NeoBundleLazy 'Yggdroot/indentLine',
 NeoBundleLazy 'jmcantrell/vim-virtualenv',
             \ {"autoload": {"filetypes": ["python"]}}
 
+" haskell
+NeoBundleLazy 'dag/vim2hs',
+            \ {"autoload": {"filetypes": ["haskell"]}}
+NeoBundleLazy 'eagletmt/ghcmod-vim',
+            \ {"autoload": {"filetypes": ["haskell"]}}
+augroup vimrc
+    autocmd FileType haskell nnoremap <Space>t :<C-u>GhcModType<CR>
+augroup END
+
+
 " markdown
 NeoBundleLazy 'kannokanno/previm',
             \ {"autoload" : {"filetypes": ["markdown"]}}
@@ -158,15 +178,15 @@ NeoBundleLazy 'tyru/open-browser.vim',
 "" color
 NeoBundle 'w0ng/vim-hybrid'
 "NeoBundle 'altercation/vim-colors-solarized'
-"NeoBundle 'croaker/mustang-vim'
-"NeoBundle 'jeffreyiacono/vim-colors-wombat'
+NeoBundle 'croaker/mustang-vim'
+NeoBundle 'jeffreyiacono/vim-colors-wombat'
 NeoBundle 'nanotech/jellybeans.vim'
-"NeoBundle 'vim-scripts/Lucius'
-"NeoBundle 'vim-scripts/Zenburn'
-"NeoBundle 'mrkn/mrkn256.vim'
-"NeoBundle 'jpo/vim-railscasts-theme'
-"NeoBundle 'therubymug/vim-pyte'
-"NeoBundle 'tomasr/molokai'
+NeoBundle 'vim-scripts/Lucius'
+NeoBundle 'vim-scripts/Zenburn'
+NeoBundle 'mrkn/mrkn256.vim'
+NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'therubymug/vim-pyte'
+NeoBundle 'tomasr/molokai'
 NeoBundle 'cocopon/iceberg.vim'
 
 NeoBundle 'ujihisa/unite-colorscheme'
@@ -200,7 +220,7 @@ filetype plugin indent on
 let g:unite_enable_split_vertically = 1
 nnoremap ,uf :<C-u>Unite<space>file<CR>
 nnoremap ,ub :<C-u>Unite<space>buffer<CR>
-"nnoremap ,um :<C-u>Unite<space>file_mru<CR>
+nnoremap ,um :<C-u>Unite<space>file_mru<CR>
 
 " neocomplete
 let s:hooks = neobundle#get_hooks("neocomplete.vim")
@@ -357,9 +377,10 @@ xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 
 " python系
-
-autocmd FileType python setlocal omnifunc=jedi#completions
-autocmd FileType python setlocal completeopt-=preview
+augroup vimrc
+    autocmd FileType python setlocal omnifunc=jedi#completions
+    autocmd FileType python setlocal completeopt-=preview
+augroup END
 
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
@@ -392,7 +413,7 @@ if $GOROOT != ''
 endif
 filetype plugin indent on
 syntax on
-autocmd FileType go autocmd BufWritePre <buffer> GoImports
+autocmd vimrc FileType go autocmd BufWritePre <buffer> GoImports
 exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
 set completeopt=menu,preview
 
@@ -440,7 +461,8 @@ set noerrorbells
 if !has('gui_running')
     set t_Co=256
 endif
-colorscheme jellybeans
+colorscheme hybrid
+
 set hidden
 set number
 set scrolloff=5
@@ -462,11 +484,13 @@ set listchars=tab:>_,trail:-,eol:$
 set pumheight=10
 syntax on
 
-au BufWritePost * mkview
-autocmd BufReadPost * loadview
+augroup vimrc
+    autocmd BufWritePost * mkview
+    autocmd BufReadPost * loadview
+augroup END
 
 " 開いているファイルと同じディレクトリに常に移動する
-au BufEnter * execute 'lcd ' . fnameescape(expand('%:p:h'))
+autocmd vimrc BufEnter * execute 'lcd ' . fnameescape(expand('%:p:h'))
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -492,8 +516,10 @@ set shiftwidth=4
 set showmatch
 set whichwrap=b,s,h,l,<,>,[,]
 set smarttab
-autocmd FileType ruby set ts=2 sw=2 softtabstop=2
-autocmd FileType eruby set ts=2 sw=2 softtabstop=2
+augroup vimrc
+    autocmd FileType ruby set ts=2 sw=2 softtabstop=2
+    autocmd FileType eruby set ts=2 sw=2 softtabstop=2
+augroup END
 
 " 数字のインクリメント
 nnoremap + <C-a>
@@ -502,6 +528,8 @@ nnoremap - <C-x>
 " 英字配列だとコロンがつらい
 nnoremap ; :
 nnoremap : ;
+vnoremap ; :
+vnoremap : ;
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""

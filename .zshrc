@@ -177,6 +177,13 @@ export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 export PATH=~/.bin:$PATH
 
+# For Haskell (Cabal)
+export PATH=/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:$PATH
+CABAL_HOME=$HOME/.cabal/
+export CABAL_HOME
+PATH=${CABAL_HOME}bin:$PATH
+export PATH
+
 
 # java
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home
