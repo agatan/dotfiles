@@ -19,28 +19,28 @@ endif
 let $VIM_NEOBUNDLE_PLUGIN_DIR = '~/.vim/bundle'
 
 let s:neobundle_plugins_dir =
-            \ expand(exists("$VIM_NEOBUNDLE_PLUGIN_DIR") ? $VIM_NEOBUNDLE_PLUGIN_DIR 
+            \ expand(exists('$VIM_NEOBUNDLE_PLUGIN_DIR') ? $VIM_NEOBUNDLE_PLUGIN_DIR 
             \                                            : '~/.vim/bundle')
 
 if !executable('git')
-    echo "Please install git."
+    echo 'Please install git.'
     finish
 endif
 
 
-if !isdirectory(s:neobundle_plugins_dir . "/neobundle.vim")
-    echo "Please install neobundle.vim"
+if !isdirectory(s:neobundle_plugins_dir . '/neobundle.vim')
+    echo 'Please install neobundle.vim'
     function! s:install_neobundle()
-        if input("Install neobundle.vim? [Y/N] : ") == "Y"
+        if input('Install neobundle.vim? [Y/N] : ') ==# 'Y'
             if !isdirectory(s:neobundle_plugins_dir)
-                call mkdir(s:neobundle_plugins_dir, "p")
+                call mkdir(s:neobundle_plugins_dir, 'p')
             endif
 
-            execute "!git clone git://github.com/Shougo/neobundle.vim "
-                        \ . s:neobundle_plugins_dir . "/neobundle.vim"
-            echo "neobundle installed. Please restart vim"
+            execute '!git clone git://github.com/Shougo/neobundle.vim '
+                        \ . s:neobundle_plugins_dir . '/neobundle.vim'
+            echo 'neobundle installed. Please restart vim'
         else
-            echo "Canceled."
+            echo 'Canceled.'
         endif
     endfunction
     augroup install-neobundle
@@ -94,9 +94,9 @@ nmap mm <Plug>(easymotion-s2)
 
 " +luaならばneocomplete
 if has('lua')
-    NeoBundle "Shougo/neocomplete.vim"
+    NeoBundle 'Shougo/neocomplete.vim'
 else
-    NeoBundle "Shougo/neocomplcache"
+    NeoBundle 'Shougo/neocomplcache'
 endif
 
 "" 各言語
@@ -119,10 +119,10 @@ NeoBundleLazy 'osyo-manga/vim-marching', {
 
 " golang
 NeoBundleLazy 'fatih/vim-go', {
-            \ "autoload": {"filetypes": ["go"]}}
+            \ 'autoload': {"filetypes": ["go"]}}
 
 " rust
-if executable("cargo") && isdirectory(expand("~/rust/rust/src"))
+if executable('cargo') && isdirectory(expand('~/rust/rust/src'))
     NeoBundle 'rust-lang/rust.vim'
     NeoBundle 'phildawes/racer', {
                 \ 'build': {
@@ -131,36 +131,36 @@ if executable("cargo") && isdirectory(expand("~/rust/rust/src"))
                 \ }
                 \}
     set hidden
-    let g:racer_cmd = expand("~/.vim/bundle/racer/target/release/racer")
-    let $RUST_SRC_PATH=expand("~/rust/rust/src/")
+    let g:racer_cmd = expand('~/.vim/bundle/racer/target/release/racer')
+    let $RUST_SRC_PATH=expand('~/rust/rust/src/')
 
     NeoBundleLazy 'rhysd/rust-doc.vim', {
                 \ 'autoload': {'filetypes': 'rust' }
                 \ }
-    let g:rust_doc#downloaded_rust_doc_dir = "~/rust/rust-1.0.0-i686-unknown-linux-gnu/rust-docs"
+    let g:rust_doc#downloaded_rust_doc_dir = '~/rust/rust-1.0.0-i686-unknown-linux-gnu/rust-docs'
 endif
 
 
 " sphinx
 NeoBundleLazy 'Rykka/riv.vim',
-            \ {"autoload": {"filetypes": ["rst"]}}
+            \ {'autoload': {"filetypes": ["rst"]}}
 
 " python
 
 NeoBundleLazy 'davidhalter/jedi-vim',
-            \ {"autoload": {"filetypes": ["python"]}}
+            \ {'autoload': {"filetypes": ["python"]}}
 NeoBundleLazy 'nvie/vim-flake8',
-            \ {"autoload": {"filetypes": ["python"]}}
+            \ {'autoload': {"filetypes": ["python"]}}
 NeoBundleLazy 'Yggdroot/indentLine',
-            \ {"autoload": {"filetypes": ["python"]}}
+            \ {'autoload': {"filetypes": ["python"]}}
 NeoBundleLazy 'jmcantrell/vim-virtualenv',
-            \ {"autoload": {"filetypes": ["python"]}}
+            \ {'autoload': {"filetypes": ["python"]}}
 
 " haskell
 NeoBundleLazy 'dag/vim2hs',
-            \ {"autoload": {"filetypes": ["haskell"]}}
+            \ {'autoload': {"filetypes": ["haskell"]}}
 NeoBundleLazy 'eagletmt/ghcmod-vim',
-            \ {"autoload": {"filetypes": ["haskell"]}}
+            \ {'autoload': {"filetypes": ["haskell"]}}
 augroup vimrc
     autocmd FileType haskell nnoremap <Space>t :<C-u>GhcModType<CR>
 augroup END
@@ -168,11 +168,11 @@ augroup END
 
 " markdown
 NeoBundleLazy 'kannokanno/previm',
-            \ {"autoload" : {"filetypes": ["markdown"]}}
+            \ {'autoload' : {"filetypes": ["markdown"]}}
 NeoBundleLazy 'plasticboy/vim-markdown',
-            \ {"autoload" : {"filetypes": ["markdown"]}}
+            \ {'autoload' : {"filetypes": ["markdown"]}}
 NeoBundleLazy 'tyru/open-browser.vim',
-            \ {"autoload" : {"filetypes": ["markdown"]}}
+            \ {'autoload' : {"filetypes": ["markdown"]}}
 
 "" color
 NeoBundle 'w0ng/vim-hybrid'
@@ -201,7 +201,7 @@ filetype plugin indent on
 """ 各プラグインの設定
 
 " caw.vim
-let s:hooks = neobundle#get_hooks("caw.vim")
+let s:hooks = neobundle#get_hooks('caw.vim')
 function! s:hooks.on_source(budle)
     " コメントアウトを切り替えるマッピング
     nmap <Space>c <Plug>(caw:I:toggle)
@@ -222,12 +222,12 @@ nnoremap ,ub :<C-u>Unite<space>buffer<CR>
 nnoremap ,um :<C-u>Unite<space>file_mru<CR>
 
 " neocomplete
-let s:hooks = neobundle#get_hooks("neocomplete.vim")
+let s:hooks = neobundle#get_hooks('neocomplete.vim')
 function! s:hooks.on_source(bundle)
     let g:neocomplete#enable_at_startup = 1
     let g:neocomplete#enable_ignore_case = 1
     let g:neocomplete#enable_smart_case = 1
-    let g:neocomplete#skip_auto_completion_time = ""
+    let g:neocomplete#skip_auto_completion_time = ''
     " Set minimum syntax keyword length.
     let g:neocomplete#sources#syntax#min_keyword_length = 3
     let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
@@ -244,19 +244,19 @@ function! s:hooks.on_source(bundle)
     " <CR>: close popup and save indent.
     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
     function! s:my_cr_function()
-        return neocomplete#close_popup() . "\<CR>"
+        return neocomplete#close_popup() . '\<CR>'
         " For no inserting <CR> key.
         "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
     endfunction
     " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    inoremap <expr><TAB>  pumvisible() ? '\<C-n>' : "\<TAB>"
     " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-h> neocomplete#smart_close_popup().'\<C-h>'
+    inoremap <expr><BS> neocomplete#smart_close_popup().'\<C-h>'
 endfunction
 unlet s:hooks
 
-let s:hooks = neobundle#get_hooks("neocomplcache")
+let s:hooks = neobundle#get_hooks('neocomplcache')
 function! s:hooks.on_source(bundle)
     let g:neocomplcache_enable_at_startup = 1
 endfunction
@@ -266,15 +266,15 @@ unlet s:hooks
 
 
 " marching.vim
-let s:hooks = neobundle#get_hooks("vim-marching")
+let s:hooks = neobundle#get_hooks('vim-marching')
 function! s:hooks.on_post_source(bundle)
     if !empty(g:marching_clang_command) && executable(g:marching_clang_command)
         " 非同期ではなく同期処理で補完
-        let g:marching_backend = "sync_clang_command"
+        let g:marching_backend = 'sync_clang_command'
     else
         " clangコマンドが実行できない場合は wandbox を使用
-        let g:marching_backend = "wandbox"
-        let g:marching_clang_command = ""
+        let g:marching_backend = 'wandbox'
+        let g:marching_clang_command = ''
     endif
 
     let g:marching_include_paths = filter(
@@ -287,7 +287,7 @@ function! s:hooks.on_post_source(bundle)
                 \ 'cpp': '-std=c++14'
                 \ }
 
-    if !neobundle#is_sourced("neocomplete.vim")
+    if !neobundle#is_sourced('neocomplete.vim')
         return
     endif
 
@@ -309,11 +309,11 @@ unlet s:hooks
 
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
+\ '\<Plug>(neosnippet_expand_or_jump)'
+\: pumvisible() ? '\<C-n>' : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
+\ '\<Plug>(neosnippet_expand_or_jump)'
+\: '\<TAB>'
 
 " For snippet_complete marker.
 if has('conceal')
@@ -324,37 +324,37 @@ endif
 " quickrun
 
 let g:quickrun_config = {
-\   "_" : {
-\       "outputter/buffer/split" : ":botright 8sp",
-\       "outputter/buffer/close_on_empty": 1,
-\       "runner" : "vimproc",
-\       "runner/vimproc/updatetime" : 60,
-\       "outputter" : "error",
-\       "outputter/error/success" : "buffer",
+\   '_' : {
+\       'outputter/buffer/split' : ':botright 8sp',
+\       'outputter/buffer/close_on_empty': 1,
+\       'runner' : 'vimproc',
+\       'runner/vimproc/updatetime' : 60,
+\       'outputter' : 'error',
+\       'outputter/error/success' : 'buffer',
 \   },
-\   "ruby" : {
-\       "command": "/Users/nao/.rbenv/shims/ruby"
+\   'ruby' : {
+\       'command': '/Users/nao/.rbenv/shims/ruby'
 \   },
-\   "cpp" : {
-\       "command": "clang++",
-\       "cmdopt": "--std=c++14 "
+\   'cpp' : {
+\       'command': 'clang++',
+\       'cmdopt': '--std=c++14 '
 \   },
-\   "c" : {
-\       "command": "gcc"
+\   'c' : {
+\       'command': 'gcc'
 \   },
-\   "cpp/wandbox" : {
-\	"runner" : "wandbox",
-\	"runner/wandbox/compiler" : "clang-head",
-\	"runner/wandbox/options" : "warning,c++1y,boost-1.55",
+\   'cpp/wandbox' : {
+\	'runner' : 'wandbox',
+\	'runner/wandbox/compiler' : 'clang-head',
+\	'runner/wandbox/options' : 'warning,c++1y,boost-1.55',
 \   },
-\   "cpp/watchdogs_checker" : {
-\   	"type" : "watchdogs_checker/clang++03",
+\   'cpp/watchdogs_checker' : {
+\   	'type' : 'watchdogs_checker/clang++03',
 \   },
-\   "watchdogs_checker/clang++03" : {
-\      "cmdopt" : "-Wall --std=c++14",
+\   'watchdogs_checker/clang++03' : {
+\      'cmdopt' : '-Wall --std=c++14',
 \   },
-\   "watchdogs_checker/g++" : {
-\       "cmdopt" : "-Wall -std=c++14",
+\   'watchdogs_checker/g++' : {
+\       'cmdopt' : '-Wall -std=c++14',
 \   },
 \   'watchdogs_checker/cargo' : {
 \       'command' : 'cargo',
@@ -398,13 +398,13 @@ endif
 
 let g:jedi#popup_select_first = 0
 let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^.\t]\.\w*'
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_definitions_command = "<leader>d"
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#show_call_signatures = "1"
+let g:jedi#goto_assignments_command = '<leader>g'
+let g:jedi#goto_definitions_command = '<leader>d'
+let g:jedi#documentation_command = 'K'
+let g:jedi#usages_command = '<leader>n'
+let g:jedi#completions_command = '<C-Space>'
+let g:jedi#rename_command = '<leader>r'
+let g:jedi#show_call_signatures = '1'
 nnoremap <Leader>l :call Flake8()<CR>
 "" indentLine
 let g:indentLine_color_term = 238
@@ -415,18 +415,18 @@ let g:indentLine_char = '¦'
 
 filetype off
 filetype plugin indent off
-if $GOROOT != ''
+if $GOROOT !=? ''
     set rtp+=$GOROOT/misc/vim/
 endif
 filetype plugin indent on
 syntax on
 autocmd vimrc FileType go autocmd BufWritePre <buffer> GoImports
-exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+exe 'set rtp+='.globpath($GOPATH, 'src/github.com/nsf/gocode/vim')
 set completeopt=menu,preview
 
 " C++
 
-if executable("clang++")
+if executable('clang++')
 "    let g:quickrun_config['cpp/clang+11'] = {
 "                \ 'cmdopt' : '--std=c++11 --stdlib=libc++',
 "                \ 'type' : 'cpp/clang++'
@@ -443,7 +443,7 @@ augroup cpp-path
                 \      ',')
 augroup END
 
-call neobundle#call_hook("on_source")
+call neobundle#call_hook('on_source')
     
 
 " markdown
@@ -451,6 +451,16 @@ augroup PrevimSettings
     autocmd!
     autocmd BufNewFile,BufRead *.{md,mdwn,mkdn,mark*} set filetype=markdown
 augroup END
+
+" vim script
+let g:quickrun_config['vim/watchdogs_checker'] = {
+\       'type' : executable('vint') ? 'watchdogs_checker/vint' : '',
+\   }
+let g:quickrun_config['watchdogs_checker/vint'] = {
+\       'command' : 'vint',
+\       'exec' : '%c %o %s:p',
+\   }
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 全般
