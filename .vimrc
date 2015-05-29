@@ -90,6 +90,9 @@ NeoBundle 'osyo-manga/vim-watchdogs'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'vim-jp/vimdoc-ja'
 
+NeoBundle 'airblade/vim-rooter'
+let g:rooter_use_lcd = 1
+
 NeoBundle 'Lokaltog/vim-easymotion'
 nmap mm <Plug>(easymotion-s2)
 
@@ -490,7 +493,8 @@ augroup vimrc
 augroup END
 
 " 開いているファイルと同じディレクトリに常に移動する
-autocmd vimrc BufEnter * execute 'lcd ' . fnameescape(expand('%:p:h'))
+" projeect root にいたいのでコメントアウト
+" autocmd vimrc BufEnter * execute 'lcd ' . fnameescape(expand('%:p:h'))
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
