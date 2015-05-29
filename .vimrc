@@ -73,10 +73,6 @@ NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'Shougo/neomru.vim'
 
-NeoBundle 'Shougo/vimfiler.vim'
-
-NeoBundle 'Shougo/vimfiler.vim'
-
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'Shougo/neosnippet'
@@ -87,7 +83,7 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'osyo-manga/shabadou.vim'
 NeoBundle 'osyo-manga/vim-watchdogs'
-NeoBundle 'scrooloose/syntastic'
+NeoBundle 'cohama/vim-hier'
 NeoBundle 'vim-jp/vimdoc-ja'
 
 NeoBundle 'airblade/vim-rooter'
