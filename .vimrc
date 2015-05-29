@@ -68,7 +68,10 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
 
+NeoBundle 'Shougo/vimfiler.vim'
+
 NeoBundle 'tyru/caw.vim'
+NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'Shougo/vimshell.vim'
@@ -115,7 +118,7 @@ NeoBundleLazy 'fatih/vim-go', {
             \ "autoload": {"filetypes": ["go"]}}
 
 " rust
-if executable("cargo") && exists(expand("~/rust/rust/src/"))
+if executable("cargo") && isdirectory(expand("~/rust/rust/src"))
     NeoBundle 'rust-lang/rust.vim'
     NeoBundle 'phildawes/racer', {
                 \ 'build': {
@@ -437,7 +440,7 @@ set noerrorbells
 if !has('gui_running')
     set t_Co=256
 endif
-colorscheme iceberg
+colorscheme jellybeans
 set hidden
 set number
 set scrolloff=5

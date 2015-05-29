@@ -1,7 +1,6 @@
 ;; -*- mode: emacs-lisp; coding: utf-8; indent-tabs-mode: nil -*-
 
 (cd "~/")
-(message (format "Startup time: %s" (format-time-string "%Y/%m/%d %H:%M:%S")))
 
 ;; Cask
 (unless (require 'cask nil t)
@@ -9,6 +8,9 @@
 (cask-initialize)
 (require 'pallet)
 
+;; mac os 設定
+(when (eq system-type 'darwin)
+  (setq ns-command-modifier (quote meta)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; package
@@ -60,8 +62,8 @@
 
 ;; expand-region
 (use-package expand-region
-  :bind (("C-@" . er/expand-region)
-         ("C-M-@" . er/contract-region))
+  :bind (("C-;" . er/expand-region)
+         ("C-M-;" . er/contract-region))
   :config
   (transient-mark-mode t))
 
@@ -115,24 +117,19 @@
 
 ;; smartparens
 ;; かっこを入力した時にその中身をハイライトしてくれるのがうざいので無効化
-(use-package smartparens-config
-  :config
-  (progn
-    (smartparens-global-mode t)
-    ;; `と'を自動補完対象から削除
-    (sp-pair "'" nil :actions :rem)
-    (sp-pair "`" nil :actions :rem)))
+;(use-package smartparens-config
+;  :config
+;  (progn
+;    (smartparens-global-mode t)
+;    ;; `と'を自動補完対象から削除
+;    (sp-pair "'" nil :actions :rem)
+;    (sp-pair "`" nil :actions :rem)))
 ;(electric-pair-mode t)
 
 ;; powerline
 (use-package powerline
   :config
   (powerline-default-theme))
-
-;; smooth-scroll
-(use-package smooth-scroll
-  :config
-  (smooth-scroll-mode t))
 
 ;; yascroll
 (use-package yascroll
