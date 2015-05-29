@@ -208,12 +208,12 @@ filetype plugin indent on
 let s:hooks = neobundle#get_hooks("caw.vim")
 function! s:hooks.on_source(budle)
     " コメントアウトを切り替えるマッピング
-    nmap <Leader>c <Plug>(caw:I:toggle)
-    vmap <Leader>c <Plug>(caw:I:toggle)
+    nmap <Space>c <Plug>(caw:I:toggle)
+    vmap <Space>c <Plug>(caw:I:toggle)
 
     " <leader>C でコメントアウトを解除
-    nmap <Leader>C <Plug>(caw:I:uncomment)
-    vmap <Leader>C <Plug>(caw:I:uncomment)
+    nmap <Space>C <Plug>(caw:I:uncomment)
+    vmap <Space>C <Plug>(caw:I:uncomment)
 endfunction
 unlet s:hooks
 
