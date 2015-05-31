@@ -426,15 +426,6 @@ set completeopt=menu,preview
 
 " C++
 
-if executable('clang++')
-"    let g:quickrun_config['cpp/clang+11'] = {
-"                \ 'cmdopt' : '--std=c++11 --stdlib=libc++',
-"                \ 'type' : 'cpp/clang++'
-"                \ }
-"    let g:quickrun_config['cpp'] = { 'type': 'cpp/clang++11' }
-endif
-
-
 augroup cpp-path
     autocmd!
     autocmd FileType cpp execute 'setlocal path=.,/usr/include,' .
@@ -443,8 +434,6 @@ augroup cpp-path
                 \      ',')
 augroup END
 
-call neobundle#call_hook('on_source')
-    
 
 " markdown
 augroup PrevimSettings
@@ -518,7 +507,6 @@ set incsearch
 set ignorecase
 set smartcase
 set nohlsearch
-set gdefault
 set keywordprg=:help
 if !exists('loaded_matchit')
   " matchitを有効化
@@ -555,5 +543,4 @@ vnoremap : ;
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 command! Todo edit ~/Dropbox/memo/todo.md
 command! Memo edit ~/Dropbox/memo/memo.md
-
 
