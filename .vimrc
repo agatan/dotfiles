@@ -72,6 +72,7 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'vim-jp/vital.vim'
 
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'junegunn/vim-easy-align'
@@ -244,15 +245,15 @@ function! s:hooks.on_source(bundle)
     " <CR>: close popup and save indent.
     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
     function! s:my_cr_function()
-        return neocomplete#close_popup() . '\<CR>'
+        return neocomplete#close_popup() . "\<CR>"
         " For no inserting <CR> key.
         "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
     endfunction
     " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? '\<C-n>' : "\<TAB>"
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
     " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup().'\<C-h>'
-    inoremap <expr><BS> neocomplete#smart_close_popup().'\<C-h>'
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 endfunction
 unlet s:hooks
 
@@ -310,10 +311,10 @@ unlet s:hooks
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ '\<Plug>(neosnippet_expand_or_jump)'
-\: pumvisible() ? '\<C-n>' : "\<TAB>"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ '\<Plug>(neosnippet_expand_or_jump)'
-\: '\<TAB>'
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')
@@ -544,3 +545,13 @@ vnoremap : ;
 command! Todo edit ~/Dropbox/memo/todo.md
 command! Memo edit ~/Dropbox/memo/memo.md
 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" VimL
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+command! -bang -nargs=* PluginTest call PluginTest()
+function! PluginTest()
+    execute '!vim -u NONE -i NONE -N --cmd "set runtimepath+=' . getcwd() . '"'
+endfunction
+
+call neobundle#call_hook('on_source')
