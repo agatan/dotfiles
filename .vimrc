@@ -175,6 +175,10 @@ NeoBundleLazy 'plasticboy/vim-markdown',
 NeoBundleLazy 'tyru/open-browser.vim',
             \ {'autoload' : {"filetypes": ["markdown"]}}
 
+" VimL
+NeoBundle 'rbtnn/vimconsole.vim'
+NeoBundle 'thinca/vim-prettyprint'
+
 "" color
 NeoBundle 'w0ng/vim-hybrid'
 "NeoBundle 'altercation/vim-colors-solarized'
