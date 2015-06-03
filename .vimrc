@@ -54,6 +54,9 @@ call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+"" My Plugin
+NeoBundle 'agatan/vim-slaq'
+let g:slaq_token = 'xoxp-4721547665-4875840292-5155510487-21150e'
 
 """" Plugins
 
@@ -73,7 +76,7 @@ NeoBundle 'Shougo/unite-outline'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'Shougo/neomru.vim'
 
-NeoBundle 'Shougo/vimfiler.vim'
+NeoBundle 'vim-jp/vital.vim'
 
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'junegunn/vim-easy-align'
