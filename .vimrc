@@ -369,6 +369,11 @@ let g:quickrun_config = {
 \       'cmdopt' : 'build',
 \       'exec' : '%c %o',
 \   },
+\   'watchdogs_checker/cargo_test' : {
+\       'command' : 'cargo',
+\       'cmfopt' : 'test',
+\       'exec' : '%c %o',
+\   },
 \   'rust/watchdogs_checker' : {
 \       'type' : 'watchdogs_checker/cargo',
 \   },
