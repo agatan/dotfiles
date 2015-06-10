@@ -217,3 +217,5 @@ export GHC_DOT_APP="/Applications/ghc-7.10.1.app"
 if [ -d "$GHC_DOT_APP" ]; then
   export PATH="${HOME}/.cabal/bin:${GHC_DOT_APP}/Contents/bin:${PATH}"
 fi
+
+export PATH=$PATH:/usr/local/llvm/bin
