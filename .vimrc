@@ -292,7 +292,7 @@ function! s:hooks.on_post_source(bundle)
                 \ 'isdirectory(v:val)')
 
     let g:marching#clang_command#options = {
-                \ 'cpp': '-std=c++14'
+                \ 'cpp': '-std=c++1z'
                 \ }
 
     if !neobundle#is_sourced('neocomplete.vim')
