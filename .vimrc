@@ -1,5 +1,6 @@
 if !1 | finish | endif
-scriptencoding utf-8
+set encoding=utf-8
+scriptencoding utf8
 
 " F1で.vimrcの編集に
 nnoremap <F1> :edit ~/.vimrc<CR>
@@ -315,13 +316,6 @@ unlet s:hooks
 
 
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ '\<Plug>(neosnippet_expand_or_jump)'
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')

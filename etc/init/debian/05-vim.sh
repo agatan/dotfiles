@@ -16,16 +16,24 @@ should_build_vim() {
 }
 
 fetch_vim() {
+    sudo apt-get build-dep vim
+    sudo apt-get install lua5.1 liblua5.1-0-dev
+    sudo apt-get install luajit libluajit-5.1-2
+    sudo apt-get install python-dev
     cd /usr/local/src
     sudo git clone https://github.com/vim/vim
+    cd /usr/local/src/vim
     sudo ./configure --with-features=huge \
+		     --disable-darwin \
+                     --disable-selinux \
                      --enable-multibyte \
-                     --enable-perlinterp \
                      --enable-pythoninterp \
-                     --enable-rubyinterp \
+                     --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
                      --enable-luainterp=dynamic \
+                     --with-luajit \
+                     --with-lua-prefix=/usr/local \
                      --enable-fail-if-missing
-    make
+    sudo make
     sudo make install
 }
 
