@@ -289,7 +289,8 @@ function! s:hooks.on_post_source(bundle)
     let g:marching_include_paths = filter(
                 \ split(glob('/usr/include/c++/*'), '\n') +
                 \ split(glob('/usr/include/*/c++/*'), '\n') +
-                \ split(glob('/usr/include/*'), '\n'),
+                \ split(glob('/usr/include/*'), '\n') + 
+                \ split(glob('/usr/local/include/'), '\n'),
                 \ 'isdirectory(v:val)')
 
     let g:marching#clang_command#options = {
