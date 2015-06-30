@@ -55,10 +55,6 @@ call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-"" My Plugin
-NeoBundle 'agatan/vim-slaq'
-let g:slaq_token = 'xoxp-4721547665-4875840292-5155510487-21150e'
-
 """" Plugins
 
 NeoBundle 'Shougo/vimproc.vim', {
@@ -78,6 +74,7 @@ NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'vim-jp/vital.vim'
 
+NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'Shougo/neosnippet'
@@ -150,16 +147,6 @@ endif
 NeoBundleLazy 'Rykka/riv.vim',
             \ {'autoload': {"filetypes": ["rst"]}}
 
-" python
-
-NeoBundleLazy 'davidhalter/jedi-vim',
-            \ {'autoload': {"filetypes": ["python"]}}
-NeoBundleLazy 'nvie/vim-flake8',
-            \ {'autoload': {"filetypes": ["python"]}}
-NeoBundleLazy 'Yggdroot/indentLine',
-            \ {'autoload': {"filetypes": ["python"]}}
-NeoBundleLazy 'jmcantrell/vim-virtualenv',
-            \ {'autoload': {"filetypes": ["python"]}}
 
 " haskell
 NeoBundleLazy 'dag/vim2hs',
@@ -224,7 +211,6 @@ unlet s:hooks
 
 " unite
 
-filetype plugin indent on
 let g:unite_enable_split_vertically = 1
 nnoremap ,uf :<C-u>Unite<space>file<CR>
 nnoremap ,ub :<C-u>Unite<space>buffer<CR>
@@ -390,30 +376,6 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-
-" python系
-augroup vimrc
-    autocmd FileType python setlocal omnifunc=jedi#completions
-    autocmd FileType python setlocal completeopt-=preview
-augroup END
-
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-
-if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-let g:jedi#popup_select_first = 0
-let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^.\t]\.\w*'
-let g:jedi#goto_assignments_command = '<leader>g'
-let g:jedi#goto_definitions_command = '<leader>d'
-let g:jedi#documentation_command = 'K'
-let g:jedi#usages_command = '<leader>n'
-let g:jedi#completions_command = '<C-Space>'
-let g:jedi#rename_command = '<leader>r'
-let g:jedi#show_call_signatures = '1'
-nnoremap <Leader>l :call Flake8()<CR>
 "" indentLine
 let g:indentLine_color_term = 238
 let g:indentLine_color_gui = '#708090'
@@ -535,9 +497,6 @@ augroup vimrc
     autocmd FileType eruby set ts=2 sw=2 softtabstop=2
 augroup END
 
-" 数字のインクリメント
-nnoremap + <C-a>
-nnoremap - <C-x>
 
 " 英字配列だとコロンがつらい
 nnoremap ; :
