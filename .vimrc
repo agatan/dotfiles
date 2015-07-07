@@ -93,12 +93,12 @@ let g:rooter_use_lcd = 1
 NeoBundle 'Lokaltog/vim-easymotion'
 nmap mm <Plug>(easymotion-s2)
 
-" +luaならばneocomplete
-if has('lua')
-    NeoBundle 'Shougo/neocomplete.vim'
-else
-    NeoBundle 'Shougo/neocomplcache'
-endif
+" " +luaならばneocomplete
+" if has('lua')
+"     NeoBundle 'Shougo/neocomplete.vim'
+" else
+"     NeoBundle 'Shougo/neocomplcache'
+" endif
 
 "" 各言語
 
@@ -179,6 +179,13 @@ NeoBundleLazy 'tyru/open-browser.vim',
 NeoBundle 'rbtnn/vimconsole.vim'
 NeoBundle 'thinca/vim-prettyprint'
 
+" OCaml
+NeoBundleLazy 'cohama/the-ocamlspot.vim',
+            \ {'autoload': {'filetypes': 'ocaml' }}
+" merlin
+let g:opamshare = substitute(system('opam config var share'), '\n$', '', '''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+
 "" color
 NeoBundle 'w0ng/vim-hybrid'
 "NeoBundle 'altercation/vim-colors-solarized'
@@ -227,45 +234,45 @@ nnoremap ,ub :<C-u>Unite<space>buffer<CR>
 nnoremap ,um :<C-u>Unite<space>file_mru<CR>
 
 " neocomplete
-let s:hooks = neobundle#get_hooks('neocomplete.vim')
-function! s:hooks.on_source(bundle)
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_ignore_case = 1
-    let g:neocomplete#enable_smart_case = 1
-    let g:neocomplete#skip_auto_completion_time = ''
-    " Set minimum syntax keyword length.
-    let g:neocomplete#sources#syntax#min_keyword_length = 3
-    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-    " Define dictionary.
-    let g:neocomplete#sources#dictionary#dictionaries = {
-                \ 'default' : '',
-                \ 'vimshell' : $HOME.'/.vimshell_hist',
-                \ }
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function()
-        return neocomplete#close_popup() . "\<CR>"
-        " For no inserting <CR> key.
-        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-    endfunction
-    " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-endfunction
-unlet s:hooks
-
-let s:hooks = neobundle#get_hooks('neocomplcache')
-function! s:hooks.on_source(bundle)
-    let g:neocomplcache_enable_at_startup = 1
-endfunction
-unlet s:hooks
+" let s:hooks = neobundle#get_hooks('neocomplete.vim')
+" function! s:hooks.on_source(bundle)
+"     let g:neocomplete#enable_at_startup = 1
+"     let g:neocomplete#enable_ignore_case = 1
+"     let g:neocomplete#enable_smart_case = 1
+"     let g:neocomplete#skip_auto_completion_time = ''
+"     " Set minimum syntax keyword length.
+"     let g:neocomplete#sources#syntax#min_keyword_length = 3
+"     let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+"
+"     " Define dictionary.
+"     let g:neocomplete#sources#dictionary#dictionaries = {
+"                 \ 'default' : '',
+"                 \ 'vimshell' : $HOME.'/.vimshell_hist',
+"                 \ }
+"     if !exists('g:neocomplete#keyword_patterns')
+"         let g:neocomplete#keyword_patterns = {}
+"     endif
+"     let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+"     " <CR>: close popup and save indent.
+"     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"     function! s:my_cr_function()
+"         return neocomplete#close_popup() . "\<CR>"
+"         " For no inserting <CR> key.
+"         "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+"     endfunction
+"     " <TAB>: completion.
+"     inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+"     " <C-h>, <BS>: close popup and delete backword char.
+"     inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+"     inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+" endfunction
+" unlet s:hooks
+"
+" let s:hooks = neobundle#get_hooks('neocomplcache')
+" function! s:hooks.on_source(bundle)
+"     let g:neocomplcache_enable_at_startup = 1
+" endfunction
+" unlet s:hooks
 
 
 
@@ -292,21 +299,21 @@ function! s:hooks.on_post_source(bundle)
                 \ 'cpp': '-std=c++14'
                 \ }
 
-    if !neobundle#is_sourced('neocomplete.vim')
-        return
-    endif
-
-    " neocomplete.vim と併用する場合の設定
-    let g:marching_enable_neocomplete = 1
-
-    if !exists('g:neocomplete#force_omni_input_patterns')
-        let g:neocomplete#force_omni_input_patterns = {}
-    endif
-
-    let g:neocomplete#force_omni_input_patterns.cpp =
-                \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
-    let g:neocomplete#force_omni_input_patterns.c =
-                \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+"     if !neobundle#is_sourced('neocomplete.vim')
+"         return
+"     endif
+"
+"     " neocomplete.vim と併用する場合の設定
+"     let g:marching_enable_neocomplete = 1
+"
+"     if !exists('g:neocomplete#force_omni_input_patterns')
+"         let g:neocomplete#force_omni_input_patterns = {}
+"     endif
+"
+"     let g:neocomplete#force_omni_input_patterns.cpp =
+"                 \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
+"     let g:neocomplete#force_omni_input_patterns.c =
+"                 \ '[^.[:digit:] *\t]\%(\.\|->\)\w*\|\h\w*::\w*'
 endfunction
 unlet s:hooks
 
@@ -388,29 +395,6 @@ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 
-" python系
-augroup vimrc
-    autocmd FileType python setlocal omnifunc=jedi#completions
-    autocmd FileType python setlocal completeopt-=preview
-augroup END
-
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-
-if !exists('g:neocomplete#force_omni_input_patterns')
-    let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-let g:jedi#popup_select_first = 0
-let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^.\t]\.\w*'
-let g:jedi#goto_assignments_command = '<leader>g'
-let g:jedi#goto_definitions_command = '<leader>d'
-let g:jedi#documentation_command = 'K'
-let g:jedi#usages_command = '<leader>n'
-let g:jedi#completions_command = '<C-Space>'
-let g:jedi#rename_command = '<leader>r'
-let g:jedi#show_call_signatures = '1'
-nnoremap <Leader>l :call Flake8()<CR>
 "" indentLine
 let g:indentLine_color_term = 238
 let g:indentLine_color_gui = '#708090'
@@ -438,6 +422,7 @@ augroup cpp-path
                 \             'isdirectory(v:val)'),
                 \      ',')
 augroup END
+set cinoptions+=:0,g0
 
 
 " markdown
