@@ -122,7 +122,6 @@ bindkey '^R' history-incremental-pattern-search-backward
 alias la='ls -a'
 alias ll='ls -l'
  
-alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
  
@@ -217,3 +216,8 @@ export GHC_DOT_APP="/Applications/ghc-7.10.1.app"
 if [ -d "$GHC_DOT_APP" ]; then
   export PATH="${HOME}/.cabal/bin:${GHC_DOT_APP}/Contents/bin:${PATH}"
 fi
+
+export PATH=$PATH:/usr/local/llvm/bin
+
+# latex
+PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin/

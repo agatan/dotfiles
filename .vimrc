@@ -1,5 +1,6 @@
 if !1 | finish | endif
-scriptencoding utf-8
+set encoding=utf-8
+scriptencoding utf8
 
 " F1で.vimrcの編集に
 nnoremap <F1> :edit ~/.vimrc<CR>
@@ -54,7 +55,6 @@ call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-
 """" Plugins
 
 NeoBundle 'Shougo/vimproc.vim', {
@@ -74,6 +74,7 @@ NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'vim-jp/vital.vim'
 
+NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'tyru/caw.vim'
 NeoBundle 'junegunn/vim-easy-align'
 NeoBundle 'Shougo/neosnippet'
@@ -146,16 +147,6 @@ endif
 NeoBundleLazy 'Rykka/riv.vim',
             \ {'autoload': {"filetypes": ["rst"]}}
 
-" python
-
-NeoBundleLazy 'davidhalter/jedi-vim',
-            \ {'autoload': {"filetypes": ["python"]}}
-NeoBundleLazy 'nvie/vim-flake8',
-            \ {'autoload': {"filetypes": ["python"]}}
-NeoBundleLazy 'Yggdroot/indentLine',
-            \ {'autoload': {"filetypes": ["python"]}}
-NeoBundleLazy 'jmcantrell/vim-virtualenv',
-            \ {'autoload': {"filetypes": ["python"]}}
 
 " haskell
 NeoBundleLazy 'dag/vim2hs',
@@ -227,7 +218,6 @@ unlet s:hooks
 
 " unite
 
-filetype plugin indent on
 let g:unite_enable_split_vertically = 1
 nnoremap ,uf :<C-u>Unite<space>file<CR>
 nnoremap ,ub :<C-u>Unite<space>buffer<CR>
@@ -292,11 +282,12 @@ function! s:hooks.on_post_source(bundle)
     let g:marching_include_paths = filter(
                 \ split(glob('/usr/include/c++/*'), '\n') +
                 \ split(glob('/usr/include/*/c++/*'), '\n') +
-                \ split(glob('/usr/include/*'), '\n'),
+                \ split(glob('/usr/include/*'), '\n') + 
+                \ split(glob('/usr/local/include/'), '\n'),
                 \ 'isdirectory(v:val)')
 
     let g:marching#clang_command#options = {
-                \ 'cpp': '-std=c++14'
+                \ 'cpp': '-std=c++1z'
                 \ }
 
 "     if !neobundle#is_sourced('neocomplete.vim')
@@ -319,13 +310,6 @@ unlet s:hooks
 
 
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ '\<Plug>(neosnippet_expand_or_jump)'
-\: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)"
-\: "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')
@@ -373,6 +357,11 @@ let g:quickrun_config = {
 \       'cmdopt' : 'build',
 \       'exec' : '%c %o',
 \   },
+\   'watchdogs_checker/cargo_test' : {
+\       'command' : 'cargo',
+\       'cmfopt' : 'test',
+\       'exec' : '%c %o',
+\   },
 \   'rust/watchdogs_checker' : {
 \       'type' : 'watchdogs_checker/cargo',
 \   },
@@ -393,7 +382,6 @@ let g:quickrun_config = {
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
-
 
 "" indentLine
 let g:indentLine_color_term = 238
@@ -517,9 +505,6 @@ augroup vimrc
     autocmd FileType eruby set ts=2 sw=2 softtabstop=2
 augroup END
 
-" 数字のインクリメント
-nnoremap + <C-a>
-nnoremap - <C-x>
 
 " 英字配列だとコロンがつらい
 nnoremap ; :
