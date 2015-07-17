@@ -151,8 +151,6 @@ NeoBundleLazy 'Rykka/riv.vim',
 " haskell
 NeoBundleLazy 'dag/vim2hs',
             \ {'autoload': {"filetypes": ["haskell"]}}
-NeoBundleLazy 'eagletmt/ghcmod-vim',
-            \ {'autoload': {"filetypes": ["haskell"]}}
 augroup vimrc
     autocmd FileType haskell nnoremap <Space>t :<C-u>GhcModType<CR>
 augroup END
