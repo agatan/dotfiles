@@ -150,11 +150,9 @@ NeoBundleLazy 'Rykka/riv.vim',
 
 " haskell
 NeoBundleLazy 'dag/vim2hs',
-            \ {'autoload': {"filetypes": ["haskell"]}}
-augroup vimrc
-    autocmd FileType haskell nnoremap <Space>t :<C-u>GhcModType<CR>
-augroup END
-
+            \ {'autoload': {"filetypes": ['haskell']}}
+NeoBundleLazy 'eagletmt/ghcmod-vim',
+            \ {'autoload': {'filetypes': ['haskell']}}
 
 " markdown
 NeoBundleLazy 'kannokanno/previm',
@@ -527,3 +525,12 @@ function! PluginTest()
 endfunction
 
 call neobundle#call_hook('on_source')
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Haskell
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+augroup vimrc
+    autocmd FileType haskell set sw=2 ts=2 softtabstop=2
+    autocmd FileType haskell nnoremap <Space>t :<C-u>GhcModType<CR>
+augroup END
