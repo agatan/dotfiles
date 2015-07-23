@@ -1,0 +1,24 @@
+" vim: set filetype=vim :
+
+command! ReloadVimrc source ~/.vimperatorrc
+
+" 入力欄に自動フォーカスしない
+set focuscontent
+
+" USキーボードでの;と:の入れ替え
+nnoremap ; :
+nnoremap : ;
+
+" :o の補完候補をサーチエンジン, 履歴に限定
+set complete=sl
+
+" google検索を手早く
+nnoremap s :open<Space>google<Space>
+nnoremap ,s :tabopen<Space>google<Space>
+
+" 移動幅
+nnoremap j 5j
+nnoremap k 5k
+
+" private browsing
+nnoremap ,p :winopen -private<CR>
