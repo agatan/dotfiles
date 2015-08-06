@@ -153,6 +153,8 @@ NeoBundleLazy 'dag/vim2hs',
             \ {'autoload': {"filetypes": ['haskell']}}
 NeoBundleLazy 'eagletmt/ghcmod-vim',
             \ {'autoload': {'filetypes': ['haskell']}}
+NeoBundleLazy 'ujihisa/unite-haskellimport',
+            \ {'autoload': {'filetypes': ['haskell']}}
 
 " markdown
 NeoBundleLazy 'kannokanno/previm',
