@@ -363,6 +363,14 @@ let g:quickrun_config = {
 \   'rust/watchdogs_checker' : {
 \       'type' : 'watchdogs_checker/cargo',
 \   },
+\   'watchdogs_checker/golint' : {
+\       'command': 'golint',
+\       'exec': '%c %o %s:p',
+\       'errorformat': '%f:%l:%c: %m,%-G%.%#',
+\   },
+\   'go/watchdogs_checker' : {
+\       'type': 'watchdogs_checker/golint'
+\   },
 \}
 
 
