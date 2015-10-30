@@ -175,6 +175,10 @@ NeoBundleLazy 'cohama/the-ocamlspot.vim',
 let g:opamshare = substitute(system('opam config var share'), '\n$', '', '''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
 
+" nim
+NeoBundleLazy 'zah/nim.vim',
+            \ {'autoload': {'filetypes': 'nim' }}
+
 "" color
 NeoBundle 'w0ng/vim-hybrid'
 "NeoBundle 'altercation/vim-colors-solarized'
@@ -418,6 +422,13 @@ augroup cpp-path
 augroup END
 set cinoptions+=:0,g0
 
+" nim
+augroup nim
+    autocmd!
+    autocmd BufNewFile,BufRead *.nim set filetype=nim
+    autocmd BufNewFile,BufRead *.nim setlocal shiftwidth=2 tabstop=2 softtabstop=2
+    autocmd FileType nim setlocal shiftwidth=2 tabstop=2 softtabstop=2
+augroup END
 
 " markdown
 augroup PrevimSettings
@@ -462,8 +473,8 @@ set cursorline
 set cursorcolumn
 set colorcolumn=80
 set ruler
-set tabstop=4
-set softtabstop=4
+set tabstop=2
+set softtabstop=2
 set expandtab
 set smarttab
 set laststatus=2
@@ -502,7 +513,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 set backspace=indent,eol,start
 set autoindent
-set shiftwidth=4
+set shiftwidth=2
 set showmatch
 set whichwrap=b,s,h,l,<,>,[,]
 set smarttab
