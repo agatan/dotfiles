@@ -94,6 +94,13 @@ let g:rooter_use_lcd = 1
 NeoBundle 'Lokaltog/vim-easymotion'
 nmap mm <Plug>(easymotion-s2)
 
+" git
+NeoBundle 'airblade/vim-gitgutter'
+NeoBundleLazy 'lambdalisue/vim-gita', {
+            \ 'autoload': {
+            \   'commands': ['Gita'],
+            \ }}
+
 " +luaならばneocomplete
 if has('lua')
     NeoBundle 'Shougo/neocomplete.vim'
@@ -149,11 +156,13 @@ NeoBundleLazy 'Rykka/riv.vim',
 
 
 " haskell
-NeoBundleLazy 'dag/vim2hs',
-            \ {'autoload': {"filetypes": ['haskell']}}
+" NeoBundleLazy 'dag/vim2hs',
+"             \ {'autoload': {"filetypes": ['haskell']}}
 NeoBundleLazy 'eagletmt/ghcmod-vim',
             \ {'autoload': {'filetypes': ['haskell']}}
 NeoBundleLazy 'ujihisa/unite-haskellimport',
+            \ {'autoload': {'filetypes': ['haskell']}}
+NeoBundleLazy 'itchyny/vim-haskell-indent',
             \ {'autoload': {'filetypes': ['haskell']}}
 
 " markdown
@@ -178,6 +187,9 @@ execute "set rtp+=" . g:opamshare . "/merlin/vim"
 " nim
 NeoBundleLazy 'zah/nim.vim',
             \ {'autoload': {'filetypes': 'nim' }}
+
+" Crystal
+NeoBundle 'rhysd/vim-crystal'
 
 "" color
 NeoBundle 'w0ng/vim-hybrid'
