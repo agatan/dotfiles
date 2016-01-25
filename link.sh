@@ -9,3 +9,6 @@ do
     fi
     ln -s ${HOME}/dotfiles/${dot} ${HOME}/${dot}
 done
+
+mkdir -p ~/.config/nvim
+ln -s ${HOME}/dotfiles/init.vim ${HOME}/.config/nvim/init.vim
