@@ -1,5 +1,10 @@
+# 少し凝った zshrc
+# License : MIT
+# http://mollifier.mit-license.org/
+ 
+########################################
 # 環境変数
-export LANG=ja_JP.UTF-8
+export LANG=en_US.UTF-8
  
  
 # 色を使用出来るようにする
@@ -82,6 +87,9 @@ setopt no_flow_control
 # '#' 以降をコメントとして扱う
 setopt interactive_comments
  
+# ディレクトリ名だけでcdする
+setopt auto_cd
+ 
 # cd したら自動的にpushdする
 setopt auto_pushd
 # 重複したディレクトリを追加しない
@@ -110,6 +118,9 @@ bindkey '^R' history-incremental-pattern-search-backward
  
 ########################################
 # エイリアス
+ 
+alias la='ls -a'
+alias ll='ls -l'
  
 alias cp='cp -i'
 alias mv='mv -i'
@@ -152,24 +163,18 @@ case ${OSTYPE} in
         ;;
 esac
  
+# vim:set ft=zsh:
+#
+#
+#
+#
+#
 #################### 
 # My Settings
 #
 export PATH=/usr/local/bin:$PATH
 export PATH=/usr/local/sbin:$PATH
 export PATH=~/.bin:$PATH
-
-# For Haskell (Cabal)
-export PATH=/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:$PATH
-CABAL_HOME=$HOME/.cabal/
-export CABAL_HOME
-PATH=${CABAL_HOME}bin:$PATH
-export PATH
-
-
-# java
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home
-export PATH=$JAVA_HOME/bin:$PATH
 
 # For @Ocaml
 
@@ -182,10 +187,6 @@ export OCAMLPARAM="_,bin-annot=1"
 export OPAMKEEPBUILDDIR=1
 
 
-# Atom
-export ATOM_PATH=/opt/homebrew-cask/Caskroom/atom/latest
-
-
 # Golang
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
@@ -194,13 +195,22 @@ export PATH=$PATH:$GOPATH/bin
 export RUST_SRC_PATH=~/rust/rust/src
 
 # for haskell
-# Add GHC 7.10.1 to the PATH, via https://ghcformacosx.github.io/
-export GHC_DOT_APP="/Applications/ghc-7.10.1.app"
-if [ -d "$GHC_DOT_APP" ]; then
-  export PATH="${HOME}/.cabal/bin:${GHC_DOT_APP}/Contents/bin:${PATH}"
-fi
+GHC_PATH="$HOME/.stack/programs/x86_64-linux/ghc-7.8.4/bin"
+LOCAL_PATH="$HOME/.local/bin"
+
+export PATH=$GHC_PATH:$PATH:$LOCAL_PATH
 
 export PATH=$PATH:/usr/local/llvm/bin
 
 # latex
 PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin/
+
+# nim
+export PATH="$HOME/.nimble/bin":$PATH
+
+# anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+
+# idris
+export PATH="$HOME/idris/:$PATH"

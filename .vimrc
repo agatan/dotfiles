@@ -178,18 +178,31 @@ NeoBundle 'rbtnn/vimconsole.vim'
 NeoBundle 'thinca/vim-prettyprint'
 
 " OCaml
-NeoBundleLazy 'cohama/the-ocamlspot.vim',
-            \ {'autoload': {'filetypes': 'ocaml' }}
+" NeoBundleLazy 'cohama/the-ocamlspot.vim',
+"             \ {'autoload': {'filetypes': 'ocaml' }}
 " merlin
 let g:opamshare = substitute(system('opam config var share'), '\n$', '', '''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
+augroup merlin
+  autocmd!
+  autocmd FileType ocaml nnoremap <Space>t :<C-u>MerlinTypeOf<CR>
+augroup END
 
 " nim
 NeoBundleLazy 'zah/nim.vim',
-            \ {'autoload': {'filetypes': 'nim' }}
+            \ {'autoload': {'filetypes': ['nim'] }}
 
 " Crystal
 NeoBundle 'rhysd/vim-crystal'
+
+" ATS2
+NeoBundleLazy 'vim-scripts/ats-lang-vim',
+      \ {'autoload': {'filetypes': ['ats']}}
+
+" Idris
+NeoBundleLazy 'idris-hackers/idris-vim',
+      \ {'autoload': {'filetypes': ['idris']}}
+
 
 "" color
 NeoBundle 'w0ng/vim-hybrid'
@@ -214,6 +227,13 @@ call neobundle#end()
 NeoBundleCheck
 
 filetype plugin indent on
+
+" ATS2
+augroup MYVIMRC
+  autocmd!
+  autocmd BufNewFile,BufRead *.dats setf ats
+  autocmd BufNewFile,BufRead *.sats setf ats
+augroup END
 
 """ 各プラグインの設定
 
