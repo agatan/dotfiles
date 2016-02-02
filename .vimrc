@@ -55,6 +55,9 @@ call plug#begin('~/.vim/plugged')
   Plug 'Shougo/neosnippet'
   Plug 'Shougo/neosnippet-snippets'
 
+  "" syntax checker
+  Plug 'scrooloose/syntastic'
+
 
   "" language support
   
@@ -82,7 +85,7 @@ call plug#end()
 let g:ctrlp_extensions = ['cmdline', 'menu']
 
 " easy-motion
-nnoremap mm <Plug>(easymotion-s2)
+nmap mm <Plug>(easymotion-s2)
 
 " vim-rooter
 let g:rooter_use_lcd = 1
@@ -149,6 +152,11 @@ augroup END
 
 "" golang
 let g:go_fmt_command = "goimports"
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:syntastic_go_checkers = ['go', 'govet', 'golint']
+let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
