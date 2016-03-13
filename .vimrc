@@ -35,11 +35,15 @@ call plug#begin('~/.vim/plugged')
   Plug 'cocopon/iceberg.vim'
 
   "" navigation
-  Plug 'ctrlpvim/ctrlp.vim' " integration navigation selection method
-  Plug 'sgur/ctrlp-extensions.vim' " extensions for ctrlp plugin
   Plug 'airblade/vim-rooter' " change directory to project root
   Plug 'Lokaltog/vim-easymotion' " easy cursor moving
   Plug 'lambdalisue/vim-gita', { 'on' : ['Gita'] } " git integration
+
+  Plug 'Shougo/unite.vim' " integrated user interface
+  Plug 'Shougo/neomru.vim' " Most Recently Used files
+  Plug 'Shougo/unite-outline' " outliner
+  Plug 'tsukkee/unite-tag' " tag file search
+  Plug 'ujihisa/unite-colorscheme' " colorscheme previewer
 
   "" ui
   Plug 'airblade/vim-gitgutter' " show git diff
@@ -50,11 +54,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'junegunn/vim-easy-align', { 'on' : ['EasyAlign'] } " alignment code
   Plug 'tpope/vim-surround' " surrounding code blocks
 
-  "" auto complete
-  Plug 'Shougo/neocomplete'
-  Plug 'Shougo/neosnippet'
-  Plug 'Shougo/neosnippet-snippets'
-
   "" syntax checker
   Plug 'scrooloose/syntastic'
 
@@ -64,7 +63,6 @@ call plug#begin('~/.vim/plugged')
   " c/c++
   Plug 'osyo-manga/vim-stargate', { 'for' : ['c', 'cpp'] } " smart #include
   Plug 'justmao945/vim-clang', { 'for' : ['c', 'cpp'] } " clang integration
-  Plug 'agatan/vim-sort-include', { 'for' : ['c', 'cpp'] } " sort #include statements
 
   " dlang
   Plug 'idanarye/vim-dutyl', { 'for' : ['d'] }
@@ -81,8 +79,23 @@ call plug#end()
 " plugin settings (exclude language plugins)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" ctrlp
-let g:ctrlp_extensions = ['cmdline', 'menu']
+" unite
+let g:unite_enable_start_insert = 1
+let g:unite_enable_smart_case = 1
+if (executable('ag'))
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+endif
+
+" unite keymaps
+nnoremap [unite] <Nop>
+nmap <Space>u [unite]
+
+nnoremap <silent> [unite]f :<C-u>Unite -start-insert file_rec file_mru file/new<CR>
+nnoremap <silent> [unite]d :<C-u>Unite -start-insert directory_rec directory_mru directory/new<CR>
+nnoremap <silent> [unite]b :<C-u>Unite -start-insert buffer<CR>
+nnoremap <silent> / :<C-u>Unite -buffer-name=search line -start-insert<CR>
+nnoremap <silent> [unite]r :<C-u>UniteResume<CR>
 
 " easy-motion
 nmap mm <Plug>(easymotion-s2)
@@ -91,29 +104,10 @@ nmap mm <Plug>(easymotion-s2)
 let g:rooter_use_lcd = 1
 
 " caw.vim
-nnoremap <Space>c <Plug>(caw:I:toggle)
-vnoremap <Space>c <Plug>(caw:I:toggle)
-nnoremap <Space>C <Plug>(caw:I:uncomment)
-vnoremap <Space>C <Plug>(caw:I:uncomment)
-
-" neocomplete
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return (pumvisible() ? "\<C-y>" : "") . "\<CR>"
-endfunction
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-if !exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
-
-" neosnippet
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_or_jump)
+nmap <Space>c <Plug>(caw:I:toggle)
+vmap <Space>c <Plug>(caw:I:toggle)
+nmap <Space>C <Plug>(caw:I:uncomment)
+vmap <Space>C <Plug>(caw:I:uncomment)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " language support
@@ -137,12 +131,9 @@ let g:clang_auto = 0
 let g:clang_cpp_options = '-std=c++1z'
 let g:clang_format_auto = 1
 let g:clang_format_style = 'LLVM'
-let g:clang_check_syntax_auto = 1
-" sort-include settings
-augroup sort-include
-  autocmd!
-  autocmd BufWritePre *.{c,cpp,h,hpp} SortInclude
-augroup END
+let g:syntastic_cpp_checkers = []
+
+" let g:clang_check_syntax_auto = 1
 
 "" dlang
 augroup dlang
@@ -156,7 +147,38 @@ let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 let g:syntastic_go_checkers = ['go', 'govet', 'golint']
-let g:neocomplete#sources#omni#input_patterns.go = '\h\w\.\w*'
+
+"" OCaml
+let s:opamshare = substitute(system('opam config var share'), '\n$', '', '''')
+if isdirectory(s:opamshare)
+  execute 'set rtp+=' . s:opamshare . '/merlin/vim'
+  let g:syntastic_ocaml_checkers = ['merlin']
+  execute 'set rtp+=' . s:opamshare . '/ocp-indent/vim'
+  execute 'helptags ' . s:opamshare . '/merlin/vim/doc'
+endif
+
+function! s:ocaml_format()
+  let now_line = line('.')
+  execute ':%! ocp-indent'
+  execute ':' . now_line
+endfunction
+
+function! s:ocaml_setup()
+  nnoremap <Space>t :<C-u>MerlinTypeOf<CR>
+  vnoremap <Space>t :<C-u>MerlinTypeOfSel<CR>
+  nnoremap <Space>n :<C-u>MerlinGrowEnclosing<CR>
+  nnoremap <Space>p :<C-u>MerlinShrinkEnclosing<CR>
+  nnoremap <Space>r <Plug>(MerlinRename)
+  nnoremap <Space>d :<C-u>MerlinDestruct<CR>
+  nnoremap <Space>o :<C-u>MerlinOutline<CR>
+  nnoremap <Space>gd :<C-u>MerlinLocate<CR>
+endfunction
+
+augroup ocaml
+  autocmd!
+  autocmd BufWritePre *.ml call s:ocaml_format()
+  autocmd FileType ocaml call s:ocaml_setup()
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -196,6 +218,7 @@ set softtabstop=2
 set expandtab
 set smarttab
 set laststatus=2
+set foldmethod=marker
 set foldlevel=100
 set list
 set listchars=tab:>_,trail:-,eol:$
