@@ -12,141 +12,38 @@ augroup END
 
 "" Plugins
 
+let s:dein_dir = expand('~/.cache/dein')
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+let s:dein_toml = expand('~/.vim/dein.toml')
+let s:dein_lazy_toml = expand('~/.vim/dein_lazy.toml')
+
 if has('vim_starting')
-  set rtp+=~/.vim/plugged/vim-plug
-  if !isdirectory(expand('~/.vim/plugged/vim-plug'))
+  execute 'set runtimepath+=' . s:dein_repo_dir
+  if !isdirectory(s:dein_repo_dir)
     echo 'install vim-plug...'
-    call system('mkdir -p ~/.vim/plugged/vim-plug')
-    call system('git clone https://github.com/junegunn/vim-plug.git ~/.vim/plugged/vim-plug/autoload')
+    call mkdir(s:dein_repo_dir, 'p')
+    call system('git clone https://github.com/Shougo/dein.vim ' . s:dein_repo_dir)
   end
 endif
 
-call plug#begin('~/.vim/plugged')
-  Plug 'junegunn/vim-plug',
-        \ {'dir': '~/.vim/plugged/vim-plug/autoload'}
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir, [expand('<sfile>'), s:dein_toml, s:dein_lazy_toml]) "{{{
 
-  "" async
-  Plug 'Shougo/vimproc.vim', { 'do' : 'make' }
+  call dein#load_toml(s:dein_toml, {'lazy': 0})
+  call dein#load_toml(s:dein_lazy_toml, {'lazy': 1})
 
-  "" work tracker
-  Plug 'wakatime/vim-wakatime'
-
-  "" Colorschemes
-  Plug 'cocopon/iceberg.vim'
-
-  "" navigation
-  Plug 'airblade/vim-rooter' " change directory to project root
-  Plug 'Lokaltog/vim-easymotion' " easy cursor moving
-  Plug 'lambdalisue/vim-gita', { 'on' : ['Gita'] } " git integration
-
-  Plug 'Shougo/unite.vim' " integrated user interface
-  Plug 'Shougo/neomru.vim' " Most Recently Used files
-  Plug 'Shougo/unite-outline' " outliner
-  Plug 'tsukkee/unite-tag' " tag file search
-  Plug 'ujihisa/unite-colorscheme' " colorscheme previewer
-
-  "" ui
-  Plug 'airblade/vim-gitgutter' " show git diff
-  Plug 'itchyny/lightline.vim' " cool status line
-
-  "" coding support
-  Plug 'tyru/caw.vim' " comment lines
-  Plug 'junegunn/vim-easy-align', { 'on' : ['EasyAlign'] } " alignment code
-  Plug 'tpope/vim-surround' " surrounding code blocks
-
-  "" syntax checker
-  Plug 'scrooloose/syntastic'
-
-
-  "" language support
-  
-  " c/c++
-  Plug 'osyo-manga/vim-stargate', { 'for' : ['c', 'cpp'] } " smart #include
-  Plug 'justmao945/vim-clang', { 'for' : ['c', 'cpp'] } " clang integration
-
-  " dlang
-  Plug 'idanarye/vim-dutyl', { 'for' : ['d'] }
-
-  " golang
-  Plug 'fatih/vim-go', { 'for' : ['go'] } " all of go support
-
-  " vim script
-  Plug 'rbtnn/vimconsole.vim', { 'on' : ['VimConsoleOpen'] } " REPL for vimscript
-  Plug 'thinca/vim-prettyprint', { 'on' : ['PrettyPrint'] } " prrety print for vimscript object
-call plug#end()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" plugin settings (exclude language plugins)
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" unite
-let g:unite_enable_start_insert = 1
-let g:unite_enable_smart_case = 1
-if (executable('ag'))
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+  call dein#end() "}}}
+  call dein#save_state()
 endif
 
-" unite keymaps
-nnoremap [unite] <Nop>
-nmap <Space>u [unite]
-
-nnoremap <silent> [unite]f :<C-u>Unite -start-insert file_rec file_mru file/new<CR>
-nnoremap <silent> [unite]d :<C-u>Unite -start-insert directory_rec directory_mru directory/new<CR>
-nnoremap <silent> [unite]b :<C-u>Unite -start-insert buffer<CR>
-nnoremap <silent> / :<C-u>Unite -buffer-name=search line -start-insert<CR>
-nnoremap <silent> [unite]r :<C-u>UniteResume<CR>
-
-" easy-motion
-nmap mm <Plug>(easymotion-s2)
-
-" vim-rooter
-let g:rooter_use_lcd = 1
-
-" caw.vim
-nmap <Space>c <Plug>(caw:I:toggle)
-vmap <Space>c <Plug>(caw:I:toggle)
-nmap <Space>C <Plug>(caw:I:uncomment)
-vmap <Space>C <Plug>(caw:I:uncomment)
+if has('vim_starting') && dein#check_install()
+    call dein#install()
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " language support
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"" c/c++
-" include path
-augroup cpp-path
-  autocmd!
-  autocmd FileType cpp execute 'setlocal path=.,/usr/include,/usr/local/include' .
-        \ join(filter(split(glob('/usr/include/**/c++/*'), '\n'),
-        \            'isdirectory(v:val)'),
-        \      ',')
-augroup END
-" indent option
-set cinoptions+=:0,g0
-" vim-clang settings
-let g:clang_compilation_database = './build'
-let g:clang_cpp_complete_opt = 'menuone,preview,noinsert'
-let g:clang_auto = 0
-let g:clang_cpp_options = '-std=c++1z'
-let g:clang_format_auto = 1
-let g:clang_format_style = 'LLVM'
-let g:syntastic_cpp_checkers = []
-
-" let g:clang_check_syntax_auto = 1
-
-"" dlang
-augroup dlang
-  autocmd!
-  autocmd FileType d setlocal ts=4 sw=4 softtabstop=0
-augroup END
-
-"" golang
-let g:go_fmt_command = "goimports"
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:syntastic_go_checkers = ['go', 'govet', 'golint']
 
 "" OCaml
 let s:opamshare = substitute(system('opam config var share'), '\n$', '', '''')
@@ -256,10 +153,8 @@ set smarttab
 
 
 " 英字配列だとコロンがつらい
-nnoremap ; :
-nnoremap : ;
-vnoremap ; :
-vnoremap : ;
-
-
+" nnoremap ; :
+" nnoremap : ;
+" vnoremap ; :
+" vnoremap : ;
 

@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/home/agatan/workspace/cpp/x3tut/calc1/.git'
+let g:netrw_dirhist_2='/usr/include/boost/spirit/home/x3'
+let g:netrw_dirhist_3='/usr/include/boost/spirit/home/x3/numeric'
+let g:netrw_dirhist_4='/home/agatan/workspace/cpp/x3tut/calc1'
+let g:netrw_dirhist_5='/home/agatan/workspace/cpp/x3tut/calc1/include'
+let g:netrw_dirhist_6='/home/agatan/workspace/cpp/tf/src'

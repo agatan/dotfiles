@@ -1,0 +1,134 @@
+# Auto Complete
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+depends = 'context_filetype.vim'
+if = "has('lua')"
+on_i = 1
+hook_source = '''
+  let g:neocomplete#enable_at_startup = 1
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+depends = ['neosnippet-snippets', 'context_filetype.vim']
+on_i = 1
+on_ft = 'snippet'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+# Unite
+[[plugins]]
+repo = 'Shougo/unite.vim'
+depends = 'neomru.vim'
+on_cmd = ['Unite', 'UniteResume']
+hook_add = '''
+  nnoremap [unite] <Nop>
+  nmap <Space>u [unite]
+
+  nnoremap <silent> [unite]f :<C-u>Unite -start-insert file_rec file_mru file/new<CR>
+  nnoremap <silent> [unite]d :<C-u>Unite -start-insert directory_rec directory_mru directory/new<CR>
+  nnoremap <silent> [unite]b :<C-u>Unite -start-insert buffer<CR>
+  nnoremap <silent> / :<C-u>Unite -buffer-name=search line -start-insert<CR>
+  nnoremap <silent> [unite]r :<C-u>UniteResume<CR>
+'''
+hook_source = '''
+  let g:unite_enable_start_insert = 1
+  let g:unite_enable_smart_case = 1
+  if (executable('ag'))
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts = '--nocolor --nogroup'
+  endif
+'''
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_path = '.*'
+
+[[plugins]]
+repo = 'Shougo/unite-outline'
+on_source = 'unite.vim'
+
+[[plugins]]
+repo = 'tsukkee/unite-tag'
+on_source = 'unite.vim'
+
+[[plugins]]
+repo = 'ujihisa/unite-colorscheme'
+on_source = 'unite.vim'
+
+[[plugins]]
+repo = 'Shougo/echodoc.vim'
+on_i = 1
+hook_add = 'let g:echodoc_enable_at_startup = 1'
+
+# User Interface
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+on_path = '.*'
+
+[[plugins]]
+repo = 'airblade/vim-rooter'
+on_path = '.*'
+hook_add = 'let g:rooter_use_lcd = 1'
+
+# Git Integration
+[[plugins]]
+repo = 'lambdalisue/vim-gita'
+hook_add = '''
+  nnoremap <silent> [Space]gs :<C-u>Gita status<CR>
+'''
+
+# Coding Support
+[[plugins]]
+repo = 'tyru/caw.vim'
+on_map = '<Plug>'
+hook_add = '''
+  nmap <Space>c <Plug>(caw:tildepos:toggle)
+  vmap <Space>c <Plug>(caw:tildepos:toggle)
+'''
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+on_cmd = 'EasyAlign'
+
+# Language Support
+# golang
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = 'go'
+hook_source = '''
+  let g:go_fmt_command = 'goimports'
+  let g:go_highlight_functions = 1
+  let g:go_highlight_methods = 1
+  let g:go_highlight_structs = 1
+  let g:syntastic_go_checkers = ['go', 'govet', 'golint']
+'''
+
+# C/C++
+[[plugins]]
+repo = 'justmao945/vim-clang'
+on_ft = ['c', 'cpp']
+hook_source = '''
+  let g:clang_compilation_database = './build'
+  let g:clang_cpp_complete_opt = 'menuone,preview,noinsert'
+  let g:clang_auto = 0
+  let g:clang_cpp_options = '-std=c++1z'
+  let g:clang_format_auto = 1
+  let g:clang_format_style = 'LLVM'
+  let g:syntastic_cpp_checkers = []
+'''
+
+# dlang
+[[plugins]]
+repo = 'idanarye/vim-dutyl'
+on_ft = 'd'
+
+# Vim script
+[[plugins]]
+repo = 'rbtnn/vimconsole.vim'
+on_cmd = 'VimConsoleOpen'
+
+[[plugins]]
+repo = 'thinca/vim-prettyprint'
+on_cmd = 'PrettyPrint'
