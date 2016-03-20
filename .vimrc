@@ -1,6 +1,9 @@
 set encoding=utf-8
 scriptencoding utf8
 
+" tiny とsmall では読み込まない
+if !1 | finish | endif
+
 nnoremap <Space>. :edit $MYVIMRC<CR>
 
 " :ReloadVimrc load $MYVIMRC
@@ -9,6 +12,7 @@ command! ReloadVimrc source $MYVIMRC
 augroup vimrc
   autocmd!
 augroup END
+
 
 "" Plugins
 
@@ -41,9 +45,7 @@ if has('vim_starting') && dein#check_install()
     call dein#install()
 endif
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" language support
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" language support {{{
 
 "" OCaml
 let s:opamshare = substitute(system('opam config var share'), '\n$', '', '''')
@@ -76,16 +78,13 @@ augroup ocaml
   autocmd BufWritePre *.ml call s:ocaml_format()
   autocmd FileType ocaml call s:ocaml_setup()
 augroup END
+" }}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" foundamental settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+" 基本設定 {{{
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 全般
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:mapleader = ','
 set noswapfile
 set nobackup
 set clipboard=unnamed,unnamedplus
@@ -151,10 +150,9 @@ set showmatch
 set whichwrap=b,s,h,l,<,>,[,]
 set smarttab
 
+nnoremap ; :
+vnoremap ; :
+nnoremap : ;
+vnoremap : ;
 
-" 英字配列だとコロンがつらい
-" nnoremap ; :
-" nnoremap : ;
-" vnoremap ; :
-" vnoremap : ;
-
+" }}}
