@@ -19,8 +19,8 @@ augroup END
 let s:dein_dir = expand('~/.cache/dein')
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-let s:dein_toml = expand('~/.vim/dein.toml')
-let s:dein_lazy_toml = expand('~/.vim/dein_lazy.toml')
+let s:dein_toml = expand('~/.vim/rc/dein.toml')
+let s:dein_lazy_toml = expand('~/.vim/rc/dein_lazy.toml')
 
 if has('vim_starting')
   execute 'set runtimepath+=' . s:dein_repo_dir

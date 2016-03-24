@@ -6,6 +6,7 @@ if = "has('lua')"
 on_i = 1
 hook_source = '''
   let g:neocomplete#enable_at_startup = 1
+  source ~/.vim/rc/plugins/neocomplete.rc.vim
 '''
 
 [[plugins]]
@@ -13,9 +14,14 @@ repo = 'Shougo/neosnippet.vim'
 depends = ['neosnippet-snippets', 'context_filetype.vim']
 on_i = 1
 on_ft = 'snippet'
-
-[[plugins]]
-repo = 'Shougo/context_filetype.vim'
+hook_add = '''
+  let g:neosnippet#snippets_directory = '~/.vim/snippets/'
+'''
+hook_source = '''
+  imap <C-k> <Plug>(neosnippet_expand_or_jump)
+  smap <C-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k> <Plug>(neosnippet_expand_target)
+'''
 
 # Unite
 [[plugins]]
@@ -45,23 +51,6 @@ hook_source = '''
 repo = 'Shougo/neomru.vim'
 on_path = '.*'
 
-[[plugins]]
-repo = 'Shougo/unite-outline'
-on_source = 'unite.vim'
-
-[[plugins]]
-repo = 'tsukkee/unite-tag'
-on_source = 'unite.vim'
-
-[[plugins]]
-repo = 'ujihisa/unite-colorscheme'
-on_source = 'unite.vim'
-
-[[plugins]]
-repo = 'Shougo/echodoc.vim'
-on_i = 1
-hook_add = 'let g:echodoc_enable_at_startup = 1'
-
 # User Interface
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
@@ -86,6 +75,17 @@ on_map = '<Plug>'
 hook_add = '''
   nmap <Space>c <Plug>(caw:tildepos:toggle)
   vmap <Space>c <Plug>(caw:tildepos:toggle)
+'''
+
+[[plugins]]
+repo = 'rhysd/devdocs.vim'
+on_cmd = ['DevDocs', 'DevDocsAll']
+on_map = '<Plug>'
+hook_add = '''
+  augroup devdocs
+    autocmd!
+    autocmd FileType c,cpp,php,ruby nmap <buffer>K <Plug>(devdocs-under-cursor)
+  augroup END
 '''
 
 [[plugins]]
