@@ -111,7 +111,8 @@ repo = 'justmao945/vim-clang'
 on_ft = ['c', 'cpp']
 hook_source = '''
   let g:clang_compilation_database = './build'
-  let g:clang_cpp_complete_opt = 'menuone,preview,noinsert'
+  let g:clang_cpp_complete_opt = 'menuone'
+  let g:clang_c_complete_opt = 'menuone'
   let g:clang_auto = 0
   let g:clang_cpp_options = '-std=c++1z'
   let g:clang_format_auto = 1
