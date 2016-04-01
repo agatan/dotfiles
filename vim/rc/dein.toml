@@ -15,6 +15,7 @@ repo = 'Shougo/neosnippet-snippets'
 repo = 'cespare/vim-toml'
 on_ft = 'toml'
 
+# Visual {{{
 [[plugins]]
 repo = 'cocopon/iceberg.vim'
 
@@ -22,7 +23,11 @@ repo = 'cocopon/iceberg.vim'
 repo = 'rhysd/wallaby.vim'
 
 [[plugins]]
+repo = 'w0ng/vim-hybrid'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
+# }}}
 
 [[plugins]]
 repo = 'wakatime/vim-wakatime'
@@ -30,6 +35,7 @@ repo = 'wakatime/vim-wakatime'
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
+# Unite {{{
 [[plugins]]
 repo = 'Shougo/unite-outline'
 on_source = 'unite.vim'
@@ -45,8 +51,23 @@ on_source = 'unite.vim'
 [[plugins]]
 repo = 'thinca/vim-unite-history'
 on_source = 'unite.vim'
+# }}}
 
 # Syntacs Checker
 [[plugins]]
 repo = 'scrooloose/syntastic'
 
+[[plugins]]
+repo = 'itchyny/vim-cursorword'
+
+[[plugins]]
+repo = 'osyo-manga/vim-anzu'
+hook_add = '''
+  nmap n <Plug>(anzu-n-with-echo)
+  nmap N <Plug>(anzu-N-with-echo)
+  nmap * <Plug>(anzu-star-with-echo)
+  nmap # <Plug>(anzu-shart-with-echo)
+'''
+
+[[plugins]]
+repo = 'kana/vim-operator-user'

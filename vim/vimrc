@@ -9,7 +9,7 @@ nnoremap <Space>. :edit $MYVIMRC<CR>
 " :ReloadVimrc load $MYVIMRC
 command! ReloadVimrc source $MYVIMRC
 
-augroup vimrc
+augroup myvimrc
   autocmd!
 augroup END
 
@@ -55,36 +55,40 @@ filetype plugin indent on
 " language support {{{
 
 "" OCaml
-let s:opamshare = substitute(system('opam config var share'), '\n$', '', '''')
-if isdirectory(s:opamshare)
-  execute 'set rtp+=' . s:opamshare . '/merlin/vim'
-  let g:syntastic_ocaml_checkers = ['merlin']
-  execute 'set rtp+=' . s:opamshare . '/ocp-indent/vim'
-  execute 'helptags ' . s:opamshare . '/merlin/vim/doc'
+if executable('opam')
+  let s:opamshare = substitute(system('opam config var share'), '\n$', '', '''')
+  if isdirectory(s:opamshare)
+    execute 'set rtp+=' . s:opamshare . '/merlin/vim'
+    let g:syntastic_ocaml_checkers = ['merlin']
+    execute 'set rtp+=' . s:opamshare . '/ocp-indent/vim'
+    execute 'helptags ' . s:opamshare . '/merlin/vim/doc'
+  endif
+
+  function! s:ocaml_format()
+    let now_line = line('.')
+    execute ':%! ocp-indent'
+    execute ':' . now_line
+  endfunction
+
+  function! s:ocaml_setup()
+    nnoremap <Space>t :<C-u>MerlinTypeOf<CR>
+    vnoremap <Space>t :<C-u>MerlinTypeOfSel<CR>
+    nnoremap <Space>n :<C-u>MerlinGrowEnclosing<CR>
+    nnoremap <Space>p :<C-u>MerlinShrinkEnclosing<CR>
+    nnoremap <Space>r <Plug>(MerlinRename)
+    nnoremap <Space>d :<C-u>MerlinDestruct<CR>
+    nnoremap <Space>o :<C-u>MerlinOutline<CR>
+    nnoremap <Space>gd :<C-u>MerlinLocate<CR>
+  endfunction
+
+  if executable('ocp-indent')
+    augroup ocaml
+      autocmd!
+      autocmd BufWritePre *.ml call s:ocaml_format()
+      autocmd FileType ocaml call s:ocaml_setup()
+    augroup END
+  endif
 endif
-
-function! s:ocaml_format()
-  let now_line = line('.')
-  execute ':%! ocp-indent'
-  execute ':' . now_line
-endfunction
-
-function! s:ocaml_setup()
-  nnoremap <Space>t :<C-u>MerlinTypeOf<CR>
-  vnoremap <Space>t :<C-u>MerlinTypeOfSel<CR>
-  nnoremap <Space>n :<C-u>MerlinGrowEnclosing<CR>
-  nnoremap <Space>p :<C-u>MerlinShrinkEnclosing<CR>
-  nnoremap <Space>r <Plug>(MerlinRename)
-  nnoremap <Space>d :<C-u>MerlinDestruct<CR>
-  nnoremap <Space>o :<C-u>MerlinOutline<CR>
-  nnoremap <Space>gd :<C-u>MerlinLocate<CR>
-endfunction
-
-augroup ocaml
-  autocmd!
-  autocmd BufWritePre *.ml call s:ocaml_format()
-  autocmd FileType ocaml call s:ocaml_setup()
-augroup END
 " }}}
 
 " 基本設定 {{{
@@ -92,7 +96,6 @@ augroup END
 " 全般
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:mapleader = ','
-set noswapfile
 set nobackup
 set clipboard=unnamed,unnamedplus
 set t_vb=
@@ -105,13 +108,13 @@ set noerrorbells
 if !has('gui_running')
     set t_Co=256
 endif
-colorscheme iceberg
+colorscheme hybrid
 
 set hidden
 set number
 set scrolloff=5
 set wrap
-set showbreak=+
+set showbreak=+\
 set cursorline
 set cursorcolumn
 set colorcolumn=80
@@ -124,12 +127,12 @@ set laststatus=2
 set foldmethod=marker
 set foldlevel=100
 set list
-set listchars=tab:>_,trail:-,eol:$
+set listchars=tab:▸\\,trail:-,eol:¬
 " 補完ポップアップの高さ設定
 set pumheight=10
 syntax on
 
-augroup vimrc
+augroup myvimrc
     autocmd BufWritePost * mkview
     autocmd BufReadPost * loadview
 augroup END

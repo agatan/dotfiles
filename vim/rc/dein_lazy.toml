@@ -36,7 +36,7 @@ hook_add = '''
   nnoremap <silent> [unite]d :<C-u>Unite -start-insert directory_rec directory_mru directory/new<CR>
   nnoremap <silent> [unite]b :<C-u>Unite -start-insert buffer<CR>
   nnoremap <silent> [unite]g :<C-u>Unite -start-insert grep<CR>
-  nnoremap <silent> / :<C-u>Unite -buffer-name=search line -start-insert<CR>
+  nnoremap <silent> [unite]s :<C-u>Unite -buffer-name=search line -start-insert<CR>
   nnoremap <silent> [unite]r :<C-u>UniteResume<CR>
 '''
 hook_source = '''
@@ -110,21 +110,52 @@ hook_source = '''
 [[plugins]]
 repo = 'justmao945/vim-clang'
 on_ft = ['c', 'cpp']
-hook_source = '''
+hook_add = '''
   let g:clang_compilation_database = './build'
   let g:clang_cpp_complete_opt = 'menuone'
   let g:clang_c_complete_opt = 'menuone'
   let g:clang_auto = 0
   let g:clang_cpp_options = '-std=c++1z'
-  let g:clang_format_auto = 1
+  let g:clang_format_auto = 0
   let g:clang_format_style = 'Chromium'
   let g:syntastic_cpp_checkers = []
+'''
+
+[[plugins]]
+repo = 'agatan/vim-sort-include'
+on_ft = ['c', 'cpp']
+
+[[plugins]]
+repo = 'rhysd/vim-clang-format'
+on_ft = ['c', 'cpp']
+hook_add = '''
+  augroup clang-format
+    autocmd!
+    autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+    autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
+    autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
+  augroup END
 '''
 
 # dlang
 [[plugins]]
 repo = 'idanarye/vim-dutyl'
 on_ft = 'd'
+
+# Haskell
+[[plugins]]
+repo = 'eagletmt/ghcmod-vim'
+if = 'executable("ghc-mod")'
+on_ft = ['haskell']
+
+[[plugins]]
+repo = 'eagletmt/neco-ghc'
+if = ' executable("ghc-mod") '
+on_ft = ['haskell']
+
+[[plugins]]
+repo = 'itchyny/vim-haskell-indent'
+on_ft = ['haskell']
 
 # Vim script
 [[plugins]]
