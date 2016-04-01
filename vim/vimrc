@@ -127,7 +127,7 @@ set laststatus=2
 set foldmethod=marker
 set foldlevel=100
 set list
-set listchars=tab:▸_,trail:-,eol:¬
+set listchars=tab:▸\ ,trail:-,eol:¬
 " 補完ポップアップの高さ設定
 set pumheight=10
 syntax on
