@@ -73,7 +73,6 @@ inoremap <expr> <BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr> <C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>\<Down>"
 " <C-p>: keyword completion.
 inoremap <expr> <C-p>  pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
-inoremap <expr> '  pumvisible() ? "\<C-y>" : "'"
 
 inoremap <silent><expr> <C-x><C-f>
       \ neocomplete#start_manual_complete('file')
