@@ -111,7 +111,7 @@ endif
 colorscheme hybrid
 
 set hidden
-set number
+set nonumber
 set scrolloff=5
 set wrap
 set showbreak=+\

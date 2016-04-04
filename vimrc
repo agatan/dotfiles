@@ -206,7 +206,7 @@ endif
 colorscheme iceberg
 
 set hidden
-set number
+set nonumber
 set scrolloff=5
 set wrap
 set showbreak=+
@@ -228,9 +228,10 @@ set pumheight=10
 syntax on
 
 augroup vimrc
-    autocmd BufWritePost * mkview
-    autocmd BufReadPost * loadview
+  autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | mkview | endif
+  autocmd BufReadPost * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
 augroup END
+set viewoptions-=options
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " search
