@@ -147,6 +147,10 @@ on_ft = 'd'
 repo = 'eagletmt/ghcmod-vim'
 if = 'executable("ghc-mod")'
 on_ft = ['haskell']
+hook_source = '''
+  nnoremap <Leader>t :<C-u>GhcModType<CR>
+  nnoremap <Leader>T :<C-u>GhcModTypeClear<CR>
+'''
 
 [[plugins]]
 repo = 'eagletmt/neco-ghc'
@@ -156,6 +160,15 @@ on_ft = ['haskell']
 [[plugins]]
 repo = 'itchyny/vim-haskell-indent'
 on_ft = ['haskell']
+
+[[plugins]]
+repo = 'eagletmt/unite-haddock'
+on_ft = ['haskell']
+if = 'executable("hoogle")'
+depends = 'unite.vim'
+hook_source = '''
+  command! Hoogle Unite -auto-preview hoogle:exact
+'''
 
 # Vim script
 [[plugins]]
