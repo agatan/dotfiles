@@ -71,23 +71,27 @@ if executable('opam')
   endfunction
 
   function! s:ocaml_setup()
-    nnoremap <Space>t :<C-u>MerlinTypeOf<CR>
-    vnoremap <Space>t :<C-u>MerlinTypeOfSel<CR>
-    nnoremap <Space>n :<C-u>MerlinGrowEnclosing<CR>
-    nnoremap <Space>p :<C-u>MerlinShrinkEnclosing<CR>
-    nnoremap <Space>r <Plug>(MerlinRename)
-    nnoremap <Space>d :<C-u>MerlinDestruct<CR>
-    nnoremap <Space>o :<C-u>MerlinOutline<CR>
-    nnoremap <Space>gd :<C-u>MerlinLocate<CR>
+    nnoremap <Leader>t :<C-u>MerlinTypeOf<CR>
+    vnoremap <Leader>t :<C-u>MerlinTypeOfSel<CR>
+    nnoremap <Leader>n :<C-u>MerlinGrowEnclosing<CR>
+    nnoremap <Leader>p :<C-u>MerlinShrinkEnclosing<CR>
+    nnoremap <Leader>r <Plug>(MerlinRename)
+    nnoremap <Leader>d :<C-u>MerlinDestruct<CR>
+    nnoremap <Leader>o :<C-u>MerlinOutline<CR>
+    nnoremap <Leader>gd :<C-u>MerlinLocate<CR>
   endfunction
 
   if executable('ocp-indent')
-    augroup ocaml
+    augroup ocamlindent
       autocmd!
       autocmd BufWritePre *.ml call s:ocaml_format()
-      autocmd FileType ocaml call s:ocaml_setup()
     augroup END
   endif
+
+  augroup ocaml
+    autocmd!
+    autocmd FileType ocaml call s:ocaml_setup()
+  augroup END
 endif
 " }}}
 

@@ -74,8 +74,8 @@ hook_add = '''
 repo = 'tyru/caw.vim'
 on_map = '<Plug>'
 hook_add = '''
-  nmap <Space>c <Plug>(caw:tildepos:toggle)
-  vmap <Space>c <Plug>(caw:tildepos:toggle)
+  nmap <Space>c <Plug>(caw:hatpos:toggle)
+  vmap <Space>c <Plug>(caw:hatpos:toggle)
 '''
 
 [[plugins]]
