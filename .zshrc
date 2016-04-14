@@ -192,6 +192,7 @@ export PATH=$PATH:$GOPATH/bin
 
 # for rust
 export RUST_SRC_PATH=~/rust/rust/src
+export PATH=$PATH:$HOME/.cargo/bin
 
 # for haskell
 export PATH=$PATH:$HOME/.local/bin
