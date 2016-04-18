@@ -114,6 +114,7 @@ if !has('gui_running')
 endif
 colorscheme hybrid
 
+set cmdheight=2
 set hidden
 set nonumber
 set scrolloff=5

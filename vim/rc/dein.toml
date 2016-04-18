@@ -24,9 +24,6 @@ repo = 'rhysd/wallaby.vim'
 
 [[plugins]]
 repo = 'w0ng/vim-hybrid'
-
-[[plugins]]
-repo = 'itchyny/lightline.vim'
 # }}}
 
 [[plugins]]

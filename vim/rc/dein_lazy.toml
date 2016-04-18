@@ -23,6 +23,10 @@ hook_source = '''
   xmap <C-k> <Plug>(neosnippet_expand_target)
 '''
 
+[[plugins]]
+repo = 'Shougo/echodoc'
+on_i = 1
+
 # Unite
 [[plugins]]
 repo = 'Shougo/unite.vim'
@@ -169,6 +173,15 @@ depends = 'unite.vim'
 hook_source = '''
   command! Hoogle Unite -auto-preview hoogle:exact
 '''
+
+# Rust
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+on_ft = ['rust']
+
+[[plugins]]
+repo = 'racer-rust/vim-racer'
+on_ft = ['rust']
 
 # Vim script
 [[plugins]]
