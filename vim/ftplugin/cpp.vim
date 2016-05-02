@@ -3,7 +3,3 @@ execute 'setlocal path=.,/usr/include,/usr/local/include' .
       \             'isdirectory(v:val)'),
       \      ',')
 
-augroup mycpp
-  autocmd!
-  autocmd BufWritePre *.{c,cpp,h,hpp} SortInclude
-augroup END
