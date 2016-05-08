@@ -112,11 +112,12 @@ set noerrorbells
 if !has('gui_running')
     set t_Co=256
 endif
-colorscheme hybrid
+set background=dark
+colorscheme jellybeans
 
 set cmdheight=2
 set hidden
-set nonumber
+set number
 set scrolloff=5
 set wrap
 set showbreak=+\

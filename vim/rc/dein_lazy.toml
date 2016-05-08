@@ -187,3 +187,7 @@ on_cmd = 'VimConsoleOpen'
 [[plugins]]
 repo = 'thinca/vim-prettyprint'
 on_cmd = 'PrettyPrint'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+on_cmd = 'QuickRun'
