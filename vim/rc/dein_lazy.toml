@@ -155,8 +155,11 @@ if = ' executable("ghc-mod") '
 on_ft = ['haskell']
 
 [[plugins]]
-repo = 'itchyny/vim-haskell-indent'
+repo = 'dag/vim2hs'
 on_ft = ['haskell']
+hook_source = '''
+  let g:haskell_conceal = 0
+'''
 
 [[plugins]]
 repo = 'eagletmt/unite-haddock'
