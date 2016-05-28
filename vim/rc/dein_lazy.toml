@@ -191,3 +191,20 @@ on_cmd = 'PrettyPrint'
 [[plugins]]
 repo = 'thinca/vim-quickrun'
 on_cmd = 'QuickRun'
+
+# typescript
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = ['typescript']
+
+[[plugins]]
+repo = 'Quramy/tsuquyomi'
+on_ft = ['typescript']
+hook_post_update = '''
+  if dein#util@_is_mac()
+    let cmd = 'make -f make_mac.mak'
+  else
+    let cmd = 'make'
+  endif
+  let g:dein#plugin.build = cmd
+'''
