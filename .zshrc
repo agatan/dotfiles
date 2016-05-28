@@ -18,7 +18,7 @@ SAVEHIST=1000000
 # 1行表示
 # PROMPT="%~ %# "
 # 2行表示
-PROMPT="%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~
+PROMPT="%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~ %(1j,(%j),)
 %# "
  
  
@@ -201,3 +201,7 @@ export PATH=$PATH:/usr/local/llvm/bin
 
 # latex
 PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin/
+
+# anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "`anyenv init -`"

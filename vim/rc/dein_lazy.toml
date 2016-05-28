@@ -211,3 +211,8 @@ hook_post_update = '''
   endif
   let g:dein#plugin.build = cmd
 '''
+
+# crystal
+[[plugins]]
+repo = 'rhysd/vim-crystal'
+on_ft = ['crystal']
