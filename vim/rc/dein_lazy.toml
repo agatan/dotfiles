@@ -1,3 +1,15 @@
+# Life
+[[plugins]]
+repo = 'glidenote/memolist.vim'
+on_cmd = ['MemoList', 'MemoNew', 'MemoGrep']
+hook_add = '''
+  let g:memolist_path = $HOME . "/Dropbox/memo"
+
+  nnoremap <silent> ,mg :MemoGrep<CR>
+  nnoremap <silent> ,mc :MemoNew<CR>
+  nnoremap <silent> ,mf :exe "CtrlP" g:memolist_path<CR>
+'''
+
 # Auto Complete
 [[plugins]]
 repo = 'Shougo/neocomplete.vim'

@@ -65,6 +65,11 @@ repo = 'thinca/vim-unite-history'
 on_source = 'unite.vim'
 # }}}
 
+# ctrlp {{{
+[[plugins]]
+repo = 'ctrlpvim/ctrlp.vim'
+# }}}
+
 [[plugins]]
 repo = 'scrooloose/syntastic'
 
