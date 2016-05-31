@@ -228,3 +228,17 @@ hook_post_update = '''
 [[plugins]]
 repo = 'rhysd/vim-crystal'
 on_ft = ['crystal']
+
+# markdown
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = ['markdown']
+
+[[plugins]]
+repo = 'kannokanno/previm'
+on_ft = ['markdown']
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+on_ft = ['markdown']
+
