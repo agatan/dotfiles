@@ -87,3 +87,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
+
+[[plugin]]
+repo = 'editorconfig/editorconfig-vim'

@@ -205,3 +205,6 @@ PATH=$PATH:/usr/local/texlive/2015/bin/x86_64-darwin/
 # anyenv
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "`anyenv init -`"
+
+# roswell
+export PATH=$HOME/.roswell/bin:$PATH
