@@ -39,10 +39,16 @@ repo = 'w0ng/vim-hybrid'
 
 [[plugins]]
 repo = 'nanotech/jellybeans.vim'
-# }}}
 
 [[plugins]]
-repo = 'wakatime/vim-wakatime'
+repo = 'itchyny/lightline.vim'
+hook_add = '''
+  let g:lightline = {
+      \ 'active': {
+      \     'left': [ ['mode', 'paste'], ['readonly', 'filename', 'modified'] ]
+      \ }
+      \ }
+'''
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'

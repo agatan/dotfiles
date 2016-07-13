@@ -100,7 +100,8 @@ endif
 " 全般
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:mapleader = ','
-set nobackup
+let &backupdir = expand('~/.vim/_backup')
+set noswapfile
 set clipboard=unnamed,unnamedplus
 set t_vb=
 set visualbell
