@@ -13,9 +13,7 @@ SAVEHIST=1000000
 
 # プロンプト
 # 2行表示
-PROMPT="%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~ %(1j,(%j),)
-%# "
-PROMPT="[%n@%md]%(1j,%{${fg[cyan]}%}(%j)%{${reset_color}%},)
+PROMPT="%F{cyan}[%n@%md]%f%(1j,%{${fg[cyan]}%}(%j)%{${reset_color}%},)
 %{${fg[yellow]}%}%~%{${reset_color}%}
 %(?.%B%F{green}.%B%F{red})%(?!:) $ !:( $ )%f%b"
 
