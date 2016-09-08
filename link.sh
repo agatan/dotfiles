@@ -17,3 +17,5 @@ neovim_link()
 }
 
 neovim_link
+
+ln -s ${HOME}/dotfiles/peco ${HOME}/.config/peco
