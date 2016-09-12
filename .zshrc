@@ -198,7 +198,7 @@ source "$HOME/.zplug/init.zsh"
 
 zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-completions'
-zplug 'zsh-users/zsh-syntax-highlighting'
+zplug 'zsh-users/zsh-syntax-highlighting', nice:10 # 10 ~ 19
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 if ! zplug check --verbose; then
