@@ -187,7 +187,7 @@ hook_source = '''
 repo = 'rust-lang/rust.vim'
 on_ft = ['rust']
 hook_source = '''
-  let g:rustfmt_autosave = 1
+  " let g:rustfmt_autosave = 1
 '''
 
 [[plugins]]
