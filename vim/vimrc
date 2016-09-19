@@ -16,39 +16,114 @@ augroup END
 
 "" Plugins
 
-let s:dein_dir = expand('~/.cache/dein')
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-
-let s:dein_toml = expand('~/.vim/rc/dein.toml')
-let s:dein_lazy_toml = expand('~/.vim/rc/dein_lazy.toml')
-
+let s:vim_plug_path = expand($HOME . '/.vim/plugged/vim-plug')
 if has('vim_starting')
-  execute 'set runtimepath+=' . s:dein_repo_dir
-  if !isdirectory(s:dein_repo_dir)
-    echo 'install vim-plug...'
-    call mkdir(s:dein_repo_dir, 'p')
-    call system('git clone https://github.com/Shougo/dein.vim ' . s:dein_repo_dir)
-  end
+    execute 'set runtimepath+=' . s:vim_plug_path
+    if !isdirectory(s:vim_plug_path)
+        echo 'install vim-plug...'
+        call mkdir(s:vim_plug_path, 'p')
+        call system('git clone https://github.com/junegunn/vim-plug ' . s:vim_plug_path . '/autoload')
+    end
 endif
 
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir, [expand('<sfile>'), s:dein_toml, s:dein_lazy_toml]) "{{{
+call plug#begin(s:vim_plug_path) " {{{
 
-  call dein#load_toml(s:dein_toml, {'lazy': 0})
-  call dein#load_toml(s:dein_lazy_toml, {'lazy': 1})
+Plug 'Shougo/vimproc', { 'do': 'make' }
+Plug 'vim-jp/vimdoc-ja'
 
-  call dein#end() "}}}
-  call dein#save_state()
-endif
+" {{{ color
+Plug 'cocopon/iceberg.vim'
+Plug 'rhysd/wallaby.vim'
+Plug 'w0ng/vim-hybrid'
+Plug 'nanotech/jellybeans.vim'
+Plug 'itchyny/lightline.vim'
+" }}}
 
-" 先に vimproc をインストールする
-if has('vim_starting') && dein#check_install(['vimproc'])
-    call dein#install(['vimproc'])
-endif
+" {{{ interface
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'itchyny/vim-cursorword'
+Plug 'airblade/vim-gitgutter'
 
-if has('vim_starting') && dein#check_install()
-    call dein#install()
-endif
+Plug 'airblade/vim-rooter'
+let g:rooter_use_lcd = 1
+" }}}
+
+" {{{ edit
+Plug 'scrooloose/syntastic'
+Plug 'editorconfig/editorconfig-vim'
+
+Plug 'osyo-manga/vim-anzu'
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-shart-with-echo)
+
+Plug 'tyru/caw.vim', { 'on': ['<Plug>(caw:hatpos:toggle)'] }
+nmap <Space>c <Plug>(caw:hatpos:toggle)
+vmap <Space>c <Plug>(caw:hatpos:toggle)
+
+Plug 'rhysd/devdocs.vim', { 'on': ['DevDocs', 'DevDocsAll', '<Plug>(devdocs-under-cursor)'] }
+augroup devdocs
+    autocmd!
+    autocmd FileType c,cpp,php,ruby nmap <buffer>K <Plug>(devdocs-under-cursor)
+augroup END
+
+Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign'] }
+" }}}
+
+" {{{ misc
+Plug 'Shougo/context_filetype.vim'
+" }}}
+
+" {{{ language
+
+"" {{{ golang
+Plug 'fatih/vim-go', { 'for': 'go' }
+let g:go_fmt_command = 'goimports'
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:syntastic_go_checkers = ['go', 'govet', 'golint']
+"" }}}
+
+"" {{{ cpp c++
+Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
+let g:clang_compilation_database = './build'
+let g:clang_cpp_complete_opt = 'menuone'
+let g:clang_c_complete_opt = 'menuone'
+let g:clang_auto = 0
+let g:clang_cpp_options = '-std=c++1z'
+let g:clang_format_auto = 0
+let g:clang_format_style = 'Chromium'
+let g:syntastic_cpp_checkers = []
+
+Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
+augroup clang-format
+    autocmd!
+    autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+    autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
+    autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
+augroup END
+"" }}}
+
+"" {{{ haskell
+Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
+nnoremap <Leader>t :<C-u>GhcModType<CR>
+nnoremap <Leader>T :<C-u>GhcModTypeClear<CR>
+
+Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+Plug 'dag/vim2hs', { 'for': 'haskell' }
+let g:haskell_conceal = 0
+"" }}}
+
+"" {{{ rust
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+" let g:rustfmt_autosave = 1
+
+Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+"" }}}
+
+call plug#end() " }}}
 
 filetype plugin indent on
 
