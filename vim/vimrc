@@ -25,7 +25,6 @@ if has('vim_starting')
         call system('git clone https://github.com/junegunn/vim-plug ' . s:vim_plug_path . '/autoload')
     end
 endif
-
 call plug#begin(s:vim_plug_path) " {{{
 
 Plug 'Shougo/vimproc', { 'do': 'make' }
@@ -117,7 +116,7 @@ let g:haskell_conceal = 0
 "" }}}
 
 "" {{{ rust
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'agatan/rust.vim', { 'for': 'rust' }
 " let g:rustfmt_autosave = 1
 
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
@@ -193,7 +192,7 @@ colorscheme jellybeans
 
 set cmdheight=2
 set hidden
-set number
+set nonumber
 set scrolloff=5
 set wrap
 set showbreak=+\
