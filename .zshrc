@@ -239,15 +239,9 @@ zle -N peco-ghq-cd
 bindkey '^x^g' peco-ghq-cd
 
 function peco-history() {
-    local selected_history=$(\
-        history -n 1 | \
-        $(tac_command) | \
-        awk '!a[$0]++' | \
-        peco --query "$LBUFFER")
-    if [ -n "$selected_history" ]; then
-        BUFFER="$selected_history"
-        zle accept-line
-    fi
+    BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | peco`
+    CURSOR=$#BUFFER
+    zle accept-line
 }
 zle -N peco-history
 bindkey '^r' peco-history
