@@ -82,7 +82,8 @@ let g:go_fmt_command = 'goimports'
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
-let g:syntastic_go_checkers = ['go', 'govet', 'golint']
+" let g:syntastic_go_checkers = ['go', 'govet', 'golint']
+let g:syntastic_go_checkers = []
 "" }}}
 
 "" {{{ cpp c++
@@ -111,6 +112,10 @@ nnoremap <Leader>t :<C-u>GhcModType<CR>
 nnoremap <Leader>T :<C-u>GhcModTypeClear<CR>
 
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+augroup haskell
+    autocmd!
+    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+augroup END
 Plug 'dag/vim2hs', { 'for': 'haskell' }
 let g:haskell_conceal = 0
 "" }}}
