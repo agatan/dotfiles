@@ -5,4 +5,4 @@
 	st = status
 	co = checkout
 [ghq]
-	root = /Users/agata/go/src
+	root = /Users/agata/repos/src

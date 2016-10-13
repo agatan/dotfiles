@@ -166,7 +166,7 @@ export OCAMLPARAM="_,bin-annot=1"
 export OPAMKEEPBUILDDIR=1
 
 # Golang
-export GOPATH=$HOME/go
+export GOPATH=$HOME/repos
 export PATH=$PATH:$GOPATH/bin
 
 # for rust
