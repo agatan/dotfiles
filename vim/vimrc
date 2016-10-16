@@ -16,6 +16,8 @@ augroup END
 
 "" Plugins
 
+filetype off
+
 let s:vim_plug_path = expand($HOME . '/.vim/plugged/vim-plug')
 if has('vim_starting')
     execute 'set runtimepath+=' . s:vim_plug_path
@@ -121,7 +123,7 @@ let g:haskell_conceal = 0
 "" }}}
 
 "" {{{ rust
-Plug 'agatan/rust.vim', { 'for': 'rust' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 " let g:rustfmt_autosave = 1
 
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
