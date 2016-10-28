@@ -2,3 +2,6 @@ vim/view/
 vim/.netrwhist
 *.swp
 vim/plugged
+service_account.json
+.DS_Store
+.editorconfig

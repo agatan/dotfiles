@@ -6,3 +6,5 @@
 	co = checkout
 [ghq]
 	root = /Users/agata/repos/src
+[core]
+	excludesfile = /Users/agata/.gitignore
