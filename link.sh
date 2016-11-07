@@ -4,7 +4,7 @@ echo 'making symbolic links...'
 
 ln -s ${HOME}/dotfiles/vim ${HOME}/.vim
 
-for dot in '.zshrc' '.gitignore' '.gitconfig' '.editorconfig'
+for dot in '.zshrc' '.gitignore' '.gitconfig' '.editorconfig' '.tmux.conf'
 do
     ln -s ${HOME}/dotfiles/${dot} ${HOME}/${dot}
 done
