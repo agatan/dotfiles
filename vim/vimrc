@@ -183,7 +183,6 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:mapleader = ','
 let &backupdir = expand('~/.vim/_backup')
-set noswapfile
 set clipboard=unnamed,unnamedplus
 set t_vb=
 set visualbell
