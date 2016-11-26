@@ -203,6 +203,7 @@ set nonumber
 set scrolloff=5
 set wrap
 set showbreak=+\
+set breakindent
 set cursorline
 set cursorcolumn
 set colorcolumn=80
