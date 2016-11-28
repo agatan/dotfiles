@@ -130,6 +130,21 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 "" }}}
 
+"" {{{ python
+Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
+if executable('pyflakes') && executable('pep8')
+    let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+end
+if executable('autopep8')
+    function! s:preserve_autopep8(cmd)
+    endfunction
+    function! s:autopep8() abort
+        silent %!autopep8 -
+    endfunction
+    command! Autopep8 call s:autopep8()
+end
+"" }}}
+
 call plug#end() " }}}
 
 filetype plugin indent on
@@ -256,3 +271,4 @@ nnoremap : ;
 vnoremap : ;
 
 " }}}
+
