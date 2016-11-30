@@ -255,6 +255,8 @@ if !exists('loaded_matchit')
   runtime macros/matchit.vim
 endif
 
+nnoremap <C-]> g<C-]>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " input
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
