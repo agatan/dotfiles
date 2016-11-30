@@ -202,6 +202,7 @@ set clipboard=unnamed,unnamedplus
 set t_vb=
 set visualbell
 set noerrorbells
+set wildmenu wildmode=list:longest
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
