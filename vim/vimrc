@@ -44,6 +44,18 @@ Plug 'itchyny/lightline.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 Plug 'mattn/ctrlp-ghq'
+
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/denite.nvim'
+nnoremap [denite] <Nop>
+nmap ,d [denite]
+nnoremap <silent> [denite]f :<C-u>DeniteProjectDir file_rec<CR>
+nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
+nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
+nnoremap <silent> [denite]l :<C-u>Denite line<CR>
+nnoremap <silent> [denite]g :<C-u>DeniteCursorWord grep<CR>
+nnoremap <silent> [denite]r :<C-u>Denite -resume<CR>
+
 Plug 'itchyny/vim-cursorword'
 Plug 'airblade/vim-gitgutter'
 
