@@ -255,12 +255,6 @@ set listchars=tab:▸\ ,trail:-,eol:¬
 set pumheight=10
 syntax on
 
-augroup myvimrc
-  autocmd BufWritePost * if expand('%') != '' && &buftype !~ 'nofile' | silent mkview | endif
-  autocmd BufReadPost * if expand('%') != '' && &buftype !~ 'nofile' | silent loadview | endif
-augroup END
-set viewoptions-=options
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " search
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
