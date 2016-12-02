@@ -80,6 +80,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign'] }
 
 " {{{ misc
 Plug 'Shougo/context_filetype.vim'
+Plug 'tpope/vim-fugitive'
 " }}}
 
 " {{{ language
