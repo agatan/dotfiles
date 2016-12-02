@@ -18,13 +18,13 @@ augroup END
 
 filetype off
 
-let s:vim_plug_path = expand($HOME . '/.vim/plugged/vim-plug')
+let s:vim_plug_path = expand($HOME . '/.vim/plugged/')
 if has('vim_starting')
-    execute 'set runtimepath+=' . s:vim_plug_path
+    execute 'set runtimepath+=' . s:vim_plug_path . 'vim-plug'
     if !isdirectory(s:vim_plug_path)
         echo 'install vim-plug...'
         call mkdir(s:vim_plug_path, 'p')
-        call system('git clone https://github.com/junegunn/vim-plug ' . s:vim_plug_path . '/autoload')
+        call system('git clone https://github.com/junegunn/vim-plug ' . s:vim_plug_path . 'vim-plug/autoload')
     end
 endif
 call plug#begin(s:vim_plug_path) " {{{
@@ -47,14 +47,6 @@ Plug 'mattn/ctrlp-ghq'
 
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/denite.nvim'
-nnoremap [denite] <Nop>
-nmap ,d [denite]
-nnoremap <silent> [denite]f :<C-u>DeniteProjectDir file_rec<CR>
-nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
-nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
-nnoremap <silent> [denite]l :<C-u>Denite line<CR>
-nnoremap <silent> [denite]g :<C-u>DeniteCursorWord grep<CR>
-nnoremap <silent> [denite]r :<C-u>Denite -resume<CR>
 
 Plug 'itchyny/vim-cursorword'
 Plug 'airblade/vim-gitgutter'
@@ -143,7 +135,6 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 "" }}}
 
 "" {{{ python
-Plug 'davidhalter/jedi-vim', { 'for': ['python', 'python3'] }
 if executable('pyflakes') && executable('pep8')
     let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 end
@@ -160,6 +151,20 @@ end
 call plug#end() " }}}
 
 filetype plugin indent on
+
+"" plugin settings
+
+" denite.nvim
+call denite#custom#var('file_rec', 'command',
+    \ [ 'git', 'ls-files', '-co', '--exclude-standard' ])
+nnoremap [denite] <Nop>
+nmap <Space>d [denite]
+nnoremap <silent> [denite]f :<C-u>DeniteProjectDir file_rec<CR>
+nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
+nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
+nnoremap <silent> [denite]l :<C-u>Denite line<CR>
+nnoremap <silent> [denite]g :<C-u>DeniteCursorWord grep<CR>
+nnoremap <silent> [denite]r :<C-u>Denite -resume<CR>
 
 " language support {{{
 
