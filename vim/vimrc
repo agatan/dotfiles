@@ -41,10 +41,6 @@ Plug 'itchyny/lightline.vim'
 " }}}
 
 " {{{ interface
-Plug 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-Plug 'mattn/ctrlp-ghq'
-
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/denite.nvim'
 
@@ -149,6 +145,10 @@ if executable('autopep8')
 end
 "" }}}
 
+"" {{{ crystal
+Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
+""
+
 call plug#end() " }}}
 
 filetype plugin indent on
@@ -156,8 +156,8 @@ filetype plugin indent on
 "" plugin settings
 
 " denite.nvim
-call denite#custom#var('file_rec', 'command',
-    \ [ 'git', 'ls-files', '-co', '--exclude-standard' ])
+" call denite#custom#var('file_rec', 'command',
+"     \ [ 'git', 'ls-files', '-co', '--exclude-standard' ])
 nnoremap [denite] <Nop>
 nmap <Space>d [denite]
 nnoremap <silent> [denite]f :<C-u>DeniteProjectDir file_rec<CR>
