@@ -85,7 +85,7 @@ Plug 'tpope/vim-fugitive'
 
 "" {{{ golang
 Plug 'fatih/vim-go', { 'for': 'go' }
-" let g:go_fmt_command = 'goimports'
+let g:go_fmt_command = 'goimports'
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
@@ -214,11 +214,9 @@ set wildmenu wildmode=list:longest
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-if !has('gui_running')
-    set t_Co=256
-endif
+colorscheme iceberg
+set termguicolors
 set background=dark
-colorscheme jellybeans
 
 set cmdheight=2
 set hidden
