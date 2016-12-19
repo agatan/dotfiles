@@ -33,10 +33,13 @@ Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug 'vim-jp/vimdoc-ja'
 
 " {{{ color
+Plug 'rhysd/try-colorscheme.vim', { 'on': 'TryColorscheme' }
 Plug 'cocopon/iceberg.vim'
 Plug 'rhysd/wallaby.vim'
 Plug 'w0ng/vim-hybrid'
 Plug 'nanotech/jellybeans.vim'
+Plug 'rhysd/vim-color-spring-night'
+Plug 'junegunn/seoul256.vim'
 Plug 'itchyny/lightline.vim'
 " }}}
 
@@ -214,9 +217,10 @@ set wildmenu wildmode=list:longest
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-colorscheme iceberg
 set termguicolors
 set background=dark
+" colorscheme spring-night
+colorscheme iceberg
 
 set cmdheight=2
 set hidden
@@ -225,8 +229,8 @@ set scrolloff=5
 set wrap
 set showbreak=+\
 set breakindent
-set cursorline
-set cursorcolumn
+" set cursorline
+" set cursorcolumn
 set colorcolumn=80
 set ruler
 set tabstop=4
