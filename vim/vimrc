@@ -81,6 +81,7 @@ Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign'] }
 Plug 'mattn/sonictemplate-vim', { 'on': ['Template'] }
 
 Plug 'cohama/lexima.vim'
+Plug 'tpope/vim-surround'
 " }}}
 
 " {{{ misc
