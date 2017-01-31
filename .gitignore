@@ -6,3 +6,4 @@ service_account.json
 .DS_Store
 .editorconfig
 tags
+*.dtps/
