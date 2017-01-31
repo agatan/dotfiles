@@ -158,6 +158,12 @@ filetype plugin indent on
 " denite.nvim
 " call denite#custom#var('file_rec', 'command',
 "     \ [ 'git', 'ls-files', '-co', '--exclude-standard' ])
+call denite#custom#var('grep', 'command', ['rg'])
+call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
+call denite#custom#var('grep', 'recursive_opts', [])
+call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+call denite#custom#var('grep', 'separator', ['--'])
+call denite#custom#var('grep', 'final_opts', [])
 nnoremap [denite] <Nop>
 nmap <Space>d [denite]
 nnoremap <silent> [denite]f :<C-u>DeniteProjectDir file_rec<CR>
