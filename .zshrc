@@ -16,6 +16,10 @@ SAVEHIST=1000000
 PROMPT="%F{cyan}[%n@%md]%f%(1j,%{${fg[red]}%}(%j)%{${reset_color}%},)
 %{${fg[yellow]}%}%~%{${reset_color}%}
 %(?.%B%F{green}.%B%F{red})%(?!:) $ !:( $ )%f%b"
+# vim から :sh している場合
+if [[ -n "$VIMRUNTIME" ]]; then
+    PROMPT="%{${fg[white]}${bg[blue]}%}(vim)%{${reset_color}%} $PROMPT"
+fi
 
 
 # 単語の区切り文字を指定する
@@ -73,7 +77,7 @@ setopt no_beep
 setopt no_flow_control
 
 # Ctrl+Dでzshを終了しない
-setopt ignore_eof
+# setopt ignore_eof
 
 # '#' 以降をコメントとして扱う
 setopt interactive_comments
