@@ -163,6 +163,7 @@ nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
 nnoremap <silent> [denite]l :<C-u>Denite line<CR>
 nnoremap <silent> [denite]g :<C-u>DeniteCursorWord grep<CR>
 nnoremap <silent> [denite]r :<C-u>Denite -resume<CR>
+nnoremap <silent> [denite]o :<C-u>Denite outline<CR>
 
 " language support {{{
 
