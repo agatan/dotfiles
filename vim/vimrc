@@ -271,6 +271,7 @@ set backspace=indent,eol,start
 set autoindent
 set shiftwidth=4
 set showmatch
+set matchtime=1
 set whichwrap=b,s,h,l,<,>,[,]
 set smarttab
 
