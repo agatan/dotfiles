@@ -1,10 +1,11 @@
 [user]
-	name = agatan
-	email = agatan039@gmail.com
+    name = agatan
+    email = agatan039@gmail.com
 [alias]
-	st = status
-	co = checkout
+    st = status
+    co = checkout
 [ghq]
-	root = /Users/agata/repos/src
+    root = ~/.ghq
+    root = ~/repos/src
 [core]
-	excludesfile = /Users/agata/.gitignore
+    excludesfile = ~/.gitignore
