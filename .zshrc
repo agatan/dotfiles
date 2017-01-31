@@ -76,8 +76,10 @@ setopt no_beep
 # フローコントロールを無効にする
 setopt no_flow_control
 
-# Ctrl+Dでzshを終了しない
-# setopt ignore_eof
+# vim から入った sh でない場合は Ctrl+Dでzshを終了しない
+if [[ -z "$VIMRUNTIME" ]]; then
+    setopt ignore_eof
+fi
 
 # '#' 以降をコメントとして扱う
 setopt interactive_comments
