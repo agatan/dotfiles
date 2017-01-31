@@ -170,7 +170,7 @@ export GOPATH=$HOME/repos
 export PATH=$PATH:$GOPATH/bin
 
 # for rust
-export RUST_SRC_PATH=~/rust/rust/src
+export RUST_SRC_PATH=$HOME/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src
 export PATH=$PATH:$HOME/.cargo/bin
 
 # for haskell
@@ -194,11 +194,11 @@ if [ ! -r "$HOME/.zplug/init.zsh" ]; then
         exit
     fi
 fi
-source "$HOME/.zplug/init.zsh"
+source $HOME/.zplug/init.zsh
 
 zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-completions'
-zplug 'zsh-users/zsh-syntax-highlighting', nice:10 # 10 ~ 19
+zplug 'zsh-users/zsh-syntax-highlighting', nice:10
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
 
 if ! zplug check --verbose; then
