@@ -229,6 +229,7 @@ set hidden
 set nonumber
 set scrolloff=5
 set wrap
+set display=lastline
 set showbreak=+\
 set breakindent
 " set cursorline
