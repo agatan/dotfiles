@@ -46,6 +46,7 @@ Plug 'itchyny/lightline.vim'
 " {{{ interface
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/denite.nvim'
+Plug 'Jagua/vim-denite-ghq'
 
 Plug 'itchyny/vim-cursorword'
 Plug 'airblade/vim-gitgutter'
@@ -87,6 +88,7 @@ Plug 'tpope/vim-surround'
 " {{{ misc
 Plug 'Shougo/context_filetype.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'kana/vim-tabpagecd'
 " }}}
 
 " {{{ language
