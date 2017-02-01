@@ -179,10 +179,11 @@ nnoremap <silent> [denite]f :<C-u>DeniteProjectDir file_rec<CR>
 nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
 nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
 nnoremap <silent> [denite]l :<C-u>Denite line<CR>
-nnoremap <silent> [denite]g :<C-u>DeniteCursorWord grep<CR>
+nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
 nnoremap <silent> [denite]r :<C-u>Denite -resume<CR>
 nnoremap <silent> [denite]o :<C-u>Denite outline<CR>
 
+nnoremap <silent> grep :<C-u>Denite grep<CR>
 nnoremap <silent> ghq :<C-u>Denite ghq<CR>
 
 " language support {{{
