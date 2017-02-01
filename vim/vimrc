@@ -179,6 +179,8 @@ nnoremap <silent> [denite]g :<C-u>DeniteCursorWord grep<CR>
 nnoremap <silent> [denite]r :<C-u>Denite -resume<CR>
 nnoremap <silent> [denite]o :<C-u>Denite outline<CR>
 
+nnoremap <silent> ghq :<C-u>Denite ghq<CR>
+
 " language support {{{
 
 "" OCaml
