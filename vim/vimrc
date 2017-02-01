@@ -161,14 +161,18 @@ filetype plugin indent on
 "" plugin settings
 
 " denite.nvim
-" call denite#custom#var('file_rec', 'command',
-"     \ [ 'git', 'ls-files', '-co', '--exclude-standard' ])
-call denite#custom#var('grep', 'command', ['rg'])
-call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
-call denite#custom#var('grep', 'recursive_opts', [])
-call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-call denite#custom#var('grep', 'separator', ['--'])
-call denite#custom#var('grep', 'final_opts', [])
+if executable('rg')
+    " replace file_rec
+    call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git', ''])
+    " replace grep
+    call denite#custom#var('grep', 'command', ['rg'])
+    call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
+    call denite#custom#var('grep', 'recursive_opts', [])
+    call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
+    call denite#custom#var('grep', 'separator', ['--'])
+    call denite#custom#var('grep', 'final_opts', [])
+endif
+
 nnoremap [denite] <Nop>
 nmap <Space>d [denite]
 nnoremap <silent> [denite]f :<C-u>DeniteProjectDir file_rec<CR>
