@@ -241,7 +241,7 @@ set wildmenu wildmode=list:longest
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-set termguicolors
+" set termguicolors
 set background=dark
 " colorscheme spring-night
 colorscheme iceberg
