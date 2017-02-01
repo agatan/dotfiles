@@ -232,7 +232,7 @@ function chpwd-ls() {
 add-zsh-hook chpwd chpwd-ls
 
 ## peco
-alias peco='peco --layout=bottom-up'
+alias peco='peco --layout=bottom-up --initial-filter=Fuzzy'
 
 function peco-ghq-cd() {
     local selected_dir=$(ghq list --full-path | peco --query "$LBUFFER")
