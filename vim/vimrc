@@ -301,6 +301,8 @@ nnoremap ; :
 vnoremap ; :
 nnoremap : ;
 vnoremap : ;
+nnoremap q; q:
+vnoremap q; q:
 
 " }}}
 
