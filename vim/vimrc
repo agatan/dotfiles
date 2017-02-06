@@ -38,6 +38,7 @@ Plug 'cocopon/iceberg.vim'
 Plug 'rhysd/wallaby.vim'
 Plug 'w0ng/vim-hybrid'
 Plug 'nanotech/jellybeans.vim'
+Plug 'altercation/vim-colors-solarized'
 Plug 'rhysd/vim-color-spring-night'
 Plug 'junegunn/seoul256.vim'
 Plug 'itchyny/lightline.vim'
@@ -247,9 +248,10 @@ set wildmenu wildmode=list:longest
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set termguicolors
-set background=dark
 " colorscheme spring-night
-colorscheme iceberg
+syntax enable
+set background=dark
+colorscheme solarized
 
 set cmdheight=2
 set hidden
