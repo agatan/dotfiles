@@ -1,0 +1,98 @@
+#!/bin/bash
+
+exists() { type "$1" >/dev/null 2>/dev/null; }
+
+BATTERY_DENGER=20
+
+get_battery() {
+    local current_bat percentage
+
+    current_bat="$(pmset -g ps | grep -o '[0-9]\+%' | tr -d '%')"
+    percentage="${current_bat%%.*}"
+    if [ -n "$percentage" ]; then
+        echo "$percentage%"
+    fi
+}
+
+is_charging() {
+    if exists "pmset"; then
+        pmset -g ps | grep -E "Battery Power|charged" >/dev/null 2>&1
+        if [ $? -eq 0 ]; then
+            return 1
+        else
+            return 0
+        fi
+    else
+        return 1
+    fi
+}
+
+battery_color_ansi() {
+    local percentage
+    percentage="${1:-$(get_battery)}"
+
+    if is_charging; then
+        [[ -n "$percentage" ]] && echo -e "\033[32m${percentage}\033[0m"
+    else
+        if [ "${percentage%%%*}" -ge "$BATTERY_DENGER" ]; then
+            echo -e "\033[34m${percentage}\033[0m"
+        else
+            echo -e "\033[31m${percentage}\033[0m"
+        fi
+    fi
+}
+
+battery_color_tmux() {
+    local percentage
+    percentage="${1:-$(get_battery)}"
+
+    if is_charging; then
+        [[ -n "$percentage" ]] && echo -e "#[fg=colour46]${percentage}#[default]"
+    else
+        if [ "${percentage%%%*}" -ge "$BATTERY_DENGER" ]; then
+            echo -e "#[fg=blue]${percentage}#[default]"
+        else
+            echo -e "#[fg=red]${percentage}#[default]"
+        fi
+    fi
+}
+
+get_remain() {
+    local time_remain
+    if exists "pmset"; then
+        time_remain="$(pmset -g ps | grep -o '[0-9]\+:[0-9]\+')"
+        if [ -z "$time_remain" ]; then
+            time_remain="no estimate"
+        fi
+    else
+        time_remain="no estimate"
+    fi
+
+    echo "$time_remain"
+    if [ "$time_remain" = "no estimate" ]; then
+        return 1
+    fi
+}
+
+for i in "$@"
+do
+    case "$i" in
+        "--ansi")
+            battery_color_ansi "$(get_battery)"
+            exit $?
+            ;;
+        "--tmux")
+            battery_color_tmux "$(get_battery)"
+            exit $?
+            ;;
+        "-r"|"--remain")
+            get_remain
+            exit $?
+            ;;
+        -*|--*)
+            echo "$i: unknown option" 1>&2
+            exit 1
+    esac
+done
+
+get_battery
