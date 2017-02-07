@@ -94,6 +94,9 @@ Plug 'kana/vim-tabpagecd'
 
 " {{{ language
 
+"" tmux
+Plug 'tmux-plugins/vim-tmux'
+
 "" {{{ golang
 Plug 'fatih/vim-go', { 'for': 'go' }
 let g:go_fmt_command = 'goimports'
