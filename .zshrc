@@ -224,6 +224,11 @@ function tac_command() {
         echo "tail -r"
     fi
 }
+function exists() { type "$1" >/dev/null 2>&1; return $?; }
+function is_tmux_running() { [ ! -z "$TMUX" ]; }
+function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
+function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
+function is_osx() { [[ $OSTYPE == darwin* ]]; }
 
 ## event
 function chpwd-ls() {
@@ -232,6 +237,10 @@ function chpwd-ls() {
 add-zsh-hook chpwd chpwd-ls
 
 ## fzf
+if is_tmux_running; then
+    alias fzf=fzf-tmux
+fi
+
 _fzf-ghq-cd() {
     local selected_dir=$(ghq list --full-path | fzf --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
@@ -259,12 +268,6 @@ killp() {
     done
 }
 
-
-function exists() { type "$1" >/dev/null 2>&1; return $?; }
-function is_tmux_running() { [ ! -z "$TMUX" ]; }
-function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
-function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
-function is_osx() { [[ $OSTYPE == darwin* ]]; }
 function tmux_automatically_attach_session()
 {
     if is_tmux_running; then
