@@ -162,14 +162,15 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
 
 # For @Ocaml
+if executable('opam'); then
+    # OPAM configuration
+    . /Users/nao/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+    eval `opam config env`
 
-# OPAM configuration
-. /Users/nao/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-eval `opam config env`
-
-#ocamlspot
-export OCAMLPARAM="_,bin-annot=1"
-export OPAMKEEPBUILDDIR=1
+    #ocamlspot
+    export OCAMLPARAM="_,bin-annot=1"
+    export OPAMKEEPBUILDDIR=1
+fi
 
 # Golang
 export GOPATH=$HOME/repos
