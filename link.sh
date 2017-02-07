@@ -8,14 +8,3 @@ for dot in '.zshrc' '.gitignore' '.gitconfig' '.editorconfig' '.tmux.conf' '.tmu
 do
     ln -s ${HOME}/dotfiles/${dot} ${HOME}/${dot}
 done
-
-neovim_link()
-{
-  nvimpath=${XDG_CONFIG_HOME:-${HOME}/.config/nvim}
-  mkdir -p $nvimpath
-  ln -s ${HOME}/dotfiles/init.vim $nvimpath/init.vim
-}
-
-neovim_link
-
-ln -s ${HOME}/dotfiles/peco ${HOME}/.config/peco
