@@ -1,5 +1,19 @@
 export LANG=ja_JP.UTF-8
 
+## my utility
+function tac_command() {
+    if which tac > /dev/null 2>&1; then
+        echo "tac"
+    else
+        echo "tail -r"
+    fi
+}
+function exists() { type "$1" >/dev/null 2>&1; return $?; }
+function is_tmux_running() { [ ! -z "$TMUX" ]; }
+function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
+function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
+function is_osx() { [[ $OSTYPE == darwin* ]]; }
+
 autoload -Uz colors
 colors
 
@@ -162,7 +176,7 @@ export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home
 export PATH=$JAVA_HOME/bin:$PATH
 
 # For @Ocaml
-if executable('opam'); then
+if exists 'opam'; then
     # OPAM configuration
     . /Users/nao/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
     eval `opam config env`
@@ -216,20 +230,6 @@ if ! zplug check --verbose; then
 fi
 
 zplug load --verbose
-
-## my utility
-function tac_command() {
-    if which tac > /dev/null 2>&1; then
-        echo "tac"
-    else
-        echo "tail -r"
-    fi
-}
-function exists() { type "$1" >/dev/null 2>&1; return $?; }
-function is_tmux_running() { [ ! -z "$TMUX" ]; }
-function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
-function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
-function is_osx() { [[ $OSTYPE == darwin* ]]; }
 
 ## event
 function chpwd-ls() {
