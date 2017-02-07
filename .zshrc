@@ -231,47 +231,34 @@ function chpwd-ls() {
 }
 add-zsh-hook chpwd chpwd-ls
 
-## peco
-alias peco='peco --layout=bottom-up --initial-filter=Fuzzy'
-
-function peco-ghq-cd() {
-    local selected_dir=$(ghq list --full-path | peco --query "$LBUFFER")
+## fzf
+_fzf-ghq-cd() {
+    local selected_dir=$(ghq list --full-path | fzf --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
         BUFFER="cd $selected_dir"
         zle accept-line
     fi
 }
-zle -N peco-ghq-cd
-bindkey '^x^g' peco-ghq-cd
+zle -N _fzf-ghq-cd
+bindkey '^x^g' _fzf-ghq-cd
 
-function peco-history() {
-    BUFFER=`history -n 1 | tail -r | awk '!a[$0]++' | peco --query "$LBUFFER"`
+_fzf-history() {
+    BUFFER=`history -n 1 | awk '!a[$0]++' | fzf --tac --no-sort --query "$LBUFFER"`
     CURSOR=$#BUFFER
 }
-zle -N peco-history
-bindkey '^r' peco-history
+zle -N _fzf-history
+bindkey '^r' _fzf-history
 
-function peco-cd() {
-    local selected_dir=$(\
-        dirs -p |\
-        peco --query "$LBUFFER")
-    if [ -n "$selected_dir" ]; then
-        BUFFER="cd $selected_dir"
-        zle accept-line
-    fi
-}
-zle -N peco-cd
-bindkey '^x^d' peco-cd
-
-function killp() {
+killp() {
     ps | tail -n +2 | \
-    peco --query "$LBUFFER" |\
+        fzf --query "$LBUFFER" | \
     cut -d' ' -f 1 |\
     while read pid
     do
         kill -KILL $pid
     done
 }
+
 
 function exists() { type "$1" >/dev/null 2>&1; return $?; }
 function is_tmux_running() { [ ! -z "$TMUX" ]; }
