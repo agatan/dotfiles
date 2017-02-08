@@ -2,6 +2,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 alias mkdir='mkdir -p'
+alias ls='ls -G'
 alias lla='ls -lAF'
 alias ll='ls -lF'
 alias la='ls -AF'
