@@ -1,18 +1,14 @@
 export LANG=ja_JP.UTF-8
 
-## my utility
-function tac_command() {
-    if which tac > /dev/null 2>&1; then
-        echo "tac"
-    else
-        echo "tail -r"
-    fi
-}
-function exists() { type "$1" >/dev/null 2>&1; return $?; }
-function is_tmux_running() { [ ! -z "$TMUX" ]; }
-function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
-function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
-function is_osx() { [[ $OSTYPE == darwin* ]]; }
+echo "==> Start to load init scripts"
+if [[ -d $HOME/.zsh  ]]; then
+    for f in $HOME/.zsh/[0-9]*.zsh
+    do
+        echo "Loading ${f}..."
+        source $f
+    done
+    unset f
+fi
 
 autoload -Uz colors
 colors
@@ -278,7 +274,7 @@ function tmux_automatically_attach_session()
         echo "${fg_bold[red]}  | | | |  | | |_| |/  \  ${reset_color}"
         echo "${fg_bold[red]}  |_| |_|  |_|\___//_/\_\ ${reset_color}"
     else
-        if shell_has_started_interactively && ! is_ssh_running; then
+        if is_interactive_shell && ! is_ssh_running; then
             if ! exists 'tmux'; then
                 echo 'Error: tmux command not found' 1>&2
                 return 1
