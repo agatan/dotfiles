@@ -1,4 +1,11 @@
-export FZF_DEFAULT_OPTS="--extended --ansi --multi"
+export FZF_DEFAULT_OPTS='
+--extended
+--ansi
+--multi
+--bind=ctrl-u:page-up
+--bind=ctrl-d:page-down
+--bind=ctrl-z:toggle-all
+'
 
 if is_tmux_running; then
     alias fzf=fzf-tmux
