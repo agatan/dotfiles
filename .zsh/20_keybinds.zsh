@@ -1,5 +1,5 @@
 bindkey -d
-bindkey -v
+bindkey -e
 
 bindkey '^x^g' fzf-ghq-cd
 
