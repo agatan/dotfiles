@@ -23,12 +23,6 @@ fi
 
 zplug load --verbose
 
-## event
-function chpwd-ls() {
-    ls
-}
-add-zsh-hook chpwd chpwd-ls
-
 echo "==> Start to load init scripts"
 if [[ -d $HOME/.zsh  ]]; then
     for f in $HOME/.zsh/[0-9]*.zsh
