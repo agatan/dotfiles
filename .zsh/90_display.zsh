@@ -17,3 +17,9 @@ function _update_vcs_info_msg() {
     RPROMPT="${vcs_info_msg_0_}"
 }
 add-zsh-hook precmd _update_vcs_info_msg
+
+# vim から :sh している場合
+if [[ -n "$VIMRUNTIME" ]]; then
+    PROMPT="%{${fg[white]}${bg[blue]}%}(vim)%{${reset_color}%} $PROMPT"
+fi
+

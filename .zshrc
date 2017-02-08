@@ -1,9 +1,3 @@
-# vim から :sh している場合
-if [[ -n "$VIMRUNTIME" ]]; then
-    PROMPT="%{${fg[white]}${bg[blue]}%}(vim)%{${reset_color}%} $PROMPT"
-fi
-
-
 # 単語の区切り文字を指定する
 autoload -Uz select-word-style
 select-word-style default
