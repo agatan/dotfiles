@@ -1,16 +1,3 @@
-export LANG=ja_JP.UTF-8
-
-autoload -Uz colors
-colors
-
-# emacs 風キーバインドにする
-bindkey -e
-
-# ヒストリの設定
-HISTFILE=~/.zsh_history
-HISTSIZE=1000000
-SAVEHIST=1000000
-
 # vim から :sh している場合
 if [[ -n "$VIMRUNTIME" ]]; then
     PROMPT="%{${fg[white]}${bg[blue]}%}(vim)%{${reset_color}%} $PROMPT"
@@ -85,37 +72,6 @@ setopt hist_reduce_blanks
 
 # 高機能なワイルドカード展開を使用する
 setopt extended_glob
-
-########################################
-# キーバインド
-
-# ^R で履歴検索をするときに * でワイルドカードを使用出来るようにする
-bindkey '^R' history-incremental-pattern-search-backward
-
-########################################
-# エイリアス
-
-alias cp='cp -i'
-alias mv='mv -i'
-
-alias mkdir='mkdir -p'
-
-# sudo の後のコマンドでエイリアスを有効にする
-alias sudo='sudo '
-
-# C で標準出力をクリップボードにコピーする
-# mollifier delta blog : http://mollifier.hatenablog.com/entry/20100317/p1
-if which pbcopy >/dev/null 2>&1 ; then
-    # Mac
-    alias -g C='| pbcopy'
-elif which xsel >/dev/null 2>&1 ; then
-    # Linux
-    alias -g C='| xsel --input --clipboard'
-elif which putclip >/dev/null 2>&1 ; then
-    # Cygwin
-    alias -g C='| putclip'
-fi
-
 
 
 ########################################
