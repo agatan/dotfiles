@@ -33,3 +33,7 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g J='| jq .'
 alias -g L='| less'
+
+if [ -n $ENHANCD_FILTER ]; then
+    alias cdg='cd -G'
+fi
