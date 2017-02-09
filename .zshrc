@@ -3,6 +3,16 @@ if [[ -n $VIMRUNTIME ]]; then
     return 0
 fi
 
+echo "==> Start to load init scripts"
+if [[ -d $HOME/.zsh  ]]; then
+    for f in $HOME/.zsh/[0-9]*.zsh
+    do
+        echo "  Loading ${f}..."
+        source $f
+    done
+    unset f
+fi
+
 # zplug
 if [ ! -r "$HOME/.zplug/init.zsh" ]; then
     printf 'Install zplug? [y/N]: '
@@ -37,13 +47,3 @@ if ! zplug check --verbose; then
 fi
 
 zplug load --verbose
-
-echo "==> Start to load init scripts"
-if [[ -d $HOME/.zsh  ]]; then
-    for f in $HOME/.zsh/[0-9]*.zsh
-    do
-        echo "Loading ${f}..."
-        source $f
-    done
-    unset f
-fi
