@@ -49,6 +49,8 @@ Plug 'itchyny/lightline.vim'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/denite.nvim'
 Plug 'Jagua/vim-denite-ghq'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 Plug 'itchyny/vim-cursorword'
 Plug 'airblade/vim-gitgutter'

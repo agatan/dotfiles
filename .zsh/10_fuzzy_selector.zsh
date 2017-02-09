@@ -7,7 +7,7 @@ export FZF_DEFAULT_OPTS='
 --bind=ctrl-z:toggle-all
 '
 
-if is_tmux_running; then
+if is_tmux_running && exists fzf-tmux; then
     alias fzf=fzf-tmux
 fi
 
