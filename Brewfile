@@ -26,6 +26,7 @@ brew 'zsh'
 brew 'sanemat/font/ricty'
 
 brew 'rbenv'
+brew 'envchain'
 
 cask 'alfred'
 cask 'docker'
