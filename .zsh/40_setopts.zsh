@@ -7,7 +7,7 @@ setopt pushd_to_home
 
 # spell check
 setopt correct
-setopt correct_all
+# setopt correct_all
 
 setopt interactive_comments
 setopt print_eight_bit
