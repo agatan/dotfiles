@@ -27,6 +27,13 @@ source $HOME/.zplug/init.zsh
 zplug 'zsh-users/zsh-history-substring-search'
 zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-completions'
+zplug 'BurntSushi/ripgrep', \
+    from:gh-r, \
+    as:command, \
+    rename-to:"rg"
+zplug 'stedolan/jq', \
+    from:gh-r, \
+    as:command
 zplug 'junegunn/fzf-bin', \
     as:command, \
     from:gh-r, \
