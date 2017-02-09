@@ -12,3 +12,18 @@ fi
 if exists 'history-substring-search-down'; then
     bindkey '^N' history-substring-search-down
 fi
+
+do_enter() {
+    if [[ -n $BUFFER ]]; then
+        zle accept-line
+        return $status
+    fi
+    echo
+    if [[ -d .git ]] && [[ -n "$(git status --short)" ]]; then
+        git status
+    fi
+
+    zle reset-prompt
+}
+zle -N do_enter
+bindkey '^m' do_enter
