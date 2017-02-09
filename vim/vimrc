@@ -42,7 +42,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'rhysd/vim-color-spring-night'
 Plug 'junegunn/seoul256.vim'
 Plug 'dracula/vim'
-" Plug 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 " }}}
 
 " {{{ interface
