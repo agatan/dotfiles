@@ -255,7 +255,7 @@ set wildmenu wildmode=list:longest
 " colorscheme spring-night
 syntax enable
 set background=dark
-colorscheme dracula
+colorscheme iceberg
 
 set cmdheight=2
 set hidden
