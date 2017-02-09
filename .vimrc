@@ -182,13 +182,34 @@ endif
 
 nnoremap [denite] <Nop>
 nmap <Space>d [denite]
-nnoremap <silent> [denite]f :<C-u>DeniteProjectDir file_rec<CR>
 nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
-nnoremap <silent> [denite]b :<C-u>Denite buffer<CR>
-nnoremap <silent> [denite]l :<C-u>Denite line<CR>
 nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
 nnoremap <silent> [denite]r :<C-u>Denite -resume<CR>
 nnoremap <silent> [denite]o :<C-u>Denite outline<CR>
+
+function! s:is_git_repo() abort
+    if executable('git')
+        call system('git rev-parse --is-inside-work-tree &>/dev/null')
+        if v:shell_error == 0
+            return 1
+        endif
+    endif
+    return 0
+endfunction
+
+function! s:fzf_files() abort
+    if s:is_git_repo()
+        GFiles
+    else
+        Files
+    endif
+endfunction
+
+nnoremap [fzf] <Nop>
+nmap <Space>d [fzf]
+nnoremap <silent> [fzf]f :<C-u>call <SID>fzf_files()<CR>
+nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
+nnoremap <silent> [fzf]l :<C-u>BLines<CR>
 
 nnoremap <silent> grep :<C-u>Denite grep<CR>
 nnoremap <silent> ghq :<C-u>Denite ghq<CR>
