@@ -37,3 +37,40 @@ alias -g L='| less'
 if [ -n $ENHANCD_FILTER ]; then
     alias cdg='cd -G'
 fi
+
+mru() {
+    local -a f1
+    f1=(
+    ~/.vim_mru_files(N)
+    )
+    if [[ $#f1 -eq 0 ]]; then
+        echo "There are no mru files." >&2
+        return 1
+    fi
+    local cmd key files
+    cmd="$(
+        cat <$f1 \
+            | grep -v '^#' | awk '!a[$0]++' \
+            | fzf --ansi --multi --prompt='MRU> ' \
+                  --expect=ctrl-v,ctrl-l \
+    )"
+    key=$(head -1 <<< "$cmd")
+    files="$(sed '1d;/^$/d' <<< "$cmd")"
+    case "$key" in
+        ctrl-v)
+            vim -p ${(@f)files} > /dev/tty < /dev/tty
+            ;;
+        ctrl-l)
+            arr=("${(@f)files}")
+            if [[ -d ${arr[1]} ]]; then
+                ls -l ${(@f)files} < /dev/tty | less > /dev/tty
+            else
+                less ${(@f)files} < /dev/tty > /dev/tty
+            fi
+            ;;
+        *)
+            echo $files
+            ;;
+    esac
+}
+alias -g FROM=mru

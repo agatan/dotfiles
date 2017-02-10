@@ -93,6 +93,7 @@ Plug 'tpope/vim-surround'
 Plug 'Shougo/context_filetype.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'kana/vim-tabpagecd'
+Plug 'vim-scripts/mru.vim'
 " }}}
 
 " {{{ language
