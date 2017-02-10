@@ -47,30 +47,36 @@ mru() {
         echo "There are no mru files." >&2
         return 1
     fi
-    local cmd key files
-    cmd="$(
+    local cmd query key files
+    while cmd="$(
         cat <$f1 \
             | grep -v '^#' | awk '!a[$0]++' \
             | fzf --ansi --multi --prompt='MRU> ' \
+                  --query="${query}" \
+                  --print-query \
                   --expect=ctrl-v,ctrl-l \
-    )"
-    key=$(head -1 <<< "$cmd")
-    files="$(sed '1d;/^$/d' <<< "$cmd")"
-    case "$key" in
-        ctrl-v)
-            vim -p ${(@f)files} > /dev/tty < /dev/tty
-            ;;
-        ctrl-l)
-            arr=("${(@f)files}")
-            if [[ -d ${arr[1]} ]]; then
-                ls -l ${(@f)files} < /dev/tty | less > /dev/tty
-            else
-                less ${(@f)files} < /dev/tty > /dev/tty
-            fi
-            ;;
-        *)
-            echo $files
-            ;;
-    esac
+    )"; do
+        query=$(head -1 <<< "$cmd")
+        key=$(head -2 <<< "$cmd" | tail -1)
+        files="$(sed '1,2d;/^$/d' <<< "$cmd")"
+        case "$key" in
+            ctrl-v)
+                vim -p ${(@f)files} > /dev/tty < /dev/tty
+                return
+                ;;
+            ctrl-l)
+                arr=("${(@f)files}")
+                if [[ -d ${arr[1]} ]]; then
+                    ls -l ${(@f)files} < /dev/tty | less > /dev/tty
+                else
+                    less ${(@f)files} < /dev/tty > /dev/tty
+                fi
+                ;;
+            *)
+                echo $files
+                break
+                ;;
+        esac
+    done
 }
 alias -g FROM=mru
