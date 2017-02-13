@@ -1,1 +1,0 @@
-/Users/naomichi/.zplug/repos/junegunn/fzf/shell/key-bindings.fish
