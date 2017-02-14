@@ -15,6 +15,9 @@ indent_size = 2
 [*.rb]
 indent_size = 2
 
+[*.haml]
+indent_size = 2
+
 [*Makefile]
 indent_style = tab
 
@@ -29,3 +32,4 @@ indent_style = tab
 
 [*.c]
 indent_style = tab
+
