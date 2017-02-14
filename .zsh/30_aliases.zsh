@@ -40,13 +40,39 @@ fi
 
 mru() {
     local -a f1
+
     f1=(
     ~/.vim_mru_files(N)
     )
+
+    # parse arguments
+    local opt action
+    action=echo
+    for opt in $@
+    do
+        case $opt in
+            '-a'|'--action')
+                if [[ -z "$2" ]] || [[ "$2" =~ "^-+" ]]; then
+                    echo "mru: option requires an argument -- $1" 1>&2
+                    return 1
+                fi
+                action="$2"
+                shift 2
+                ;;
+            -*)
+                echo "mru: illegal option -- '$(echo $1 | sed 's/^-*//')'" 1>&2
+                return 1
+                ;;
+            *)
+                ;;
+        esac
+    done
+
     if [[ $#f1 -eq 0 ]]; then
         echo "There are no mru files." >&2
         return 1
     fi
+
     local cmd query key files
     while cmd="$(
         cat <$f1 \
@@ -73,10 +99,11 @@ mru() {
                 fi
                 ;;
             *)
-                echo $files
+                eval "$action ${(@f)files}" > /dev/tty < /dev/tty
                 break
                 ;;
         esac
     done
 }
 alias -g FROM=mru
+alias vmru='mru --action "vim -p"'
