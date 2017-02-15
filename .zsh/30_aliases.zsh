@@ -106,4 +106,4 @@ mru() {
     done
 }
 alias -g FROM=mru
-alias vmru='mru --action "vim -p"'
+alias v='mru --action "vim -p"'
