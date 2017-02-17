@@ -3,6 +3,9 @@ if [[ -n $VIMRUNTIME ]]; then
     return 0
 fi
 
+bindkey -d
+bindkey -e
+
 # zplug
 if [ ! -r "$HOME/.zplug/init.zsh" ]; then
     printf 'Install zplug? [y/N]: '
