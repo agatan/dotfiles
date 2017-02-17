@@ -31,7 +31,7 @@ alias -g N1=" >/dev/null"
 alias -g N2=" 2>/dev/null"
 alias -g H='| head'
 alias -g T='| tail'
-alias -g J='| jq .'
+alias -g J='| jq . -C'
 alias -g L='| less'
 
 if [ -n $ENHANCD_FILTER ]; then
