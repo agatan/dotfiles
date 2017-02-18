@@ -33,3 +33,5 @@ indent_style = tab
 [*.c]
 indent_style = tab
 
+[*.json]
+indent_size = 2
