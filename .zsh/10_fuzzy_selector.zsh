@@ -27,7 +27,7 @@ fzf-history() {
 zle -N fzf-history
 
 killp() {
-    ps | tail -n +2 | \
+    ps a | tail -n +2 | \
         fzf --query "$LBUFFER" | \
     cut -d' ' -f 1 |\
     while read pid
