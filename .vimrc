@@ -206,9 +206,23 @@ function! s:fzf_files() abort
     endif
 endfunction
 
+command! FZFMru call fzf#run({
+\ 'source':  reverse(s:all_files()),
+\ 'sink':    'edit',
+\ 'options': '-m -x +s',
+\ 'down':    '40%' })
+
+function! s:all_files()
+  return extend(
+  \ filter(copy(v:oldfiles),
+  \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+  \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
+endfunction
+
 nnoremap [fzf] <Nop>
 nmap <Space>d [fzf]
 nnoremap <silent> [fzf]f :<C-u>call <SID>fzf_files()<CR>
+nnoremap <silent> [fzf]m :<C-u>FZFMru<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
 nnoremap <silent> [fzf]l :<C-u>BLines<CR>
 
