@@ -220,7 +220,7 @@ function! s:all_files()
 endfunction
 
 nnoremap [fzf] <Nop>
-nmap <Space>d [fzf]
+nmap <Space>f [fzf]
 nnoremap <silent> [fzf]f :<C-u>call <SID>fzf_files()<CR>
 nnoremap <silent> [fzf]m :<C-u>FZFMru<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
