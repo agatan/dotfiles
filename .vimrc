@@ -207,7 +207,7 @@ function! s:fzf_files() abort
 endfunction
 
 command! FZFMru call fzf#run({
-\ 'source':  reverse(s:all_files()),
+\ 'source':  s:all_files(),
 \ 'sink':    'edit',
 \ 'options': '-m -x +s',
 \ 'down':    '40%' })
