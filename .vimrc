@@ -225,9 +225,7 @@ nnoremap <silent> grep :<C-u>Denite grep<CR>
 nnoremap <silent> ghq :<C-u>Denite ghq<CR>
 
 "" lexima.vim
-let g:lexima_no_default_rules = 1
-call lexima#set_default_rules()
-call lexima#add_rule({'char': "'", 'filetype': ['rust']})
+let g:lexima_enable_basic_rules = 0
 
 " language support {{{
 
@@ -299,7 +297,7 @@ set display=lastline
 set showbreak=+\
 set breakindent
 " set cursorline
-" set cursorcolumn
+set cursorcolumn
 set colorcolumn=80
 set ruler
 set tabstop=4

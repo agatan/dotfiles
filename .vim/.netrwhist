@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/Users/naomichi/.config/fish'
-let g:netrw_dirhist_2='/Users/naomichi/.ghq/github.com/matz/streem/src'
-let g:netrw_dirhist_3='/Users/naomichi/.ghq/github.com/agatan/rustreem/src'
-let g:netrw_dirhist_4='/Users/naomichi/.ghq/github.com/agatan/yoin/yoin-ipadic'
-let g:netrw_dirhist_5='/Users/naomichi/repos/src/github.com/wantedly/finder-go/api'
-let g:netrw_dirhist_6='/Users/naomichi/dotfiles/.zsh'
