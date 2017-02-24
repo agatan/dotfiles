@@ -47,8 +47,6 @@ Plug 'itchyny/lightline.vim'
 
 " {{{ interface
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/denite.nvim'
-Plug 'Jagua/vim-denite-ghq'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
@@ -168,26 +166,6 @@ filetype plugin indent on
 
 "" plugin settings
 
-" denite.nvim
-if executable('rg')
-    " replace file_rec
-    call denite#custom#var('file_rec', 'command', ['rg', '--files', '--glob', '!.git', ''])
-    " replace grep
-    call denite#custom#var('grep', 'command', ['rg'])
-    call denite#custom#var('grep', 'default_opts', ['--vimgrep', '--no-heading'])
-    call denite#custom#var('grep', 'recursive_opts', [])
-    call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
-    call denite#custom#var('grep', 'separator', ['--'])
-    call denite#custom#var('grep', 'final_opts', [])
-endif
-
-nnoremap [denite] <Nop>
-nmap <Space>d [denite]
-nnoremap <silent> [denite]m :<C-u>Denite file_mru<CR>
-nnoremap <silent> [denite]g :<C-u>Denite grep<CR>
-nnoremap <silent> [denite]r :<C-u>Denite -resume<CR>
-nnoremap <silent> [denite]o :<C-u>Denite outline<CR>
-
 function! s:is_git_repo() abort
     if executable('git')
         call system('git rev-parse --is-inside-work-tree &>/dev/null')
@@ -220,9 +198,6 @@ nnoremap <silent> [fzf]m :<C-u>History<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
 nnoremap <silent> [fzf]l :<C-u>BLines<CR>
 nnoremap <silent> [fzf]t :<C-u>Tags<CR>
-
-nnoremap <silent> grep :<C-u>Denite grep<CR>
-nnoremap <silent> ghq :<C-u>Denite ghq<CR>
 
 "" lexima.vim
 let g:lexima_enable_basic_rules = 0
