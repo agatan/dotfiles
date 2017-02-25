@@ -83,7 +83,8 @@ Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign'] }
 
 Plug 'mattn/sonictemplate-vim', { 'on': ['Template'] }
 
-Plug 'cohama/lexima.vim'
+" Plug 'cohama/lexima.vim'
+Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-surround'
 " }}}
 
@@ -193,30 +194,31 @@ endfunction
 
 nnoremap [fzf] <Nop>
 nmap <Space>f [fzf]
-nnoremap <silent> [fzf]f :<C-u>call <SID>fzf_files()<CR>
+" nnoremap <silent> [fzf]f :<C-u>call <SID>fzf_files()<CR>
+nnoremap <silent> [fzf]f :<C-u>Files<CR>
 nnoremap <silent> [fzf]m :<C-u>History<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
 nnoremap <silent> [fzf]l :<C-u>BLines<CR>
 nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 
 "" lexima.vim
-let g:lexima_enable_basic_rules = 0
-
-function! s:endwise_rule(at, end, filetype, syntax)
-    return {
-        \ 'char': '<CR>',
-        \ 'input': '<CR>',
-        \ 'input_after': '<CR>' . a:end,
-        \ 'at': a:at,
-        \ 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1' . a:end,
-        \ 'filetype': a:filetype,
-        \ 'syntax': a:syntax,
-        \ }
-endfunction
-call lexima#add_rule(s:endwise_rule('^\s*\%(module\|def\|macro\|class\|if\|unless\|for\|while\|until\|case\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#', 'end', 'crystal', []))
-call lexima#add_rule(s:endwise_rule('^\s*\%(begin\)\s*\%#', 'end', 'crystal', []))
-call lexima#add_rule(s:endwise_rule('\%(^\s*#.*\)\@<!do\%(\s*|.*|\)\?\s*\%#', 'end', 'crystal', []))
-call lexima#add_rule(s:endwise_rule('\<\%(if\|unless\)\>.*\%#', 'end', 'crystal', 'rubyConditionalExpression'))
+" let g:lexima_enable_basic_rules = 0
+"
+" function! s:endwise_rule(at, end, filetype, syntax)
+"     return {
+"         \ 'char': '<CR>',
+"         \ 'input': '<CR>',
+"         \ 'input_after': '<CR>' . a:end,
+"         \ 'at': a:at,
+"         \ 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1' . a:end,
+"         \ 'filetype': a:filetype,
+"         \ 'syntax': a:syntax,
+"         \ }
+" endfunction
+" call lexima#add_rule(s:endwise_rule('^\s*\%(module\|def\|macro\|class\|if\|unless\|for\|while\|until\|case\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#', 'end', 'crystal', []))
+" call lexima#add_rule(s:endwise_rule('^\s*\%(begin\)\s*\%#', 'end', 'crystal', []))
+" call lexima#add_rule(s:endwise_rule('\%(^\s*#.*\)\@<!do\%(\s*|.*|\)\?\s*\%#', 'end', 'crystal', []))
+" call lexima#add_rule(s:endwise_rule('\<\%(if\|unless\)\>.*\%#', 'end', 'crystal', 'rubyConditionalExpression'))
 
 " language support {{{
 
