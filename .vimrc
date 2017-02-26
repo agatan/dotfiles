@@ -117,6 +117,8 @@ augroup clang-format
     autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
     autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
 augroup END
+Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
+let g:clang_cpp_options = '-std=c++14'
 "" }}}
 
 "" {{{ haskell
