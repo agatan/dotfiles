@@ -61,7 +61,7 @@ let g:rooter_use_lcd = 1
 Plug 'scrooloose/syntastic'
 Plug 'editorconfig/editorconfig-vim'
 
-Plug 'maralla/completor.vim'
+" Plug 'maralla/completor.vim'
 
 Plug 'osyo-manga/vim-anzu'
 nmap n <Plug>(anzu-n-with-echo)
