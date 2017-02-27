@@ -3,11 +3,17 @@ execute 'setlocal path=.,./src,/usr/include,/usr/local/include,' .
       \             'isdirectory(v:val)'),
       \      ',')
 
-function! s:include_guard(name)
-    let head = "#ifndef " . a:name . "\n#define " . a:name . "\n\n"
-    let foot = '#endif // ' . a:name
+function! s:include_guard(...)
+    if a:0 > 0
+        let name = a:1
+    else
+        let file = toupper(expand('%'))
+        let name = substitute(file, '[/\.]', '_', 'g')
+    endif
+    let head = "#ifndef " . name . "\n#define " . name . "\n\n"
+    let foot = '#endif // ' . name
     silent! execute '1s/^/\=head'
     silent! execute '$s/$/\=foot'
 endfunction
 
-command! -nargs=1 IncludeGuard call s:include_guard(<f-args>)
+command! -nargs=? IncludeGuard call s:include_guard(<f-args>)
