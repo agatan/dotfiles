@@ -260,6 +260,10 @@ if executable('opam')
     autocmd FileType ocaml call s:ocaml_setup()
   augroup END
 endif
+
+"" C++
+let g:syntastic_cpp_compiler_options = '-std=c++14'
+
 " }}}
 
 " 基本設定 {{{
