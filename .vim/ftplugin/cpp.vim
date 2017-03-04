@@ -7,8 +7,8 @@ function! s:include_guard(...)
     if a:0 > 0
         let name = a:1
     else
-        let file = toupper(expand('%'))
-        let name = substitute(file, '[/\.]', '_', 'g')
+        let file = substitute(expand('%'), '^include/', '', '')
+        let name = toupper(substitute(file, '[/\.]', '_', 'g'))
     endif
     let head = "#ifndef " . name . "\n#define " . name . "\n\n"
     let foot = '#endif // ' . name
