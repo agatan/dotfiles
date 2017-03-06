@@ -18,7 +18,7 @@ fi
 source $HOME/.zplug/init.zsh
 
 zplug 'zsh-users/zsh-history-substring-search'
-zplug 'zsh-users/zsh-autosuggestions'
+# zplug 'zsh-users/zsh-autosuggestions'
 zplug 'zsh-users/zsh-completions'
 zplug 'b4b4r07/git-open', as:command
 zplug 'BurntSushi/ripgrep', \
