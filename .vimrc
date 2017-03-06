@@ -284,6 +284,7 @@ set wildmenu wildmode=list:longest
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set termguicolors
 " colorscheme spring-night
+set t_ut=
 syntax enable
 set background=dark
 colorscheme iceberg
