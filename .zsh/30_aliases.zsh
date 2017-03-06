@@ -35,7 +35,7 @@ alias -g J='| jq . -C'
 alias -g L='| less'
 
 if [ -n $ENHANCD_FILTER ]; then
-    alias cdg='cd -G'
+    alias g='cd -G'
 fi
 
 mru() {

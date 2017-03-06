@@ -35,3 +35,9 @@ killp() {
         kill -KILL $pid
     done
 }
+
+# git
+
+git-del-branch() {
+    git branch -D $(git branch | fzf)
+}
