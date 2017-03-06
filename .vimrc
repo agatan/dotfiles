@@ -118,6 +118,7 @@ augroup clang-format
     autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
 augroup END
 Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
+let g:clang_auto = 0
 let g:clang_cpp_options = '-std=c++14'
 "" }}}
 
