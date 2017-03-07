@@ -58,7 +58,8 @@ let g:rooter_use_lcd = 1
 " }}}
 
 " {{{ edit
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
 Plug 'editorconfig/editorconfig-vim'
 
 " Plug 'maralla/completor.vim'
@@ -120,6 +121,7 @@ augroup END
 Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
 let g:clang_auto = 0
 let g:clang_cpp_options = '-std=c++14'
+let g:clang_diagnostics = ''
 "" }}}
 
 "" {{{ haskell
@@ -223,6 +225,16 @@ nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 " call lexima#add_rule(s:endwise_rule('\%(^\s*#.*\)\@<!do\%(\s*|.*|\)\?\s*\%#', 'end', 'crystal', []))
 " call lexima#add_rule(s:endwise_rule('\<\%(if\|unless\)\>.*\%#', 'end', 'crystal', 'rubyConditionalExpression'))
 
+" Neomake
+augroup my_neomake
+    autocmd!
+    autocmd BufWritePost,BufEnter * Neomake
+    " autocmd ColorScheme *
+    "             \ highlight NeomakeErrorSign ctermfg=white |
+    "             \ highlight NeomakeWarningSign ctermfg=yellow
+augroup END
+
+
 " language support {{{
 
 "" OCaml
@@ -287,7 +299,7 @@ set wildmenu wildmode=list:longest
 set t_ut=
 syntax enable
 set background=dark
-colorscheme iceberg
+colorscheme hybrid
 
 set cmdheight=2
 set hidden
