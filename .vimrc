@@ -58,7 +58,6 @@ let g:rooter_use_lcd = 1
 " }}}
 
 " {{{ edit
-" Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
 Plug 'editorconfig/editorconfig-vim'
 
@@ -107,7 +106,6 @@ let g:go_fmt_command = 'goimports'
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
-let g:syntastic_go_checkers = ['govet', 'golint']
 "" }}}
 
 "" {{{ cpp c++
@@ -147,10 +145,8 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 
 "" {{{ python
 if executable('flake8')
-    let g:syntastic_python_checkers = ['flake8']
     let g:syntastic_python_flake8_args = '--max-line-length=120'
 elseif executable('pyflakes') && executable('pep8')
-    let g:syntastic_python_checkers = ['pyflakes', 'pep8']
 end
 if executable('autopep8')
     function! s:preserve_autopep8(cmd)
@@ -275,7 +271,6 @@ if executable('opam')
 endif
 
 "" C++
-let g:syntastic_cpp_compiler_options = '-std=c++14'
 
 " }}}
 
