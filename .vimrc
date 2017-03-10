@@ -9,10 +9,6 @@ nnoremap <Space>. :edit $MYVIMRC<CR>
 " :ReloadVimrc load $MYVIMRC
 command! ReloadVimrc source $MYVIMRC
 
-augroup myvimrc
-  autocmd!
-augroup END
-
 
 "" Plugins
 
