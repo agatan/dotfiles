@@ -267,6 +267,8 @@ if executable('opam')
 endif
 
 "" C++
+let g:neomake_cpp_enabled_markers = ['clang']
+let g:neomake_c_enabled_markers = ['clang']
 
 " }}}
 
