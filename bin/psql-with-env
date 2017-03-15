@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -eu
+
+read -p "Do you readlly want to connect to $DATABASE_URL ? [y/N] " ans
+case $ans in
+    'y')
+        echo 'ok'
+        ;;
+    * )
+        echo 'cancel'
+        exit 1
+        ;;
+esac
+
+psql -d $DATABASE_URL
