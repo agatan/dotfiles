@@ -125,16 +125,19 @@
   "Disable show trail whitespace"
   (setq show-trailing-whitespace nil))
 
-;; anything.el
-(use-package anything
+;; helm
+(use-package helm
   :config
-  (require 'anything-config)
-  (setq anything-enable-shortcuts 'prefix)
-  (define-key anything-map (kbd "@") 'anything-select-with-prefix-shortcut)
+  (require 'helm-config)
   :bind
-  ("C-x C-b" . anything-mini)
-  ("C-x C-f" . anything-for-files)
-  ("M-x" . anything-M-x))
+  ("C-x C-r" . helm-recentf)
+  ("C-x C-b" . helm-mini)
+  ("C-x b" . helm-buffers-list)
+  ("C-x C-f" . helm-for-files)
+  ("M-x" . helm-M-x))
+(use-package helm-ghq
+  :bind
+  ("C-x g" . helm-ghq))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customizations relating to editing a buffer.
@@ -219,10 +222,10 @@
 
 ;; On OS X, meta key is option.
 ;; Change meta key binding to left command.
-(when (eq system-type 'darwin)
-  (setq default-input-method "MacOSX")
-  (setq ns-command-modifier 'meta)
-  (setq ns-alternate-modifier 'super))
+;(when (eq system-type 'darwin)
+;  (setq default-input-method "MacOSX")
+;  (setq ns-command-modifier 'meta)
+;  (setq ns-alternate-modifier 'super))
 (when (eq system-type 'gnu/linux)
   (setq x-super-keysym 'meta)
   (setq x-meta-keysym 'super))
