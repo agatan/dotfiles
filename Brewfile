@@ -25,6 +25,7 @@ brew 'zplug'
 brew 'zsh'
 brew 'sanemat/font/ricty'
 
+brew 'ccache'
 brew 'rbenv'
 brew 'envchain'
 
@@ -33,3 +34,4 @@ cask 'docker'
 cask 'dropbox'
 cask 'shiftit'
 cask 'slack'
+
