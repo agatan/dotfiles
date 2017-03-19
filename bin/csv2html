@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require 'csv'
+
+STDOUT << "<table border=1>"
+
+CSV(STDIN).each do |row|
+    cols = row.map{ |c| "<td>#{c}</td>"}.join
+    STDOUT << "<tr>#{cols}</tr>"
+end
+
+STDOUT << "</table>"
