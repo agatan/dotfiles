@@ -115,7 +115,7 @@ augroup END
 Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
 let g:clang_auto = 0
 let g:clang_cpp_options = '-std=c++14'
-let g:clang_diagnostics = ''
+let g:clang_diagsopt = ''
 "" }}}
 
 "" {{{ haskell
