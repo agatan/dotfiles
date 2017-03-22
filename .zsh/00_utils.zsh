@@ -16,7 +16,7 @@ is_interactive_shell() {
 }
 
 is_ssh_running() {
-    [ ! -z "$SSH_CONECTION" ]
+    [ ! -z "$SSH_CONNECTION" ]
 }
 
 ostype() {
