@@ -33,6 +33,9 @@ alias -g H='| head'
 alias -g T='| tail'
 alias -g J='| jq . -C'
 alias -g L='| less'
+if exists fzf; then
+    alias -g F='| fzf'
+fi
 
 if [ -n $ENHANCD_FILTER ]; then
     alias g='cd -G'
