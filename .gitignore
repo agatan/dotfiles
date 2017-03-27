@@ -7,3 +7,5 @@ service_account.json
 .editorconfig
 tags
 *.dtps/
+
+.ipynb_checkpoints/
