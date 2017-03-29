@@ -28,6 +28,7 @@ brew 'sanemat/font/ricty'
 brew 'ccache'
 brew 'rbenv'
 brew 'envchain'
+brew 'mosh'
 
 cask 'alfred'
 cask 'docker'
