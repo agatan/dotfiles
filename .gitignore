@@ -9,3 +9,5 @@ tags
 *.dtps/
 
 .ipynb_checkpoints/
+
+bin/startserver
