@@ -220,7 +220,7 @@ nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 " Neomake
 augroup my_neomake
     autocmd!
-    autocmd BufWritePost,BufEnter * Neomake
+    autocmd BufWritePost * Neomake
     " autocmd ColorScheme *
     "             \ highlight NeomakeErrorSign ctermfg=white |
     "             \ highlight NeomakeWarningSign ctermfg=yellow
