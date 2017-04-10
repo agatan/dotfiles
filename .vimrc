@@ -296,7 +296,7 @@ colorscheme hybrid
 
 set cmdheight=2
 set hidden
-set nonumber
+set number
 set scrolloff=5
 set wrap
 set display=lastline
