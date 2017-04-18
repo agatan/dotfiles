@@ -292,11 +292,11 @@ set wildmenu wildmode=list:longest
 set t_ut=
 syntax enable
 set background=dark
-silent! colorscheme hybrid " supress error message even if hybrid is not installed.
+silent! colorscheme hybrid " suppress error message even if hybrid is not installed.
 
 set cmdheight=2
 set hidden
-set number
+set nonumber
 set scrolloff=5
 set wrap
 set display=lastline
