@@ -12,7 +12,7 @@ indent_size = 4
 [*.cr]
 indent_size = 2
 
-[*.rb]
+[*.{rb,rake}]
 indent_size = 2
 
 [*.haml]
