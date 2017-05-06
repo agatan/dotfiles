@@ -157,7 +157,11 @@ end
 
 "" {{{ crystal
 Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
-""
+"" }}}
+
+"" {{{ yaml
+Plug 'mrk21/yaml-vim'
+"" }}}
 
 call plug#end() " }}}
 
