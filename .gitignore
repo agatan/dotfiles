@@ -10,4 +10,4 @@ tags
 
 .ipynb_checkpoints/
 
-bin/startserver
+.config/yarn/

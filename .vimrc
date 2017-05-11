@@ -159,6 +159,10 @@ end
 Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 "" }}}
 
+"" {{{ javascript
+Plug 'flowtype/vim-flow'
+"" }}}
+
 "" {{{ yaml
 Plug 'mrk21/yaml-vim'
 "" }}}
