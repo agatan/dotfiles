@@ -2,14 +2,12 @@ export FZF_DEFAULT_OPTS='
 --extended
 --ansi
 --multi
+--height 40%
+--reverse
 --bind=ctrl-u:page-up
 --bind=ctrl-d:page-down
 --bind=ctrl-z:toggle-all
 '
-
-if is_tmux_running && exists fzf-tmux; then
-    alias fzf=fzf-tmux
-fi
 
 fzf-ghq-cd() {
     local selected_dir=$(ghq list --full-path | fzf --query "$LBUFFER")
