@@ -31,11 +31,7 @@ zplug 'stedolan/jq', \
 zplug 'junegunn/fzf-bin', \
     as:command, \
     from:gh-r, \
-    rename-to:"fzf", \
-    frozen:1
-zplug 'junegunn/fzf', \
-    as:command, \
-    use:"bin/fzf-tmux"
+    rename-to:"fzf"
 zplug 'b4b4r07/enhancd', use:init.sh
 zplug 'zsh-users/zsh-syntax-highlighting', defer:2
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
