@@ -23,3 +23,6 @@ indent_style = tab
 
 [*.py]
 indent_size = 4
+
+[*.{cpp,hpp}]
+indent_size = 4
