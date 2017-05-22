@@ -7,6 +7,8 @@ export FZF_DEFAULT_OPTS='
 --bind=ctrl-u:page-up
 --bind=ctrl-d:page-down
 --bind=ctrl-z:toggle-all
+--reverse
+--height 40%
 '
 
 fzf-ghq-cd() {

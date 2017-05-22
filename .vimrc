@@ -141,10 +141,7 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 "" }}}
 
 "" {{{ python
-if executable('flake8')
-    let g:syntastic_python_flake8_args = '--max-line-length=120'
-elseif executable('pyflakes') && executable('pep8')
-end
+let g:neomake_python_enabled_makers = ['python', 'flake8', 'mypy']
 if executable('autopep8')
     function! s:preserve_autopep8(cmd)
     endfunction
@@ -353,6 +350,7 @@ set showmatch
 set matchtime=1
 set whichwrap=b,s,h,l,<,>,[,]
 set smarttab
+set completeopt-=preview
 
 nnoremap ; :
 vnoremap ; :
