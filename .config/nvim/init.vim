@@ -277,7 +277,7 @@ set wildmenu wildmode=list:longest
 set t_ut=
 syntax enable
 set background=dark
-silent! colorscheme hybrid
+silent! colorscheme iceberg
 
 set cmdheight=2
 set hidden
