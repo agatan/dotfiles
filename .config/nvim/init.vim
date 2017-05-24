@@ -14,7 +14,7 @@ filetype off
 let s:vim_plug_path = expand($HOME . '/.vim/plugged/')
 if has('vim_starting')
     execute 'set runtimepath+=' . s:vim_plug_path . 'vim-plug'
-    if !isdirectory(s:vim_plug_path)
+    if !isdirectory(s:vim_plug_path . 'vim-plug')
         echo 'install vim-plug...'
         call mkdir(s:vim_plug_path, 'p')
         call system('git clone https://github.com/junegunn/vim-plug ' . s:vim_plug_path . 'vim-plug/autoload')
@@ -50,7 +50,8 @@ let g:rooter_use_lcd = 1
 " }}}
 
 " {{{ edit
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
+Plug 'w0rp/ale'
 Plug 'editorconfig/editorconfig-vim'
 
 " Plug 'maralla/completor.vim'
@@ -136,6 +137,8 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 let g:rustfmt_autosave = 1
 
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+
+let g:ale_rust_cargo_use_check = 1
 "" }}}
 
 "" {{{ python
@@ -204,14 +207,15 @@ let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_delay = 10
 " }}}
 
-" Neomake
-augroup my_neomake
-    autocmd!
-    autocmd BufWritePost * Neomake
-    " autocmd ColorScheme *
-    "             \ highlight NeomakeErrorSign ctermfg=white |
-    "             \ highlight NeomakeWarningSign ctermfg=yellow
-augroup END
+" " Neomake
+" augroup my_neomake
+"     autocmd!
+"     autocmd BufWritePost * Neomake
+"     autocmd BufEnter * Neomake
+"     autocmd ColorScheme *
+"                 \ highlight NeomakeErrorSign ctermfg=white |
+"                 \ highlight NeomakeWarningSign ctermfg=yellow
+" augroup END
 
 
 " language support {{{
@@ -254,8 +258,8 @@ if executable('opam')
 endif
 
 "" C++
-let g:neomake_cpp_enabled_markers = ['clang']
-let g:neomake_c_enabled_markers = ['clang']
+" let g:neomake_cpp_enabled_markers = ['clang']
+" let g:neomake_c_enabled_markers = ['clang']
 
 " }}}
 
