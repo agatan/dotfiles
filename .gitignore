@@ -11,3 +11,4 @@ tags
 .ipynb_checkpoints/
 
 .config/yarn/
+.config/nvim/.netrwhist
