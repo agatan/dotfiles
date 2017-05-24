@@ -99,6 +99,8 @@ let g:go_fmt_command = 'goimports'
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
+Plug 'zchee/deoplete-go', { 'do': 'make' }
+let g:deoplete#sources#go#gocode_binary = $GOPATH . '/bin/gocode'
 "" }}}
 
 "" {{{ cpp c++
