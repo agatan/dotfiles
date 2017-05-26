@@ -42,15 +42,6 @@ Plug 'Shougo/neomru.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
-Plug 'lambdalisue/lista.nvim'
-nnoremap / :<C-u>Lista<CR>
-nnoremap g/ :<C-u>ListaCursorWord<CR>
-let g:lista#custom_mappings = [
-            \ ['<C-n>', '<lista:select_next_candidate>', 'noremap'],
-            \ ['<C-p>', '<lista:select_previous_candidate>', 'noremap'],
-            \ ]
-
-
 Plug 'itchyny/vim-cursorword'
 Plug 'airblade/vim-gitgutter'
 
@@ -215,7 +206,7 @@ nmap <Space>f [fzf]
 nnoremap <silent> [fzf]f :<C-u>Files<CR>
 nnoremap <silent> [fzf]m :<C-u>History<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
-nnoremap <silent> [fzf]l :<C-u>BLines<CR>
+nnoremap <silent> [fzf]l :<C-u>Lines<CR>
 nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 
 " deoplete.nvim {{{
