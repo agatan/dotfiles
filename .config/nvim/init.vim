@@ -50,14 +50,7 @@ let g:rooter_use_lcd = 1
 " }}}
 
 " {{{ edit
-" Plug 'neomake/neomake'
-Plug 'w0rp/ale'
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 0
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-let g:ale_open_list = 1
+Plug 'neomake/neomake'
 Plug 'editorconfig/editorconfig-vim'
 
 " Plug 'maralla/completor.vim'
@@ -146,8 +139,6 @@ Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 let g:rustfmt_autosave = 1
 
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
-
-let g:ale_rust_cargo_use_check = 1
 "" }}}
 
 "" {{{ python
@@ -196,7 +187,7 @@ endfunction
 function! s:all_files()
     return extend(
                 \ filter(copy(v:oldfiles),
-                \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+                \        "v:val !~# 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
                 \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
 endfunction
 
@@ -216,33 +207,15 @@ let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_delay = 10
 " }}}
 
-" lightline.vim {{{
-let g:lightline = {
-      \  'active': {
-      \    'left': [
-      \      ['mode', 'paste'],
-      \      ['readonly', 'filename', 'modified'],
-      \      ['ale'],
-      \    ]
-      \  },
-      \  'component_function': {
-      \    'ale': 'ALEStatus'
-      \  }
-      \}
-function! ALEStatus() abort
-    return ale#statusline#Status()
-endfunction
-" }}}
-
 " " Neomake
-" augroup my_neomake
-"     autocmd!
-"     autocmd BufWritePost * Neomake
-"     autocmd BufEnter * Neomake
-"     autocmd ColorScheme *
-"                 \ highlight NeomakeErrorSign ctermfg=white |
-"                 \ highlight NeomakeWarningSign ctermfg=yellow
-" augroup END
+augroup my_neomake
+    autocmd!
+    autocmd BufWritePost * Neomake | lw
+    " autocmd BufEnter * Neomake | lw
+    " autocmd ColorScheme *
+    "             \ highlight NeomakeErrorSign ctermfg=white |
+    "             \ highlight NeomakeWarningSign ctermfg=yellow
+augroup END
 
 
 " language support {{{
@@ -258,9 +231,9 @@ if executable('opam')
     endif
 
     function! s:ocaml_format()
-        let now_line = line('.')
+        let l:now_line = line('.')
         execute ':%! ocp-indent'
-        execute ':' . now_line
+        execute ':' . l:now_line
     endfunction
 
     function! s:ocaml_setup()
