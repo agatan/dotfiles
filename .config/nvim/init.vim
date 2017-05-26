@@ -52,6 +52,7 @@ let g:rooter_use_lcd = 1
 " {{{ edit
 " Plug 'neomake/neomake'
 Plug 'w0rp/ale'
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 Plug 'editorconfig/editorconfig-vim'
 
 " Plug 'maralla/completor.vim'
@@ -205,6 +206,24 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_ignore_case = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_delay = 10
+" }}}
+
+" lightline.vim {{{
+let g:lightline = {
+      \  'active': {
+      \    'left': [
+      \      ['mode', 'paste'],
+      \      ['readonly', 'filename', 'modified'],
+      \      ['ale'],
+      \    ]
+      \  },
+      \  'component_function': {
+      \    'ale': 'ALEStatus'
+      \  }
+      \}
+function! ALEStatus() abort
+    return ale#statusline#Status()
+endfunction
 " }}}
 
 " " Neomake
