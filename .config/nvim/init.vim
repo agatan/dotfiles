@@ -208,7 +208,7 @@ let g:deoplete#auto_complete_delay = 10
 " }}}
 
 " " Neomake
-let g:neomake_open_list = 2
+" let g:neomake_open_list = 2
 let g:neomake_list_height = 5
 augroup my_neomake
     autocmd!
