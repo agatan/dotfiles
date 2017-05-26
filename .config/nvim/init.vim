@@ -42,6 +42,15 @@ Plug 'Shougo/neomru.vim'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
+Plug 'lambdalisue/lista.nvim'
+nnoremap / :<C-u>Lista<CR>
+nnoremap g/ :<C-u>ListaCursorWord<CR>
+let g:lista#custom_mappings = [
+            \ ['<C-n>', '<lista:select_next_candidate>', 'noremap'],
+            \ ['<C-p>', '<lista:select_previous_candidate>', 'noremap'],
+            \ ]
+
+
 Plug 'itchyny/vim-cursorword'
 Plug 'airblade/vim-gitgutter'
 
