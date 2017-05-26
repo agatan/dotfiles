@@ -208,13 +208,14 @@ let g:deoplete#auto_complete_delay = 10
 " }}}
 
 " " Neomake
+let g:neomake_open_list = 2
+let g:neomake_list_height = 5
 augroup my_neomake
     autocmd!
-    autocmd BufWritePost * Neomake | lw
-    " autocmd BufEnter * Neomake | lw
-    " autocmd ColorScheme *
-    "             \ highlight NeomakeErrorSign ctermfg=white |
-    "             \ highlight NeomakeWarningSign ctermfg=yellow
+    autocmd BufWritePost * Neomake
+    autocmd ColorScheme *
+                \ highlight NeomakeError cterm=underline ctermfg=red |
+                \ highlight NeomakeWarning cterm=underline ctermfg=yellow
 augroup END
 
 
