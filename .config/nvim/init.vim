@@ -6,6 +6,13 @@ nnoremap <Space>. :edit $MYVIMRC<CR>
 " :ReloadVimrc load $MYVIMRC
 command! ReloadVimrc source $MYVIMRC
 
+" neovim python3 client
+if isdirectory(expand($HOME . '/venvs/neovim/'))
+    let g:python3_host_prog = expand($HOME . '/venvs/neovim/bin/python3')
+else
+    echomsg 'python3 venv for neovim is not found'
+endif
+
 
 "" Plugins
 
@@ -55,6 +62,7 @@ Plug 'editorconfig/editorconfig-vim'
 
 " Plug 'maralla/completor.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugin' }
+Plug 'Shougo/echodoc.vim'
 
 Plug 'osyo-manga/vim-anzu'
 nmap n <Plug>(anzu-n-with-echo)
