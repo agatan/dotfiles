@@ -215,6 +215,10 @@ let g:deoplete#enable_smart_case = 1
 let g:deoplete#auto_complete_delay = 10
 " }}}
 
+" echodoc {{{
+let g:echodoc#enable_at_startup = 1
+" }}}
+
 " " Neomake
 " let g:neomake_open_list = 2
 let g:neomake_list_height = 5
