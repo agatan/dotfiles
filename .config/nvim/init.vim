@@ -10,7 +10,7 @@ command! ReloadVimrc source $MYVIMRC
 if isdirectory(expand($HOME . '/venvs/neovim/'))
     let g:python3_host_prog = expand($HOME . '/venvs/neovim/bin/python3')
 else
-    echomsg 'python3 venv for neovim is not found'
+    throw 'python3 venv for neovim is not found'
 endif
 
 
