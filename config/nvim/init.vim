@@ -281,7 +281,7 @@ endif
 " 全般
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:mapleader = ','
-let &backupdir = expand('~/.vim/_backup')
+" let &backupdir = expand('~/.vim/_backup')
 set clipboard=unnamed,unnamedplus
 set t_vb=
 set visualbell
