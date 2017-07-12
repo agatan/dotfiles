@@ -37,10 +37,6 @@ Plug 'cocopon/iceberg.vim'
 Plug 'rhysd/wallaby.vim'
 Plug 'w0ng/vim-hybrid'
 Plug 'nanotech/jellybeans.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'rhysd/vim-color-spring-night'
-Plug 'junegunn/seoul256.vim'
-Plug 'dracula/vim'
 Plug 'itchyny/lightline.vim'
 " }}}
 
@@ -292,8 +288,7 @@ set wildmenu wildmode=list:longest
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set termguicolors
-" colorscheme spring-night
+set termguicolors
 set t_ut=
 syntax enable
 set background=dark
