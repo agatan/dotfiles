@@ -288,7 +288,7 @@ set wildmenu wildmode=list:longest
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
-set termguicolors
+" set termguicolors
 set t_ut=
 syntax enable
 set background=dark
