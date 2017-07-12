@@ -8,3 +8,6 @@
     root = ~/repos/src
 [core]
     excludesfile = ~/.gitignore
+[github]
+    privatekey = ~/.ssh/id_rsa
+    user = agatan
