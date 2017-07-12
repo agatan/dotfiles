@@ -59,6 +59,7 @@ let g:rooter_use_lcd = 1
 " {{{ edit
 Plug 'neomake/neomake'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
 " Plug 'maralla/completor.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugin' }
