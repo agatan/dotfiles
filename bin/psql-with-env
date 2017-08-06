@@ -2,7 +2,7 @@
 
 set -eu
 
-read -p "Do you readlly want to connect to $DATABASE_URL ? [y/N] " ans
+read -p "Do you want to connect to $DATABASE_URL ? [y/N] " ans
 case $ans in
     'y')
         echo 'ok'
