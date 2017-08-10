@@ -7,7 +7,7 @@ function tmux_automatically_attach_session()
         echo "${fg_bold[red]}  | | | |  | | |_| |/  \  ${reset_color}"
         echo "${fg_bold[red]}  |_| |_|  |_|\___//_/\_\ ${reset_color}"
     else
-        if is_interactive_shell && ! is_ssh_running; then
+        if is_interactive_shell && ! is_ssh_running && ! is_vscode_running; then
             if ! exists 'tmux'; then
                 echo 'Error: tmux command not found' 1>&2
                 return 1

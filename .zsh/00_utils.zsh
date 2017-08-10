@@ -11,6 +11,10 @@ is_tmux_running() {
     [[ -n "$TMUX" ]]
 }
 
+is_vscode_running() {
+    [[ -n "$VSCODE_PID" ]]
+}
+
 is_interactive_shell() {
     [[ -n "$PS1" ]]
 }
