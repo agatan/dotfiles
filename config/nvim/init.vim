@@ -225,8 +225,8 @@ augroup my_neomake
     autocmd!
     autocmd BufWritePost * Neomake
     autocmd ColorScheme *
-                \ highlight NeomakeError cterm=underline ctermfg=red |
-                \ highlight NeomakeWarning cterm=underline ctermfg=yellow
+                \ highlight NeomakeErrorSign cterm=underline ctermfg=red |
+                \ highlight NeomakeWarningSign cterm=underline ctermfg=yellow
 augroup END
 
 
