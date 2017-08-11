@@ -10,6 +10,8 @@ if exists 'history-substring-search-down'; then
     bindkey '^N' history-substring-search-down
 fi
 
+bindkey -s "^Z" "^Ufg^M"
+
 do_enter() {
     if [[ -n $BUFFER ]]; then
         zle accept-line
