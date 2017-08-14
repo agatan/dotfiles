@@ -12,3 +12,5 @@ tags
 
 .config/yarn/
 .config/nvim/.netrwhist
+
+.bindor/
