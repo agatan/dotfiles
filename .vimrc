@@ -240,9 +240,9 @@ if executable('opam')
   endif
 
   function! s:ocaml_format()
-    let now_line = line('.')
+    let l:now_line = line('.')
     execute ':%! ocp-indent'
-    execute ':' . now_line
+    execute ':' . l:now_line
   endfunction
 
   function! s:ocaml_setup()
