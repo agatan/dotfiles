@@ -54,9 +54,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
 Plug 'maralla/completor.vim'
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 Plug 'Shougo/echodoc.vim'
 
 Plug 'osyo-manga/vim-anzu'
@@ -344,6 +341,9 @@ set matchtime=1
 set whichwrap=b,s,h,l,<,>,[,]
 set smarttab
 " set completeopt-=preview
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" inoremap <expr> <Tab> pumvisible() ? '<C-y>' :  '<CR>'
 
 nnoremap ; :
 vnoremap ; :
