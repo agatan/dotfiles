@@ -1,9 +1,6 @@
 set encoding=utf-8
 scriptencoding utf8
 
-" tiny とsmall では読み込まない
-if !1 | finish | endif
-
 nnoremap <Space>. :edit $MYVIMRC<CR>
 
 " :ReloadVimrc load $MYVIMRC
@@ -17,7 +14,7 @@ filetype off
 let s:vim_plug_path = expand($HOME . '/.vim/plugged/')
 if has('vim_starting')
     execute 'set runtimepath+=' . s:vim_plug_path . 'vim-plug'
-    if !isdirectory(s:vim_plug_path)
+    if !isdirectory(s:vim_plug_path . 'vim-plug')
         echo 'install vim-plug...'
         call mkdir(s:vim_plug_path, 'p')
         call system('git clone https://github.com/junegunn/vim-plug ' . s:vim_plug_path . 'vim-plug/autoload')
@@ -34,10 +31,6 @@ Plug 'cocopon/iceberg.vim'
 Plug 'rhysd/wallaby.vim'
 Plug 'w0ng/vim-hybrid'
 Plug 'nanotech/jellybeans.vim'
-Plug 'altercation/vim-colors-solarized'
-Plug 'rhysd/vim-color-spring-night'
-Plug 'junegunn/seoul256.vim'
-Plug 'dracula/vim'
 Plug 'itchyny/lightline.vim'
 " }}}
 
@@ -51,13 +44,20 @@ Plug 'airblade/vim-gitgutter'
 
 Plug 'airblade/vim-rooter'
 let g:rooter_use_lcd = 1
+
+Plug 'wsdjeg/FlyGrep.vim'
 " }}}
 
 " {{{ edit
 Plug 'neomake/neomake'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
-" Plug 'maralla/completor.vim'
+Plug 'maralla/completor.vim'
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
+Plug 'Shougo/echodoc.vim'
 
 Plug 'osyo-manga/vim-anzu'
 nmap n <Plug>(anzu-n-with-echo)
@@ -135,13 +135,16 @@ let g:haskell_conceal = 0
 
 "" {{{ rust
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-" let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 1
 
 Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 "" }}}
 
 "" {{{ python
-let g:neomake_python_enabled_makers = ['python', 'flake8', 'mypy']
+if executable('flake8')
+    let g:syntastic_python_flake8_args = '--max-line-length=120'
+elseif executable('pyflakes') && executable('pep8')
+end
 if executable('autopep8')
     function! s:preserve_autopep8(cmd)
     endfunction
@@ -158,6 +161,15 @@ Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 
 "" {{{ javascript
 Plug 'flowtype/vim-flow'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
+"" }}}
+
+"" {{{ web / html / css
+Plug 'othree/html5.vim'
 "" }}}
 
 "" {{{ yaml
@@ -203,25 +215,6 @@ nnoremap <silent> [fzf]m :<C-u>History<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
 nnoremap <silent> [fzf]l :<C-u>BLines<CR>
 nnoremap <silent> [fzf]t :<C-u>Tags<CR>
-
-"" lexima.vim
-" let g:lexima_enable_basic_rules = 0
-"
-" function! s:endwise_rule(at, end, filetype, syntax)
-"     return {
-"         \ 'char': '<CR>',
-"         \ 'input': '<CR>',
-"         \ 'input_after': '<CR>' . a:end,
-"         \ 'at': a:at,
-"         \ 'except': '\C\v^(\s*)\S.*%#\n%(%(\s*|\1\s.+)\n)*\1' . a:end,
-"         \ 'filetype': a:filetype,
-"         \ 'syntax': a:syntax,
-"         \ }
-" endfunction
-" call lexima#add_rule(s:endwise_rule('^\s*\%(module\|def\|macro\|class\|if\|unless\|for\|while\|until\|case\)\>\%(.*[^.:@$]\<end\>\)\@!.*\%#', 'end', 'crystal', []))
-" call lexima#add_rule(s:endwise_rule('^\s*\%(begin\)\s*\%#', 'end', 'crystal', []))
-" call lexima#add_rule(s:endwise_rule('\%(^\s*#.*\)\@<!do\%(\s*|.*|\)\?\s*\%#', 'end', 'crystal', []))
-" call lexima#add_rule(s:endwise_rule('\<\%(if\|unless\)\>.*\%#', 'end', 'crystal', 'rubyConditionalExpression'))
 
 " Neomake
 augroup my_neomake
@@ -298,7 +291,7 @@ set wildmenu wildmode=list:longest
 set t_ut=
 syntax enable
 set background=dark
-silent! colorscheme hybrid " suppress error message even if hybrid is not installed.
+silent! colorscheme iceberg " suppress error message even if hybrid is not installed.
 
 set cmdheight=2
 set hidden
@@ -350,7 +343,7 @@ set showmatch
 set matchtime=1
 set whichwrap=b,s,h,l,<,>,[,]
 set smarttab
-set completeopt-=preview
+" set completeopt-=preview
 
 nnoremap ; :
 vnoremap ; :
