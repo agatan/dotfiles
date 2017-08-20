@@ -111,10 +111,6 @@ mru() {
 alias -g FROM=mru
 alias v='mru --action "vim -p"'
 
-if exists 'nvim'; then
-  alias vim='nvim'
-fi
-
 if exists 'fzf'; then
   alias ff='nvim -c Files'
 fi
