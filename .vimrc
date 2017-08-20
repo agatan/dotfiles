@@ -152,6 +152,10 @@ if executable('autopep8')
 end
 "" }}}
 
+""" {{{ ruby
+Plug 'vim-ruby/vim-ruby'
+""" }}}
+
 "" {{{ crystal
 Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
 "" }}}
@@ -200,7 +204,7 @@ endfunction
 function! s:all_files()
   return extend(
   \ filter(copy(v:oldfiles),
-  \        "v:val !~ 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+  \        "v:val !~# 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
   \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
 endfunction
 
@@ -217,9 +221,9 @@ nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 augroup my_neomake
     autocmd!
     autocmd BufWritePost * Neomake
-    " autocmd ColorScheme *
-    "             \ highlight NeomakeErrorSign ctermfg=white |
-    "             \ highlight NeomakeWarningSign ctermfg=yellow
+    autocmd ColorScheme *
+                \ highlight NeomakeErrorSign ctermfg=red |
+                \ highlight NeomakeWarningSign ctermfg=yellow
 augroup END
 
 
