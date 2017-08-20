@@ -10,7 +10,7 @@ tags
 
 .ipynb_checkpoints/
 
-.config/yarn/
-.config/nvim/.netrwhist
+config/yarn/
+config/nvim/.netrwhist
 
 .bindor/
