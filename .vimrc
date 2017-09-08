@@ -165,6 +165,7 @@ Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
+Plug 'posva/vim-vue', { 'for': ['javascript', 'vue'] }
 "" }}}
 
 "" {{{ web / html / css
@@ -214,6 +215,9 @@ nnoremap <silent> [fzf]m :<C-u>History<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
 nnoremap <silent> [fzf]l :<C-u>BLines<CR>
 nnoremap <silent> [fzf]t :<C-u>Tags<CR>
+
+" fugitive
+nnoremap <Space>g :<C-u>Ggrep
 
 " Neomake
 augroup my_neomake
@@ -267,6 +271,13 @@ endif
 "" C++
 let g:neomake_cpp_enabled_markers = ['clang']
 let g:neomake_c_enabled_markers = ['clang']
+
+
+"" ruby
+augroup myvimrc
+  autocmd!
+  autocmd FileType ruby setlocal regexpengine=1
+augroup END
 
 " }}}
 

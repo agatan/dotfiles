@@ -41,3 +41,14 @@ killp() {
 git-del-branch() {
     git branch -D $(git branch | fzf)
 }
+
+# godoc
+fdoc() {
+    local selected_dir=$(ghq list --full-path | fzf --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        if [ ! -n "$PAGER" ]; then
+           PAGER=less
+        fi
+        godoc ${selected_dir} | $PAGER
+    fi
+}
