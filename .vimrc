@@ -52,6 +52,11 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
 Plug 'maralla/completor.vim'
+" Plug 'maralla/completor-neosnippet'
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'Shougo/echodoc.vim'
 
 Plug 'osyo-manga/vim-anzu'
@@ -112,6 +117,10 @@ Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
 let g:clang_auto = 0
 let g:clang_cpp_options = '-std=c++14'
 let g:clang_diagsopt = ''
+"" }}}
+
+"" {{{ dlang
+Plug 'idanarye/vim-dutyl', { 'for': 'd' }
 "" }}}
 
 "" {{{ haskell
@@ -356,6 +365,7 @@ set smarttab
 " set completeopt-=preview
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+let g:UltiSnipsExpandTrigger = '<c-k>'
 " inoremap <expr> <Tab> pumvisible() ? '<C-y>' :  '<CR>'
 
 nnoremap ; :
