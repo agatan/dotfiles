@@ -6,6 +6,10 @@ nnoremap <Space>. :edit $MYVIMRC<CR>
 " :ReloadVimrc load $MYVIMRC
 command! ReloadVimrc source $MYVIMRC
 
+augroup myvimrc
+  autocmd!
+augroup END
+
 
 "" Plugins
 
@@ -70,8 +74,7 @@ nmap <Space>c <Plug>(caw:hatpos:toggle)
 vmap <Space>c <Plug>(caw:hatpos:toggle)
 
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocs', 'DevDocsAll', '<Plug>(devdocs-under-cursor)'] }
-augroup devdocs
-    autocmd!
+augroup myvimrc
     autocmd FileType c,cpp,php,ruby nmap <buffer>K <Plug>(devdocs-under-cursor)
 augroup END
 
@@ -107,8 +110,7 @@ Plug 'yosssi/vim-ace', { 'for': 'ace' }
 
 "" {{{ cpp c++
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
-augroup clang-format
-    autocmd!
+augroup myvimrc
     autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
     autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
     autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
@@ -129,8 +131,7 @@ nnoremap <Leader>t :<C-u>GhcModType<CR>
 nnoremap <Leader>T :<C-u>GhcModTypeClear<CR>
 
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
-augroup haskell
-    autocmd!
+augroup myvimrc
     autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 augroup END
 Plug 'dag/vim2hs', { 'for': 'haskell' }
@@ -229,8 +230,7 @@ nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 nnoremap <Space>g :<C-u>Ggrep
 
 " Neomake
-augroup my_neomake
-    autocmd!
+augroup myvimrc
     autocmd BufWritePost * Neomake
     autocmd ColorScheme *
                 \ highlight NeomakeErrorSign ctermfg=red |
@@ -271,8 +271,7 @@ if executable('opam')
       command! OcpIndent call s:ocaml_format()
   endif
 
-  augroup ocaml
-    autocmd!
+  augroup myvimrc
     autocmd FileType ocaml call s:ocaml_setup()
   augroup END
 endif
@@ -284,8 +283,12 @@ let g:neomake_c_enabled_markers = ['clang']
 
 "" ruby
 augroup myvimrc
-  autocmd!
   autocmd FileType ruby setlocal regexpengine=1
+augroup END
+
+"" Crystal
+augroup myvimrc
+  autocmd FileType crystal setlocal regexpengine=1
 augroup END
 
 " }}}
