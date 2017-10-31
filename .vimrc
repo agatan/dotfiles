@@ -68,6 +68,10 @@ nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
+augroup myvimrc
+  autocmd CmdlineEnter [/\?] :set hlsearch
+autocmd CmdlineLeave [/\?] :set nohlsearch
+augroup END
 
 Plug 'tyru/caw.vim', { 'on': ['<Plug>(caw:hatpos:toggle)'] }
 nmap <Space>c <Plug>(caw:hatpos:toggle)
