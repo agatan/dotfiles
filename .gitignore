@@ -14,3 +14,5 @@ config/yarn/
 config/nvim/.netrwhist
 
 .bindor/
+
+vendor/bundle
