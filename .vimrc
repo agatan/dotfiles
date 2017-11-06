@@ -239,6 +239,7 @@ nnoremap <Space>g :<C-u>Ggrep
 augroup myvimrc
     autocmd BufWritePost * Neomake
     autocmd ColorScheme *
+                \ highlight NeomakeError ctermfg=lightred |
                 \ highlight NeomakeErrorSign ctermfg=red |
                 \ highlight NeomakeWarningSign ctermfg=yellow
 augroup END
