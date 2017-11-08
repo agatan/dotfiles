@@ -17,10 +17,12 @@ do_enter() {
         zle accept-line
         return $status
     fi
+
     echo
     if [[ -d .git ]] && [[ -n "$(git status --short)" ]]; then
         git status
     fi
+    echo "\n"
 
     zle reset-prompt
 }
