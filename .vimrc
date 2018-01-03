@@ -186,6 +186,7 @@ Plug 'posva/vim-vue', { 'for': ['javascript', 'vue'] }
 
 "" {{{ web / html / css
 Plug 'othree/html5.vim'
+Plug 'mattn/emmet-vim'
 "" }}}
 
 "" {{{ yaml
