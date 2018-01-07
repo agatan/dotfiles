@@ -1,11 +1,7 @@
 function tmux_automatically_attach_session()
 {
-    if is_tmux_running; then
-        echo "${fg_bold[red]} _____ __  __ _   ___  __ ${reset_color}"
-        echo "${fg_bold[red]}|_   _|  \/  | | | \ \/ / ${reset_color}"
-        echo "${fg_bold[red]}  | | | |\/| | | | |\  /  ${reset_color}"
-        echo "${fg_bold[red]}  | | | |  | | |_| |/  \  ${reset_color}"
-        echo "${fg_bold[red]}  |_| |_|  |_|\___//_/\_\ ${reset_color}"
+    if is_tmux_running || is_vscode_running; then
+      return 0
     else
         if is_interactive_shell && ! is_ssh_running && ! is_vscode_running; then
             if ! exists 'tmux'; then
