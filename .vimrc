@@ -184,6 +184,11 @@ Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'np
 Plug 'posva/vim-vue', { 'for': ['javascript', 'vue'] }
 "" }}}
 
+"" {{{ typescript
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
+"" }}}
+
 "" {{{ web / html / css
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
