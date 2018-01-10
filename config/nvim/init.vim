@@ -13,6 +13,9 @@ else
   throw 'python3 venv for neovim is not found'
 endif
 
+augroup myvimrc
+  autocmd!
+augroup END
 
 "" Plugins
 
@@ -74,8 +77,7 @@ nmap <Space>c <Plug>(caw:hatpos:toggle)
 vmap <Space>c <Plug>(caw:hatpos:toggle)
 
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocs', 'DevDocsAll', '<Plug>(devdocs-under-cursor)'] }
-augroup devdocs
-  autocmd!
+augroup myvimrc
   autocmd FileType c,cpp,php,ruby nmap <buffer>K <Plug>(devdocs-under-cursor)
 augroup END
 
@@ -115,8 +117,7 @@ let g:deoplete#sources#go#gocode_binary = $GOPATH . '/bin/gocode'
 
 "" {{{ cpp c++
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
-augroup clang-format
-  autocmd!
+augroup myvimrc
   autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
   autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
   autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
@@ -133,8 +134,7 @@ nnoremap <Leader>t :<C-u>GhcModType<CR>
 nnoremap <Leader>T :<C-u>GhcModTypeClear<CR>
 
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
-augroup haskell
-  autocmd!
+augroup myvimrc
   autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 augroup END
 Plug 'dag/vim2hs', { 'for': 'haskell' }
@@ -236,8 +236,7 @@ let g:echodoc#enable_at_startup = 1
 " " Neomake
 " let g:neomake_open_list = 2
 let g:neomake_list_height = 5
-augroup my_neomake
-  autocmd!
+augroup myvirc
   autocmd BufWritePost * Neomake
   autocmd ColorScheme *
         \ highlight NeomakeError ctermfg=lightred |
@@ -279,8 +278,7 @@ if executable('opam')
     command! OcpIndent call s:ocaml_format()
   endif
 
-  augroup ocaml
-    autocmd!
+  augroup myvirmc
     autocmd FileType ocaml call s:ocaml_setup()
   augroup END
 endif
