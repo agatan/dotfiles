@@ -17,12 +17,12 @@ filetype off
 
 let s:vim_plug_path = expand($HOME . '/.vim/plugged/')
 if has('vim_starting')
-    execute 'set runtimepath+=' . s:vim_plug_path . 'vim-plug'
-    if !isdirectory(s:vim_plug_path . 'vim-plug')
-        echo 'install vim-plug...'
-        call mkdir(s:vim_plug_path, 'p')
-        call system('git clone https://github.com/junegunn/vim-plug ' . s:vim_plug_path . 'vim-plug/autoload')
-    end
+  execute 'set runtimepath+=' . s:vim_plug_path . 'vim-plug'
+  if !isdirectory(s:vim_plug_path . 'vim-plug')
+    echo 'install vim-plug...'
+    call mkdir(s:vim_plug_path, 'p')
+    call system('git clone https://github.com/junegunn/vim-plug ' . s:vim_plug_path . 'vim-plug/autoload')
+  end
 endif
 call plug#begin(s:vim_plug_path) " {{{
 
@@ -70,7 +70,7 @@ nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
 augroup myvimrc
   autocmd CmdlineEnter [/\?] :set hlsearch
-autocmd CmdlineLeave [/\?] :set nohlsearch
+  autocmd CmdlineLeave [/\?] :set nohlsearch
 augroup END
 
 Plug 'tyru/caw.vim', { 'on': ['<Plug>(caw:hatpos:toggle)'] }
@@ -79,7 +79,7 @@ vmap <Space>c <Plug>(caw:hatpos:toggle)
 
 Plug 'rhysd/devdocs.vim', { 'on': ['DevDocs', 'DevDocsAll', '<Plug>(devdocs-under-cursor)'] }
 augroup myvimrc
-    autocmd FileType c,cpp,php,ruby nmap <buffer>K <Plug>(devdocs-under-cursor)
+  autocmd FileType c,cpp,php,ruby nmap <buffer>K <Plug>(devdocs-under-cursor)
 augroup END
 
 Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign'] }
@@ -117,9 +117,9 @@ Plug 'yosssi/vim-ace', { 'for': 'ace' }
 "" {{{ cpp c++
 Plug 'rhysd/vim-clang-format', { 'for': ['c', 'cpp'] }
 augroup myvimrc
-    autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
-    autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
-    autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
+  autocmd FileType c,cpp nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+  autocmd FileType c,cpp vnoremap <buffer><Leader>cf :ClangFormat<CR>
+  autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
 augroup END
 Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
 let g:clang_auto = 0
@@ -138,7 +138,7 @@ nnoremap <Leader>T :<C-u>GhcModTypeClear<CR>
 
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 augroup myvimrc
-    autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+  autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 augroup END
 Plug 'dag/vim2hs', { 'for': 'haskell' }
 let g:haskell_conceal = 0
@@ -153,16 +153,16 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 
 "" {{{ python
 if executable('flake8')
-    let g:syntastic_python_flake8_args = '--max-line-length=120'
+  let g:syntastic_python_flake8_args = '--max-line-length=120'
 elseif executable('pyflakes') && executable('pep8')
 end
 if executable('autopep8')
-    function! s:preserve_autopep8(cmd)
-    endfunction
-    function! s:autopep8() abort
-        silent %!autopep8 -
-    endfunction
-    command! Autopep8 call s:autopep8()
+  function! s:preserve_autopep8(cmd)
+  endfunction
+  function! s:autopep8() abort
+    silent %!autopep8 -
+  endfunction
+  command! Autopep8 call s:autopep8()
 end
 "" }}}
 
@@ -205,28 +205,28 @@ filetype plugin indent on
 "" plugin settings
 
 function! s:is_git_repo() abort
-    if executable('git')
-        call system('git rev-parse --is-inside-work-tree &>/dev/null')
-        if v:shell_error == 0
-            return 1
-        endif
+  if executable('git')
+    call system('git rev-parse --is-inside-work-tree &>/dev/null')
+    if v:shell_error == 0
+      return 1
     endif
-    return 0
+  endif
+  return 0
 endfunction
 
 function! s:fzf_files() abort
-    if s:is_git_repo()
-        GFiles
-    else
-        Files
-    endif
+  if s:is_git_repo()
+    GFiles
+  else
+    Files
+  endif
 endfunction
 
 function! s:all_files()
   return extend(
-  \ filter(copy(v:oldfiles),
-  \        "v:val !~# 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
-  \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
+        \ filter(copy(v:oldfiles),
+        \        "v:val !~# 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+        \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
 endfunction
 
 nnoremap [fzf] <Nop>
@@ -243,11 +243,11 @@ nnoremap <Space>g :<C-u>Ggrep
 
 " Neomake
 augroup myvimrc
-    autocmd BufWritePost * Neomake
-    autocmd ColorScheme *
-                \ highlight NeomakeError ctermfg=lightred |
-                \ highlight NeomakeErrorSign ctermfg=red |
-                \ highlight NeomakeWarningSign ctermfg=yellow
+  autocmd BufWritePost * Neomake
+  autocmd ColorScheme *
+        \ highlight NeomakeError ctermfg=lightred |
+        \ highlight NeomakeErrorSign ctermfg=red |
+        \ highlight NeomakeWarningSign ctermfg=yellow
 augroup END
 
 
@@ -281,7 +281,7 @@ if executable('opam')
   endfunction
 
   if executable('ocp-indent')
-      command! OcpIndent call s:ocaml_format()
+    command! OcpIndent call s:ocaml_format()
   endif
 
   augroup myvimrc
