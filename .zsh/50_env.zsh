@@ -2,6 +2,10 @@ if exists nodenv; then
     eval "$(nodenv init -)"
 fi
 
+if exists npm; then
+  export PATH=$(npm bin)/$PATH
+fi
+
 if is_linux; then
     export XDG_CONFIG_HOME=$HOME/.config
 fi
