@@ -53,5 +53,8 @@ if [[ -d $HOME/.zsh  ]]; then
         source $f
     done
     unset f
+    if [[ -f $HOME/.zsh/local.zsh ]]; then
+        source $HOME/.zsh/local.zsh
+    fi
 fi
 
