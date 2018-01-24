@@ -63,8 +63,21 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
 " Plug 'maralla/completor.vim'
-Plug 'Shougo/deoplete.nvim', { 'do': 'UpdateRemotePlugin' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
+
+Plug 'autozimu/LanguageClient-neovim', {
+            \ 'branch': 'next',
+            \ 'do': 'bash install.sh',
+            \ }
+let g:LanguageClient_serverCommands = {
+            \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+            \ 'typescript': ['javascript-typescript-stdio'],
+            \ 'typescript.tsx': ['javascript-typescript-stdio'],
+            \ 'javascript': ['javascript-typescript-stdio'],
+            \ 'javascript.jsx': ['javascript-typescript-stdio'],
+            \ }
+
 
 Plug 'osyo-manga/vim-anzu'
 nmap n <Plug>(anzu-n-with-echo)
@@ -145,7 +158,7 @@ let g:haskell_conceal = 0
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 let g:rustfmt_autosave = 1
 
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
+" Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 "" }}}
 
 "" {{{ python
@@ -175,6 +188,10 @@ Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
 Plug 'posva/vim-vue', { 'for': ['javascript', 'vue'] }
+"" }}}
+
+"" {{{ typescript
+Plug 'leafgarland/typescript-vim'
 "" }}}
 
 "" {{{ web / html / css
