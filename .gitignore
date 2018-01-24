@@ -1,6 +1,7 @@
 vim/view/
 vim/.netrwhist
 *.swp
+*.swo
 vim/plugged
 service_account.json
 .DS_Store
