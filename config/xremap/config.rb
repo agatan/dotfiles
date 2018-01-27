@@ -20,7 +20,7 @@ window class_not: ['gnome-terminal-server', 'urxvt'] do
   remap 'C-u', to: ['Shift-Home', 'Ctrl-x']
   remap 'C-w', to: ['Ctrl-Shift-Left', 'Ctrl-x']
 
-  %w[a z x c v w t e].each do |key|
+  %w[a z x c v w t e f].each do |key|
     remap "Alt-#{key}", to: "C-#{key}"
   end
 end
