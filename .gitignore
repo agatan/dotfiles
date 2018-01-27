@@ -8,6 +8,7 @@ service_account.json
 .editorconfig
 tags
 *.dtps/
+.zsh/local.zsh
 
 .ipynb_checkpoints/
 
