@@ -168,6 +168,9 @@ end
 
 """ {{{ ruby
 Plug 'vim-ruby/vim-ruby'
+Plug 'thoughtbot/vim-rspec', { 'for': ['ruby'] }
+Plug 'tpope/vim-dispatch'
+let g:rspec_command = 'Dispatch bundle exec rspec {spec}'
 """ }}}
 
 "" {{{ crystal
