@@ -18,3 +18,5 @@ config/nvim/.netrwhist
 .bindor/
 
 vendor/bundle
+
+*.so
