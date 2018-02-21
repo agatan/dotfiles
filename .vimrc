@@ -386,12 +386,12 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:UltiSnipsExpandTrigger = '<c-k>'
 " inoremap <expr> <Tab> pumvisible() ? '<C-y>' :  '<CR>'
 
-nnoremap ; :
-vnoremap ; :
-nnoremap : ;
-vnoremap : ;
-nnoremap q; q:
-vnoremap q; q:
+" nnoremap ; :
+" vnoremap ; :
+" nnoremap : ;
+" vnoremap : ;
+" nnoremap q; q:
+" vnoremap q; q:
 
 " }}}
 
