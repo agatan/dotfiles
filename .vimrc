@@ -55,7 +55,7 @@ Plug 'neomake/neomake'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
-Plug 'maralla/completor.vim'
+" Plug 'maralla/completor.vim'
 " Plug 'maralla/completor-neosnippet'
 " Plug 'Shougo/neosnippet'
 " Plug 'Shougo/neosnippet-snippets'
@@ -122,7 +122,7 @@ augroup myvimrc
   autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
 augroup END
 Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
-let g:clang_auto = 0
+" let g:clang_auto = 0
 let g:clang_cpp_options = '-std=c++14'
 let g:clang_diagsopt = ''
 "" }}}
@@ -386,12 +386,12 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 let g:UltiSnipsExpandTrigger = '<c-k>'
 " inoremap <expr> <Tab> pumvisible() ? '<C-y>' :  '<CR>'
 
-" nnoremap ; :
-" vnoremap ; :
-" nnoremap : ;
-" vnoremap : ;
-" nnoremap q; q:
-" vnoremap q; q:
+nnoremap ; :
+vnoremap ; :
+nnoremap : ;
+vnoremap : ;
+nnoremap q; q:
+vnoremap q; q:
 
 " }}}
 
