@@ -55,7 +55,7 @@ Plug 'neomake/neomake'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
-" Plug 'maralla/completor.vim'
+Plug 'maralla/completor.vim'
 " Plug 'maralla/completor-neosnippet'
 " Plug 'Shougo/neosnippet'
 " Plug 'Shougo/neosnippet-snippets'
