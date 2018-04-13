@@ -1,3 +1,5 @@
+export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/*'"
+export FZF_FIND_FILE_COMMAND=$FZF_DEFAULT_COMMAND
 export FZF_DEFAULT_OPTS='
 --extended
 --ansi
