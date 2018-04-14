@@ -160,7 +160,7 @@ if executable('autopep8')
   function! s:preserve_autopep8(cmd)
   endfunction
   function! s:autopep8() abort
-    silent %!autopep8 -
+    silent %!autopep8 --max-line-length 80 -
   endfunction
   command! Autopep8 call s:autopep8()
 end
