@@ -37,10 +37,6 @@ if exists fzf; then
     alias -g F='| fzf'
 fi
 
-if [ -n $ENHANCD_FILTER ]; then
-    alias g='cd -G'
-fi
-
 mru() {
     local -a f1
 

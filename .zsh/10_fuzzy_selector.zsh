@@ -16,11 +16,24 @@ export FZF_DEFAULT_OPTS='
 fzf-ghq-cd() {
     local selected_dir=$(ghq list --full-path | fzf --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
-        BUFFER="cd $selected_dir"
-        zle accept-line
+        cd $selected_dir
     fi
 }
 zle -N fzf-ghq-cd
+
+alias gall=fzf-ghq-cd
+
+fzf-ghq-my-cd() {
+    local ghqroot=$(ghq root)
+    local selected_dir=$(find $ghqroot/github.com/wantedly $ghqroot/github.com/agatan -maxdepth 1 -type d | fzf --query "$LBUFFER")
+    if [ -n "$selected_dir" ]; then
+        cd $selected_dir
+    fi
+}
+zle -N fzf-ghq-my-cd
+
+alias g=fzf-ghq-my-cd
+
 
 fzf-history() {
     BUFFER=`history -n 1 | awk '!a[$0]++' | fzf --tac --no-sort --query "$LBUFFER"`
