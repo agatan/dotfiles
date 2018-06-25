@@ -154,6 +154,7 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 "" }}}
 
 "" {{{ python
+Plug 'heavenshell/vim-pydocstring'
 if executable('flake8')
   let g:syntastic_python_flake8_args = '--max-line-length=120'
 elseif executable('pyflakes') && executable('pep8')
