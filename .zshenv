@@ -45,3 +45,9 @@ if [[ $UID == 0 ]]; then
     unset HISTFILE
     export SAVEHIST=0
 fi
+
+### Android
+if [ -d $HOME/Library/Android ];
+then
+  export PATH="$HOME/Library/Android/sdk/platform-tools/:$PATH"
+fi
