@@ -24,3 +24,5 @@ vendor/bundle
 .env-prod
 .env-dev
 .env
+
+.idea/
