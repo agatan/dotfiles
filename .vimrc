@@ -53,7 +53,11 @@ Plug 'jremmen/vim-ripgrep'
 " }}}
 
 " {{{ edit
-Plug 'neomake/neomake'
+Plug 'w0rp/ale'
+let g:ale_fixers = {
+\ 'python': ['black', 'mypy'],
+\}
+let g:ale_python_mypy_options = '--ignore-missing-imports'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
@@ -157,9 +161,6 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 Plug 'heavenshell/vim-pydocstring'
 Plug 'ambv/black'
 autocmd BufWritePre *.py execute ':Black'
-if executable('flake8')
-  let g:syntastic_python_flake8_args = '--ignore=E501'
-end
 "" }}}
 
 """ {{{ ruby
@@ -239,15 +240,6 @@ nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 " fugitive
 nnoremap <Space>g :<C-u>Ggrep
 
-" Neomake
-augroup myvimrc
-  autocmd BufWritePost * Neomake
-  autocmd ColorScheme *
-        \ highlight NeomakeError ctermfg=lightred |
-        \ highlight NeomakeErrorSign ctermfg=red |
-        \ highlight NeomakeWarningSign ctermfg=yellow
-augroup END
-
 
 " language support {{{
 
@@ -286,10 +278,6 @@ if executable('opam')
     autocmd FileType ocaml call s:ocaml_setup()
   augroup END
 endif
-
-"" C++
-let g:neomake_cpp_enabled_markers = ['clang']
-let g:neomake_c_enabled_markers = ['clang']
 
 
 "" ruby
