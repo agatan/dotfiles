@@ -155,17 +155,10 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 
 "" {{{ python
 Plug 'heavenshell/vim-pydocstring'
+Plug 'ambv/black'
+autocmd BufWritePre *.py execute ':Black'
 if executable('flake8')
   let g:syntastic_python_flake8_args = '--max-line-length=120'
-elseif executable('pyflakes') && executable('pep8')
-end
-if executable('autopep8')
-  function! s:preserve_autopep8(cmd)
-  endfunction
-  function! s:autopep8() abort
-    silent %!autopep8 --max-line-length 80 -
-  endfunction
-  command! Autopep8 call s:autopep8()
 end
 "" }}}
 
