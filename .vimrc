@@ -158,7 +158,7 @@ Plug 'heavenshell/vim-pydocstring'
 Plug 'ambv/black'
 autocmd BufWritePre *.py execute ':Black'
 if executable('flake8')
-  let g:syntastic_python_flake8_args = '--max-line-length=120'
+  let g:syntastic_python_flake8_args = '--ignore=E501'
 end
 "" }}}
 
