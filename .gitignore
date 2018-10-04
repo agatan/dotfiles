@@ -27,3 +27,5 @@ vendor/bundle
 .env
 
 .idea/
+.mypy_cache/
+.envrc
