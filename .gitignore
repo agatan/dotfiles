@@ -29,3 +29,5 @@ vendor/bundle
 .idea/
 .mypy_cache/
 .envrc
+
+.vscode/
