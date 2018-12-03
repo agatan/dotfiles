@@ -207,3 +207,13 @@
                 python-shell-interpreter-args "-i --simple-prompt")))))
 (when (require 'projectile nil t)
   (add-hook 'window-configuration-change-hook #'my/enable-project-root-venv))
+
+
+;;; markdown
+(use-package markdown-mode
+  :mode (("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :config
+  (gfm-mode)
+  :init
+  (setq markdown-command "multimarkdown"))
