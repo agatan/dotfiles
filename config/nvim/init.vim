@@ -174,6 +174,9 @@ if executable('autopep8')
   endfunction
   command! Autopep8 call s:autopep8()
 end
+Plug 'zchee/deoplete-jedi'
+
+let g:neomake_python_enabled_makers = ['python', 'flake8', 'mypy']
 "" }}}
 
 "" {{{ crystal
@@ -253,6 +256,7 @@ let g:echodoc#enable_at_startup = 1
 " " Neomake
 " let g:neomake_open_list = 2
 let g:neomake_list_height = 5
+call neomake#configure#automake('w')
 augroup myvirc
   autocmd BufWritePost * Neomake
   autocmd ColorScheme *
