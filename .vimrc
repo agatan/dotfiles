@@ -160,7 +160,7 @@ Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 "" {{{ python
 Plug 'heavenshell/vim-pydocstring'
 Plug 'ambv/black'
-autocmd BufWritePre *.py execute ':Black'
+" autocmd BufWritePre *.py execute ':Black'
 "" }}}
 
 """ {{{ ruby
