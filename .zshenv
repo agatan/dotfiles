@@ -51,3 +51,9 @@ if [ -d $HOME/Library/Android ];
 then
   export PATH="$HOME/Library/Android/sdk/platform-tools/:$PATH"
 fi
+
+### Python
+# If virtualenv is enabled, script mode sessions must run in the virtualenv.
+if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
+  source "${VIRTUAL_ENV}/bin/activate"
+fi
