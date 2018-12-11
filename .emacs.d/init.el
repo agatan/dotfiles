@@ -194,7 +194,11 @@
               ("C-c b p" . goto-previous-block))
   :config
   (elpy-enable)
+  (python-mode)
   (elpy-mode))
+
+(use-package cython-mode
+  :mode ("\\.pyx\\'" . cython-mode))
 
 (defun my/enable-project-root-venv ()
   (let* ((root (projectile-project-root))
@@ -217,3 +221,24 @@
   (gfm-mode)
   :init
   (setq markdown-command "multimarkdown"))
+
+
+;;; golang
+ (use-package company-go)
+(use-package go-mode
+  :mode (("\\.go\\'" . go-mode))
+  :init
+  (add-hook 'go-mode-hook (lambda ()
+                            (add-hook 'before-save-hook 'gofmt-before-save)
+                            (local-set-key (kbd "M-.") 'godef-jump)
+                            (setq indent-tabs-mode nil)
+                            (setq tab-width 4)
+                            (setq c-basic-offset 4)
+                            (set (make-local-variable 'company-backends) '(company-go))
+                            (add-to-list 'company-backends 'company-go)))
+  (setq gofmt-command "goimports"))
+
+
+;; protobuf
+(use-package protobuf-mode
+  :mode (("\\.proto\\'" . protobuf-mode)))
