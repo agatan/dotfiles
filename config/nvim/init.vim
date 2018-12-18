@@ -67,17 +67,26 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/echodoc.vim'
 
 Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh',
-            \ }
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+nnoremap <Space>ls :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 let g:LanguageClient_serverCommands = {
-            \ 'rust': ['rustup', 'run', 'nightly', 'rls'],
+            \ 'rust': ['rustup', 'run', 'stable', 'rls'],
             \ 'typescript': ['javascript-typescript-stdio'],
             \ 'typescript.tsx': ['javascript-typescript-stdio'],
             \ 'javascript': ['javascript-typescript-stdio'],
             \ 'javascript.jsx': ['javascript-typescript-stdio'],
+            \ 'python': ['pyls'],
+            \ 'go': ['golsp'],
+            \ 'ruby': ['solargraph', 'stdio'],
             \ }
 
+" 'go': [$GOPATH.'/bin/go-langserver','-format-tool','gofmt','-lint-tool','golint', '--gocodecompletion'],
 
 Plug 'osyo-manga/vim-anzu'
 nmap n <Plug>(anzu-n-with-echo)
@@ -118,14 +127,24 @@ Plug 'thinca/vim-quickrun'
 Plug 'tmux-plugins/vim-tmux'
 
 "" {{{ golang
-Plug 'fatih/vim-go', { 'for': 'go' }
-let g:go_fmt_command = 'goimports'
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
+" Plug 'fatih/vim-go', { 'for': 'go' }
+" let g:go_fmt_command = 'goimports'
+" let g:go_highlight_functions = 1
+" let g:go_highlight_methods = 1
+" let g:go_highlight_structs = 1
+"
+" Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
+" let g:deoplete#sources#go#gocode_binary = $GOPATH . '/bin/gocode'
+function! s:gofmt_on_save()
 
-Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
-let g:deoplete#sources#go#gocode_binary = $GOPATH . '/bin/gocode'
+  let l:curw = winsaveview()
+  silent execute "0,$! goimports"
+  try | silent undojoin | catch | endtry
+  call winrestview(l:curw)
+endfunction
+augroup myvimrc
+  autocmd BufWritePre *.go call s:gofmt_on_save()
+augroup END
 "" }}}
 
 "" {{{ cpp c++
@@ -162,10 +181,6 @@ let g:rustfmt_autosave = 1
 "" }}}
 
 "" {{{ python
-if executable('flake8')
-  let g:syntastic_python_flake8_args = '--max-line-length=120'
-elseif executable('pyflakes') && executable('pep8')
-end
 if executable('autopep8')
   function! s:preserve_autopep8(cmd)
   endfunction
@@ -174,9 +189,6 @@ if executable('autopep8')
   endfunction
   command! Autopep8 call s:autopep8()
 end
-Plug 'zchee/deoplete-jedi'
-
-let g:neomake_python_enabled_makers = ['python', 'flake8', 'mypy']
 "" }}}
 
 "" {{{ crystal
@@ -381,6 +393,10 @@ if !exists('loaded_matchit')
 endif
 
 nnoremap <C-]> g<C-]>
+augroup grepquickfix
+  autocmd!
+  autocmd QuickFixCmdPost *grep* cwindow
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " input
