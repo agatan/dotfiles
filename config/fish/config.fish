@@ -17,8 +17,11 @@ set -x FZF_LEGACY_KEYBINDINGS 0
 set -x FZF_DEFAULT_COMMAND "rg --files --hidden --follow --glob '!.git/*'"
 set -x FZF_FIND_FILE_COMMAND $FZF_DEFAULT_COMMAND
 set -x FZF_DEFAULT_OPTS '--extended --ansi --multi --height 40% --reverse --bind=ctrl-u:page-up --bind=ctrl-d:page-down --bind=ctrl-z:toggle-all --reverse --height 40%'
+bind \cf 'forward-char'  # fzf plugin overrides C-f.
+bind \cg '__ghq_crtl_g'  # from fzf-ghq plugin.
 
 ### UI
+set fish_prompt_pwd_dir_length 15
 
 # git status
 set __fish_git_prompt_show_informative_status
