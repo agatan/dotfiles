@@ -126,6 +126,9 @@ Plug 'thinca/vim-quickrun'
 "" tmux
 Plug 'tmux-plugins/vim-tmux'
 
+"" fish
+Plug 'dag/vim-fish'
+
 "" {{{ golang
 " Plug 'fatih/vim-go', { 'for': 'go' }
 " let g:go_fmt_command = 'goimports'
