@@ -10,6 +10,7 @@ set -x PATH $GOPATH/bin $PATH
 if test -d $HOME/.cargo/bin
   set -x PATH $HOME/.cargo/bin $PATH
 end
+set -x PATH $HOME/bin $PATH
 
 
 # fzf
@@ -19,6 +20,19 @@ set -x FZF_FIND_FILE_COMMAND $FZF_DEFAULT_COMMAND
 set -x FZF_DEFAULT_OPTS '--extended --ansi --multi --height 40% --reverse --bind=ctrl-u:page-up --bind=ctrl-d:page-down --bind=ctrl-z:toggle-all --reverse --height 40%'
 bind \cf 'forward-char'  # fzf plugin overrides C-f.
 bind \cg '__ghq_crtl_g'  # from fzf-ghq plugin.
+
+# aliases
+alias ec envchain
+
+
+### Language
+
+# anyenv
+if [ -d $HOME/.anyenv ]
+  set -x PATH $HOME/.anyenv/bin $PATH
+  eval (anyenv init - fish | source)
+end
+
 
 ### UI
 set fish_prompt_pwd_dir_length 15
@@ -49,3 +63,10 @@ function do_enter
 end
 
 bind \cm 'do_enter'
+
+
+# Read Local configuration
+
+if [ -r $HOME/.config/fish/local.fish ]
+  source $HOME/.config/fish/local.fish
+end
