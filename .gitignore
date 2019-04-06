@@ -1,3 +1,9 @@
+.emacs.d/straight/
+.emacs.d/bookmarks
+.emacs.d/recentf
+.emacs.d/smex-items
+.emacs.d/.lsp-session-v1
+
 .vim/black
 vim/view/
 vim/.netrwhist
@@ -10,6 +16,8 @@ service_account.json
 tags
 *.dtps/
 .zsh/local.zsh
+
+config/fish/local.fish
 
 .ipynb_checkpoints/
 
