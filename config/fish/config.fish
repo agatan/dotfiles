@@ -33,6 +33,11 @@ if [ -d $HOME/.anyenv ]
   eval (anyenv init - fish | source)
 end
 
+# python
+if [ -d $HOME/.poetry ]
+  set -x PATH $HOME/.poetry/bin $PATH
+end
+
 
 ### UI
 set fish_prompt_pwd_dir_length 15
