@@ -53,15 +53,24 @@ Plug 'jremmen/vim-ripgrep'
 " }}}
 
 " {{{ edit
-Plug 'w0rp/ale'
-let g:ale_fixers = {
-\ 'python': ['black', 'mypy'],
-\}
-let g:ale_python_mypy_options = '--ignore-missing-imports'
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'natebosch/vim-lsc'
+if executable('pyls')
+  au User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls',
+        \ 'cmd': {server_info->['pyls']},
+        \ 'whitelist': ['python'],
+        \ })
+endif
+let g:lsp_async_completion = 1
+
 Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
-Plug 'maralla/completor.vim'
+" Plug 'maralla/completor.vim'
 " Plug 'maralla/completor-neosnippet'
 " Plug 'Shougo/neosnippet'
 " Plug 'Shougo/neosnippet-snippets'

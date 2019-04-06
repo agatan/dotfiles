@@ -58,7 +58,7 @@ Plug 'wsdjeg/FlyGrep.vim'
 " }}}
 
 " {{{ edit
-Plug 'neomake/neomake'
+" Plug 'neomake/neomake'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
@@ -75,6 +75,7 @@ nnoremap <Space>ls :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" let g:LanguageClient_changeThrottle = 5
 let g:LanguageClient_serverCommands = {
             \ 'rust': ['rustup', 'run', 'stable', 'rls'],
             \ 'typescript': ['javascript-typescript-stdio'],
@@ -271,15 +272,15 @@ let g:echodoc#enable_at_startup = 1
 
 " " Neomake
 " let g:neomake_open_list = 2
-let g:neomake_list_height = 5
-call neomake#configure#automake('w')
-augroup myvirc
-  autocmd BufWritePost * Neomake
-  autocmd ColorScheme *
-        \ highlight NeomakeError ctermfg=lightred |
-        \ highlight NeomakeErrorSign ctermfg=red |
-        \ highlight NeomakeWarningSign ctermfg=yellow
-augroup END
+" let g:neomake_list_height = 5
+" call neomake#configure#automake('w')
+" augroup myvirc
+"   autocmd BufWritePost * Neomake
+"   autocmd ColorScheme *
+"        \ highlight NeomakeError ctermfg=lightred |
+"        \ highlight NeomakeErrorSign ctermfg=red |
+"        \ highlight NeomakeWarningSign ctermfg=yellow
+" augroup END
 
 
 " language support {{{
