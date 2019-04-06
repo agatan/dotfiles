@@ -47,33 +47,72 @@
 ;; User Interface
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(use-package ido
-  :config
-  (ido-mode t)
-  (ido-everywhere t)
-  (setq ido-enable-flex-matching t))
 
-(use-package ido-grid-mode
-  :config
-  (ido-grid-mode t))
+;; ;;; ido
+;; (use-package ido
+;;   :config
+;;   (ido-mode t)
+;;   (ido-everywhere t)
+;;   (setq ido-enable-flex-matching t))
 
-(use-package smex
-  :bind (("M-x" . 'smex)))
+;; (use-package ido-grid-mode
+;;   :config
+;;   (ido-grid-mode t))
 
-(use-package ido-completing-read+
-  :config
-  (ido-ubiquitous-mode t))
+;; (use-package smex
+;;   :bind (("M-x" . 'smex)))
 
-(use-package flx-ido
-  :config
-  (flx-ido-mode))
+;; (use-package ido-completing-read+
+;;   :config
+;;   (ido-ubiquitous-mode t))
 
-;; ido-ghq is only on github.
-(straight-use-package '(ido-ghq :type git :host github :repo "uwabami/ido-ghq"))
-(use-package ido-ghq
+;; (use-package flx-ido
+;;   :config
+;;   (flx-ido-mode))
+
+;; ;; ido-ghq is only on github.
+;; (straight-use-package '(ido-ghq :type git :host github :repo "uwabami/ido-ghq"))
+;; (use-package ido-ghq
+;;   :config
+;;   (setq ido-ghq-short-list t)
+;;   :ensure-system-package ghq)
+
+
+;;; helm
+(use-package helm
+  :bind (("M-x" . helm-M-x)
+         ("C-x b" . helm-mini)
+         ("C-x C-f" . helm-find-files)
+         ("C-c o" . helm-occur))
+  :init
+  (setq helm-M-x-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t)
+  (setq helm-recentf-fuzzy-match t)
+  (setq helm-mode-fuzzy-match t)
+  (setq helm-completion-in-region-fuzzy-match t))
+
+
+(use-package helm-projectile
   :config
-  (setq ido-ghq-short-list t)
-  :ensure-system-package ghq)
+  (helm-projectile-on))
+
+(use-package helm-ghq
+  :defer t
+  :commands 'helm-ghq)
+
+(use-package helm-rg
+  :defer t
+  :commands 'helm-rg)
+;;; << helm
+
+(use-package shackle
+  :config
+  (shackle-mode)
+  (setq helm-display-function 'pop-to-buffer)
+  (setq shackle-rules
+        '(
+          ("\\*helm" :regexp t :align below :ratio 0.4)
+          )))
 
 (use-package iflipb
   :bind (("<C-tab>" . iflipb-next-buffer)
@@ -95,6 +134,7 @@
 	("C-p" . company-select-previous))
   :config
   (global-company-mode)
+  (push 'company-lsp company-backends)
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 2))
 
@@ -106,7 +146,9 @@
 (use-package projectile
   :config
   (projectile-mode)
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map))
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (setq projectile-switch-project-action #'projectile-dired)
+  (setq projectile-enable-caching t))
 
 (defun my/recentf-find-file ()
   (interactive)
@@ -130,9 +172,13 @@
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Key bindinggs
+;; Key bindings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+(use-package bind-key)
+(bind-key "C-h" 'delete-backward-char)
+(winner-mode t)
+(bind-key "C-z" 'winner-undo)
+(bind-key "C-M-z" 'winner-redo)
 ;; For macos
 (when (eq system-type 'darwin)
   (setq ns-command-modifier 'meta))
@@ -146,79 +192,48 @@
 ;; Languages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;; Python
-(defun goto-begining-of-block (&optional n)
-  "Move to the N previous block."
-  (interactive "p")
-  (let ((n (if (null n) 1 n)))
-    (if (search-backward-regexp "\n[\t ]*\n[\t ]*\n" nil t n)
-        (goto-char (match-end 0))
-      (goto-char (point-min)))))
+;;; lsp-mode
+(use-package lsp-mode
+  :custom ((lsp-inhibit-message t)
+         (lsp-message-project-root-warning t)
+         (create-lockfiles nil))
+  :hook   (prog-major-mode . lsp-prog-major-mode-enable))
 
-(defun goto-previous-block (&optional n)
-  (interactive "p")
-  (let ((n (if (null n) 1 n)))
-    (search-backward-regexp "\n[\t ]*\n[\t ]*\n" nil t n)
-    (goto-begining-of-block)))
-
-(defun goto-end-of-block (&optional n)
-  "Move to the N next block."
-  (interactive "p")
-  (let ((n (if (null n) 1 n)))
-    (if (search-forward-regexp "\n[\t ]*\n[\t ]*\n" nil t n)
-        (goto-char (match-beginning 0))
-      (goto-char (point-max)))))
-
-(defun goto-next-block (&optional n)
-  (interactive "p")
-  (let ((n (if (null n) 1 n)))
-    (search-forward-regexp "\n[\t ]*\n[\t ]*\n" nil t 1)))
-
-(defun elpy-shell-send-current-block ()
-  "Send current block to Python shell."
-  (interactive)
-  (let ((pos (point)))
-    (goto-begining-of-block)
-    (push-mark nil t t)
-    (goto-end-of-block)
-    (elpy-shell-send-region-or-buffer)
-    (pop-mark)
-    (goto-char pos)))
-
-(use-package elpy
-  :mode ("\\.py\\'" . python-mode)
-  :interpreter ("python" . python-mode)
-  :bind (:map elpy-mode-map
-              ("C-c c" . elpy-shell-send-current-block)
-              ("C-c b n" . goto-next-block)
-              ("C-c b p" . goto-previous-block))
+(use-package lsp-ui
+  :after lsp-mode
+  :custom (scroll-margin 0)
+  :hook   (lsp-mode . lsp-ui-mode)
   :config
-  (elpy-enable)
-  (python-mode)
-  (elpy-mode))
+  (setq lsp-ui-flycheck-enable t))
 
-(use-package cython-mode
-  :mode ("\\.pyx\\'" . cython-mode))
+(use-package company-lsp
+  :after (lsp-mode company yasnippet)
+  :defines company-backends
+  :functions company-backend-with-yas
+  :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))
 
-(defun my/enable-project-root-venv ()
-  (let* ((root (projectile-project-root))
-	 (target (expand-file-name "venv" root)))
-    (if (file-directory-p target)
-	(progn
-	  (message "venv enabled: %s" target)
-	  (pyvenv-activate target)
-          (setq python-shell-interpreter "ipython"
-                python-shell-interpreter-args "-i --simple-prompt")))))
-(when (require 'projectile nil t)
-  (add-hook 'window-configuration-change-hook #'my/enable-project-root-venv))
+(use-package dap-mode
+  :after lsp-mode
+  :defer t
+  :config
+  (dap-mode t)
+  (dap-ui-mode t))
+
+
+;;; Python
+(add-hook 'python-mode-hook #'lsp)
+(use-package pipenv
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq
+   pipenv-projectile-after-switch-function
+   #'pipenv-projectile-after-switch-extended))
 
 
 ;;; markdown
 (use-package markdown-mode
-  :mode (("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
-  :config
-  (gfm-mode)
+  :mode (("\\.md\\'" . gfm-mode)
+         ("\\.markdown\\'" . gfm-mode))
   :init
   (setq markdown-command "multimarkdown"))
 
@@ -242,3 +257,61 @@
 ;; protobuf
 (use-package protobuf-mode
   :mode (("\\.proto\\'" . protobuf-mode)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org-mode
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package org
+  :commands org-agenda
+  :mode (("\\.org\\'" . org-mode))
+  :init
+  (setq org-directory "~/Dropbox/org/")
+  (setq org-default-notes-file (concat org-directory "main.org"))
+  (setq org-agenda-files (list org-directory))
+  (defun my:org-goto-inbox ()
+    (interactive)
+    (find-file org-default-notes-file))
+  :config
+  (setq org-hide-leading-stars t)
+  (setq org-startup-folded nil)
+  ;; org-capture
+  (setq org-todo-keywords '((sequence "TASK(t)" "WAIT(w)" "|" "DONE(d)" "ABORT(a)" "SOMEDAY(s)")))
+  (setq org-capture-templates
+        '(("t" "Task" entry (file+headline org-default-notes-file "inbox")
+           "** TASK %?\n   CREATED: %U\n")
+          ("i" "Idea" entry (file+headline org-default-notes-file "idea")
+           "** %?\n   CREATED: %U\n")))
+  (setq org-refile-targets '((org-agenda-files :maxlevel . 1)))
+  ;; org-clock
+  (setq org-log-done 'time)
+  (setq org-clock-clocked-in-display 'frame-title)
+  ;; org-agenda
+  (setq org-agenda-custom-commands
+        '(("x" "Unscheduled Tasks" tags-todo
+           "-SCHEDULED>=\"<now>\"" nil)
+          ("d" "Daily Tasks" agenda ""
+           ((org-agenda-span 1)))))
+  (setq org-agenda-skip-scheduled-if-done t)
+  (setq org-return-follows-link t)  ;; RET to follow link
+  (setq org-agenda-columns-add-appointments-to-effort-sum t)
+  (setq org-agenda-time-grid
+        '((daily today require-timed)
+          (0900 1200 1300 1800) "......" "----------------"))
+  (setq org-columns-default-format
+        "%68ITEM(Task) %6Effort(Effort){:} %6CLOCKSUM(Clock){:}")
+  (defadvice org-agenda-switch-to (after org-agenda-close)
+    "Close a org-agenda window when RET is hit on the window."
+    (progn (delete-other-windows)
+           (recenter-top-bottom)))
+  (ad-activate 'org-agenda-switch-to)
+  :bind
+  (("C-c a" . org-agenda)
+   ("C-c c" . org-capture)
+   ("C-c g" . org-clock-goto)
+   ("C-c i" . my:org-goto-inbox)
+   :map org-mode-map
+   ("C-m" . org-return-indent)
+   ("M-n" . org-forward-heading-same-level)
+   ("M-p" . org-backward-heading-same-level)))
