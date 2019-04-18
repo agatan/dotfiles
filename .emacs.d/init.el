@@ -37,11 +37,37 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; View
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package jbeans-theme
+(use-package jbeans-theme :disabled t
   :config
   (load-theme 'jbeans t))
 
+
+(use-package doom-themes
+    :custom
+    (doom-themes-enable-italic t)
+    (doom-themes-enable-bold t)
+    :config
+    (load-theme 'doom-one t))
+
+
 (global-linum-mode)
+
+
+(use-package elscreen
+  :defer nil
+  :bind (("C-<tab>" . elscreen-next)
+         ("C-S-<tab>" . elscreen-previous))
+  :config
+  (setq elscreen-prefix-key (kbd "C-c w"))
+  (setq elscreen-display-tab nil)
+  (setq elscreen-tab-display-kill-screen nil)
+  (setq elscreen-tab-display-control nil)
+  (elscreen-start)
+  (defun elscreen-display-toggle ()
+    (interactive)
+    (setq elscreen-display-tab (not elscreen-display-tab))))
+
+(use-package helm-elscreen)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; User Interface
@@ -115,10 +141,12 @@
           )))
 
 (use-package iflipb
-  :bind (("<C-tab>" . iflipb-next-buffer)
-         ("<C-S-tab>" . iflipb-previous-buffer))
+  :bind (("C-)" . iflipb-next-buffer)
+         ("C-(" . iflipb-previous-buffer))
   :config
   (setq iflipb-wrap-around t))
+
+(use-package all-the-icons)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Editing
@@ -136,7 +164,13 @@
   (global-company-mode)
   (push 'company-lsp company-backends)
   (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 2))
+  (setq company-minimum-prefix-length 2)
+  (setq company-backends (delete 'company-capf company-backends)))
+
+(use-package company-box
+  :diminish
+  :hook (company-mode . company-box-mode)
+  :init (setq company-box-icons-alist 'company-box-icons-all-the-icons))
 
 (use-package company-quickhelp
   :config
@@ -170,6 +204,8 @@
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+(use-package magit)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings
@@ -197,7 +233,9 @@
   :custom ((lsp-inhibit-message t)
          (lsp-message-project-root-warning t)
          (create-lockfiles nil))
-  :hook   (prog-major-mode . lsp-prog-major-mode-enable))
+  :hook (prog-major-mode . lsp-prog-major-mode-enable))
+
+(add-hook 'ruby-mode-hook #'lsp)
 
 (use-package lsp-ui
   :after lsp-mode
