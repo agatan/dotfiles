@@ -43,11 +43,22 @@
 
 
 (use-package doom-themes
-    :custom
-    (doom-themes-enable-italic t)
-    (doom-themes-enable-bold t)
-    :config
-    (load-theme 'doom-one t))
+  :custom
+  (doom-themes-enable-italic t)
+  (doom-themes-enable-bold t)
+  :config
+  (load-theme 'doom-vibrant t))
+
+
+(use-package doom-modeline
+  :custom
+  (doom-modelin-icon t)
+  (doom-modeline-buffer-file-name-style 'truncate-upto-project)
+  (doom-modeline-vcs-max-length 24)
+  :hook (after-init . doom-modeline-mode)
+  :config
+  (line-number-mode 0)
+  (column-number-mode 0))
 
 
 (global-linum-mode)
@@ -219,6 +230,10 @@
 (when (eq system-type 'darwin)
   (setq ns-command-modifier 'meta))
 
+(use-package which-key
+  :diminish which-key-mode
+  :hook (after-init . which-key-mode))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; misc.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -277,7 +292,7 @@
 
 
 ;;; golang
- (use-package company-go)
+(use-package company-go)
 (use-package go-mode
   :mode (("\\.go\\'" . go-mode))
   :init
