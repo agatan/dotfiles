@@ -37,12 +37,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; View
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package jbeans-theme :disabled t
+(use-package jbeans-theme ;; :disabled t
   :config
   (load-theme 'jbeans t))
 
 
-(use-package doom-themes
+(use-package doom-themes :disabled t
   :custom
   (doom-themes-enable-italic t)
   (doom-themes-enable-bold t)
@@ -60,6 +60,14 @@
   (line-number-mode 0)
   (column-number-mode 0))
 
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
+(use-package beacon
+  :custom
+  (beacon-color "yellow")
+  :config
+  (beacon-mode 1))
 
 (global-linum-mode)
 
@@ -175,8 +183,7 @@
   (global-company-mode)
   (push 'company-lsp company-backends)
   (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 2)
-  (setq company-backends (delete 'company-capf company-backends)))
+  (setq company-minimum-prefix-length 2))
 
 (use-package company-box
   :diminish
@@ -216,6 +223,9 @@
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 (use-package magit)
+(use-package git-gutter-fringe
+  :config
+  (global-git-gutter-mode t))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -245,38 +255,53 @@
 
 ;;; lsp-mode
 (use-package lsp-mode
-  :custom ((lsp-inhibit-message t)
-         (lsp-message-project-root-warning t)
-         (create-lockfiles nil))
-  :hook (prog-major-mode . lsp-prog-major-mode-enable))
-
-(add-hook 'ruby-mode-hook #'lsp)
-
-(use-package lsp-ui
-  :after lsp-mode
-  :custom (scroll-margin 0)
-  :hook   (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-inhibit-message t)
+  (lsp-message-project-root-warning t)
+  (lsp-auto-guess-root t)
+  (lsp-document-sync-method 'incremental)
+  (lsp-response-timeout 5)
+  (lsp-enable-completion-at-point nil)
+  (lsp-prefer-flymake 'flymake)
+  (create-lockfiles nil)
+  :hook
+  (prog-major-mode . lsp-prog-major-mode-enable)
+  (ruby-mode-hook . lsp)
+  (python-mode-hook . lsp)
   :config
-  (setq lsp-ui-flycheck-enable t))
+  (use-package lsp-ui
+    :after lsp-mode
+    :config
+    (setq lsp-ui-doc-use-childframe t)
+    (setq lsp-ui-doc-use-webkit t)
+    (setq lsp-ui-flycheck-enable nil)
+    :hook (lsp-mode . lsp-ui-mode)
+    :bind
+    (:map lsp-mode-map
+          ("C-c C-r" . lsp-ui-peek-find-references)
+          ("C-c C-d" . lsp-ui-peek-find-definitions)
+          ("C-c i" . lsp-ui-peek-find-implementation)))
 
-(use-package company-lsp
-  :after (lsp-mode company yasnippet)
-  :defines company-backends
-  :functions company-backend-with-yas
-  :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends))
+  (use-package company-lsp
+    :after (lsp-mode company yasnippet)
+    :defines company-backends
+    :functions company-backend-with-yas
+    :init (cl-pushnew (company-backend-with-yas 'company-lsp) company-backends)
+    :custom
+    (company-lsp-cache-candidates t))
 
-(use-package dap-mode
-  :after lsp-mode
-  :defer t
-  :config
-  (dap-mode t)
-  (dap-ui-mode t))
+  (use-package dap-mode
+    :after lsp-mode
+    :defer t
+    :config
+    (dap-mode t)
+    (dap-ui-mode t)))
 
 
 ;;; Python
-(add-hook 'python-mode-hook #'lsp)
 (use-package pipenv
-  :hook (python-mode . pipenv-mode)
+  :hook
+  (python-mode . pipenv-mode)
   :init
   (setq
    pipenv-projectile-after-switch-function
