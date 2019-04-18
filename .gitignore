@@ -3,6 +3,7 @@
 .emacs.d/recentf
 .emacs.d/smex-items
 .emacs.d/.lsp-session-v1
+\#*\#
 
 .vim/black
 vim/view/
