@@ -157,6 +157,7 @@
   (setq shackle-rules
         '(
           ("\\*helm" :regexp t :align below :ratio 0.4)
+          ("*rspec-compilation*" :align below :ratio 0.4)
           )))
 
 (use-package iflipb
@@ -166,6 +167,14 @@
   (setq iflipb-wrap-around t))
 
 (use-package all-the-icons)
+
+(use-package ace-window
+  :functions ace-window
+  :bind ("C-M-o" . ace-window)
+  :custom
+  (aw-keys '(?j ?k ?l ?i ?o ?h ?y ?u ?p)f)
+  :custom-face
+  (aw-leading-char-face ((t (:height 4.0 :foreground "#f1fa8c")))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Editing
@@ -296,6 +305,13 @@
     :config
     (dap-mode t)
     (dap-ui-mode t)))
+
+
+;;; ruby
+(use-package rspec-mode
+  :hook
+  (ruby-mode . rspec-mode))
+(setq ruby-insert-encoding-magic-comment nil)
 
 
 ;;; Python
