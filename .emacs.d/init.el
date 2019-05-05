@@ -37,12 +37,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; View
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package jbeans-theme ;; :disabled t
+(use-package jbeans-theme :disabled t
   :config
   (load-theme 'jbeans t))
 
 
-(use-package doom-themes :disabled t
+(use-package doom-themes ;; :disabled t
   :custom
   (doom-themes-enable-italic t)
   (doom-themes-enable-bold t)
@@ -158,6 +158,7 @@
         '(
           ("\\*helm" :regexp t :align below :ratio 0.4)
           ("*rspec-compilation*" :align below :ratio 0.4)
+          ("\\*cargo" :regexp t :align below :ratio 0.4)
           )))
 
 (use-package iflipb
@@ -236,6 +237,8 @@
   :config
   (global-git-gutter-mode t))
 
+(when (eq system-type 'darwin)
+  (use-package dash-at-point))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings
@@ -273,10 +276,12 @@
   (lsp-enable-completion-at-point nil)
   (lsp-prefer-flymake 'flymake)
   (create-lockfiles nil)
+  :commands lsp
   :hook
   (prog-major-mode . lsp-prog-major-mode-enable)
   (ruby-mode-hook . lsp)
   (python-mode-hook . lsp)
+  (d-mode-hook . lsp)
   :config
   (use-package lsp-ui
     :after lsp-mode
@@ -304,7 +309,15 @@
     :defer t
     :config
     (dap-mode t)
-    (dap-ui-mode t)))
+    (dap-ui-mode t))
+
+  ;; dlang, D
+  (add-hook 'd-mode-hook #'lsp)
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection '("dls"))
+    :major-modes '(d-mode)
+    :server-id 'dls)))
 
 
 ;;; ruby
@@ -352,6 +365,15 @@
 (use-package protobuf-mode
   :mode (("\\.proto\\'" . protobuf-mode)))
 
+
+;; dlang, D
+(use-package d-mode
+  :mode (("\\.d\\'" . d-mode)))
+
+
+;; Rust
+(use-package rustic
+  :mode (("\\.rs\\'" . rustic-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; org-mode
