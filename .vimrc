@@ -72,7 +72,14 @@ function! s:configure_lsp() abort
 endfunction
 
 augroup MyLsp
-  if executable('pyls')
+  if executable($HOME . '/bin/pyls-wrap')
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'pyls-wrap',
+          \ 'cmd': {server_info->['pyls-wrap']},
+          \ 'whitelist': ['python'],
+          \ })
+    autocmd FileType python call s:configure_lsp()
+  elseif executable('pyls')
     au User lsp_setup call lsp#register_server({
           \ 'name': 'pyls',
           \ 'cmd': {server_info->['pyls']},
@@ -98,6 +105,8 @@ augroup MyLsp
   endif
 augroup END
 
+" let g:lsp_log_verbose = 1
+" let g:lsp_log_file = expand("/tmp/vim-lsp.log")
 let g:lsp_async_completion = 1
 let g:lsp_diagnostics_echo_cursor = 1
 
