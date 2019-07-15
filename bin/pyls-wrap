@@ -1,0 +1,39 @@
+#!/bin/bash
+
+set -Ce
+
+detect_venv() {
+  if [ ! -z "$VIRTUAL_ENV" ]; then
+    echo $VIRTUAL_ENV
+  elif [ -d "$PWD/.venv" ]; then
+    echo "$PWD/.venv"
+  elif [ -d "$PWD/venv" ]; then
+    echo "$PWD/venv"
+  fi
+}
+
+which_in_venv() {
+  local venv=$1
+  local bin=$2
+  if [ ! -z "$venv" ]; then
+    echo $venv/bin/$bin
+  else
+    which $bin
+  fi
+}
+
+venv=$(detect_venv)
+
+if [ -z $venv ]; then
+  pyls $@
+else
+  pyls_path=$(which_in_venv $venv pyls)
+  if [ ! -e $pyls_path ]; then
+    echo "Missing pyls in $venv" >&2
+    pip=$(which_in_venv $venv pip)
+    echo "Installing pyls via ${pip}..." >&2
+    $pip install python-language-server pyls-mypy pyls-black
+  fi
+  echo "Launch ${pyls_path}..." >&2
+  $pyls_path $@
+fi
