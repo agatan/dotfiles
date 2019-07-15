@@ -44,12 +44,14 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 Plug 'itchyny/vim-cursorword'
-Plug 'airblade/vim-gitgutter'
 
 Plug 'airblade/vim-rooter'
 let g:rooter_use_lcd = 1
 
-Plug 'jremmen/vim-ripgrep'
+if executable('rg')
+    Plug 'mileszs/ack.vim'
+    let g:ackprg = 'rg --vimgrep'
+endif
 " }}}
 
 " {{{ edit
@@ -57,15 +59,47 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'natebosch/vim-lsc'
-if executable('pyls')
-  au User lsp_setup call lsp#register_server({
-        \ 'name': 'pyls',
-        \ 'cmd': {server_info->['pyls']},
-        \ 'whitelist': ['python'],
-        \ })
-endif
+
+function! s:configure_lsp() abort
+  setlocal omnifunc=lsp#complete
+  nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>
+  nnoremap <buffer> gd :<C-u>LspDefinition<CR>
+  nnoremap <buffer> gD :<C-u>LspReference<CR>
+  nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
+  nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
+  nnoremap <buffer> K :<C-u>LspHover<CR>
+  nnoremap <buffer> gg=G :<C-u>LspDocumentFormat<CR>
+endfunction
+
+augroup MyLsp
+  if executable('pyls')
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'pyls',
+          \ 'cmd': {server_info->['pyls']},
+          \ 'whitelist': ['python'],
+          \ })
+    autocmd FileType python call s:configure_lsp()
+  endif
+  if executable('rls')
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'rls',
+          \ 'cmd': {server_info->['rls']},
+          \ 'whitelist': ['rust'],
+          \ })
+    autocmd FileType rust call s:configure_lsp()
+  endif
+  if executable('gopls')
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'gopls',
+          \ 'cmd': {server_info->['gopls']},
+          \ 'whitelist': ['go'],
+          \ })
+    autocmd FileType go call s:configure_lsp()
+  endif
+augroup END
+
 let g:lsp_async_completion = 1
+let g:lsp_diagnostics_echo_cursor = 1
 
 Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
@@ -92,11 +126,6 @@ Plug 'tyru/caw.vim', { 'on': ['<Plug>(caw:hatpos:toggle)'] }
 nmap <Space>c <Plug>(caw:hatpos:toggle)
 vmap <Space>c <Plug>(caw:hatpos:toggle)
 
-Plug 'rhysd/devdocs.vim', { 'on': ['DevDocs', 'DevDocsAll', '<Plug>(devdocs-under-cursor)'] }
-augroup myvimrc
-  autocmd FileType c,cpp,php,ruby nmap <buffer>K <Plug>(devdocs-under-cursor)
-augroup END
-
 Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign'] }
 
 Plug 'mattn/sonictemplate-vim', { 'on': ['Template'] }
@@ -121,11 +150,6 @@ Plug 'thinca/vim-quickrun'
 Plug 'tmux-plugins/vim-tmux'
 
 "" {{{ golang
-Plug 'fatih/vim-go', { 'for': 'go' }
-let g:go_fmt_command = 'goimports'
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
 Plug 'yosssi/vim-ace', { 'for': 'ace' }
 "" }}}
 
@@ -163,13 +187,10 @@ let g:haskell_conceal = 0
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 let g:rustfmt_autosave = 1
 
-Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 "" }}}
 
 "" {{{ python
 Plug 'heavenshell/vim-pydocstring'
-Plug 'ambv/black'
-" autocmd BufWritePre *.py execute ':Black'
 "" }}}
 
 """ {{{ ruby
@@ -240,6 +261,7 @@ endfunction
 nnoremap [fzf] <Nop>
 nmap <Space>f [fzf]
 " nnoremap <silent> [fzf]f :<C-u>call <SID>fzf_files()<CR>
+nnoremap <silent> [fzf]g :<C-u>GitFiles<CR>
 nnoremap <silent> [fzf]f :<C-u>Files<CR>
 nnoremap <silent> [fzf]m :<C-u>History<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
