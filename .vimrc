@@ -68,7 +68,7 @@ function! s:configure_lsp() abort
   nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
   nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
   nnoremap <buffer> K :<C-u>LspHover<CR>
-  nnoremap <buffer> gg=G :<C-u>LspDocumentFormat<CR>
+  nnoremap <buffer> fmt :<C-u>LspDocumentFormat<CR>
 endfunction
 
 augroup MyLsp
@@ -91,17 +91,27 @@ augroup MyLsp
     au User lsp_setup call lsp#register_server({
           \ 'name': 'rls',
           \ 'cmd': {server_info->['rls']},
+          \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
           \ 'whitelist': ['rust'],
           \ })
     autocmd FileType rust call s:configure_lsp()
   endif
   if executable('gopls')
     au User lsp_setup call lsp#register_server({
-          \ 'name': 'gopls',
-          \ 'cmd': {server_info->['gopls']},
-          \ 'whitelist': ['go'],
-          \ })
+         \ 'name': 'gopls',
+         \ 'cmd': {server_info->['gopls']},
+         \ 'whitelist': ['go'],
+         \ })
     autocmd FileType go call s:configure_lsp()
+  endif
+  if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+          \ 'name': 'typescript-language-server',
+          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+          \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+          \ 'whitelist': ['typescript', 'typescript.tsx'],
+          \ })
+    autocmd FileType typescript call s:configure_lsp()
   endif
 augroup END
 
@@ -193,8 +203,8 @@ let g:haskell_conceal = 0
 "" }}}
 
 "" {{{ rust
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-let g:rustfmt_autosave = 1
+" Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+" let g:rustfmt_autosave = 1
 
 "" }}}
 
@@ -223,8 +233,9 @@ Plug 'posva/vim-vue', { 'for': ['javascript', 'vue'] }
 "" }}}
 
 "" {{{ typescript
-Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+let g:prettier#autoformat = 0
 "" }}}
 
 "" {{{ web / html / css
