@@ -1,10 +1,12 @@
 function g
   set -l ghqroot (ghq root)
-  find $ghqroot/github.com/wantedly $ghqroot/github.com/agatan -maxdepth 1 -type d | \
+  find $ghqroot/github.com -mindepth 1 -maxdepth 2 -type d | \
     string replace $ghqroot/github.com/ '' | \
     fzf --query "$argv" | \
     read -l result
-  builtin cd $ghqroot/github.com/$result
-  commandline -f repaint
+  if [ -d $ghqroot/github.com/$result ]
+    builtin cd $ghqroot/github.com/$result
+    commandline -f repaint
+  end
 end
 
