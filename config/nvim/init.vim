@@ -83,7 +83,7 @@ let g:LanguageClient_serverCommands = {
             \ 'javascript': ['javascript-typescript-stdio'],
             \ 'javascript.jsx': ['javascript-typescript-stdio'],
             \ 'python': ['pyls'],
-            \ 'go': ['golsp'],
+            \ 'go': ['gopls'],
             \ 'ruby': ['solargraph', 'stdio'],
             \ }
 
