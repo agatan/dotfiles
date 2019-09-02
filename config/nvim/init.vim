@@ -54,16 +54,22 @@ Plug 'airblade/vim-gitgutter'
 Plug 'airblade/vim-rooter'
 let g:rooter_use_lcd = 1
 
-Plug 'wsdjeg/FlyGrep.vim'
+if executable('rg')
+    Plug 'mileszs/ack.vim'
+    let g:ackprg = 'rg --vimgrep'
+endif
 " }}}
 
 " {{{ edit
-" Plug 'neomake/neomake'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
 " Plug 'maralla/completor.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'ncm2/float-preview.nvim'
+set completeopt-=preview
+set completeopt+=noinsert
+let g:float_preview#docked = 0
 Plug 'Shougo/echodoc.vim'
 
 Plug 'autozimu/LanguageClient-neovim', {
@@ -76,33 +82,33 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " let g:LanguageClient_changeThrottle = 5
+let g:LanguageClient_useFloatingHover = 1
 let g:LanguageClient_serverCommands = {
             \ 'rust': ['rustup', 'run', 'stable', 'rls'],
             \ 'typescript': ['javascript-typescript-stdio'],
             \ 'typescript.tsx': ['javascript-typescript-stdio'],
             \ 'javascript': ['javascript-typescript-stdio'],
             \ 'javascript.jsx': ['javascript-typescript-stdio'],
-            \ 'python': ['pyls'],
             \ 'go': ['gopls'],
             \ 'ruby': ['solargraph', 'stdio'],
             \ }
-
-" 'go': [$GOPATH.'/bin/go-langserver','-format-tool','gofmt','-lint-tool','golint', '--gocodecompletion'],
+if executable($HOME . '/bin/pyls-wrap')
+  let g:LanguageClient_serverCommands["python"] = ["pyls-wrap"]
+endif
 
 Plug 'osyo-manga/vim-anzu'
 nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
+augroup myvimrc
+  autocmd CmdlineEnter [/\?] :set hlsearch
+  autocmd CmdlineLeave [/\?] :set nohlsearch
+augroup END
 
 Plug 'tyru/caw.vim', { 'on': ['<Plug>(caw:hatpos:toggle)'] }
 nmap <Space>c <Plug>(caw:hatpos:toggle)
 vmap <Space>c <Plug>(caw:hatpos:toggle)
-
-Plug 'rhysd/devdocs.vim', { 'on': ['DevDocs', 'DevDocsAll', '<Plug>(devdocs-under-cursor)'] }
-augroup myvimrc
-  autocmd FileType c,cpp,php,ruby nmap <buffer>K <Plug>(devdocs-under-cursor)
-augroup END
 
 Plug 'junegunn/vim-easy-align', { 'on': ['EasyAlign'] }
 
@@ -131,24 +137,10 @@ Plug 'tmux-plugins/vim-tmux'
 Plug 'dag/vim-fish'
 
 "" {{{ golang
-" Plug 'fatih/vim-go', { 'for': 'go' }
-" let g:go_fmt_command = 'goimports'
-" let g:go_highlight_functions = 1
-" let g:go_highlight_methods = 1
-" let g:go_highlight_structs = 1
-"
-" Plug 'zchee/deoplete-go', { 'do': 'make', 'for': 'go' }
-" let g:deoplete#sources#go#gocode_binary = $GOPATH . '/bin/gocode'
-function! s:gofmt_on_save()
-
-  let l:curw = winsaveview()
-  silent execute "0,$! goimports"
-  try | silent undojoin | catch | endtry
-  call winrestview(l:curw)
-endfunction
-augroup myvimrc
-  autocmd BufWritePre *.go call s:gofmt_on_save()
-augroup END
+Plug 'fatih/vim-go', { 'for': ['go'] }
+let g:go_fmt_command = 'goimports'
+let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
 "" }}}
 
 "" {{{ cpp c++
@@ -181,18 +173,10 @@ let g:haskell_conceal = 0
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 let g:rustfmt_autosave = 1
 
-" Plug 'racer-rust/vim-racer', { 'for': 'rust' }
 "" }}}
 
 "" {{{ python
-if executable('autopep8')
-  function! s:preserve_autopep8(cmd)
-  endfunction
-  function! s:autopep8() abort
-    silent %!autopep8 -
-  endfunction
-  command! Autopep8 call s:autopep8()
-end
+Plug 'heavenshell/vim-pydocstring'
 "" }}}
 
 "" {{{ crystal
@@ -205,17 +189,22 @@ Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': ['javascript', 'javascript.jsx'] }
-Plug 'ternjs/tern_for_vim', { 'for': ['javascript', 'javascript.jsx'], 'do': 'npm install' }
 Plug 'posva/vim-vue', { 'for': ['javascript', 'vue'] }
 "" }}}
 
 "" {{{ typescript
-Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim', { 'for': ['typescript', 'typescript.tsx'] }
+Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+let g:prettier#autoformat = 0
 "" }}}
 
 "" {{{ web / html / css
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
+"" }}}
+
+"" {{{ yaml
+Plug 'mrk21/yaml-vim'
 "" }}}
 
 call plug#end() " }}}
@@ -232,6 +221,50 @@ function! s:is_git_repo() abort
     endif
   endif
   return 0
+endfunction
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'TabLine'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color always --colors path:fg:0xb2,0x94,0xbb --colors line:fg:0x6c,0x7a,0x80 --colors column:fg:0x6c,0x7a,0x80 --smart-case --hidden --glob "!/.git" '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview({'options': '--color dark,hl:#8abeb7,hl+:#8abeb7,prompt:#8abeb7,pointer:#8abeb7 --delimiter : --nth 4..'}, 'up:60%')
+  \           : fzf#vim#with_preview({'options': '--color dark,hl:#8abeb7,hl+:#8abeb7,prompt:#8abeb7,pointer:#8abeb7 --delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+  \   <bang>0)
+
+let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+
+function! FloatingFZF()
+  let buf = nvim_create_buf(v:false, v:true)
+  call setbufvar(buf, '&signcolumn', 'no')
+
+  let height = float2nr(&lines * 0.6)
+  let width = float2nr(&columns - (&columns * 2 / 10))
+  let row = float2nr(&lines * 0.2)
+  let col = float2nr((&columns - width) / 2)
+
+  let opts = {
+        \ 'relative': 'editor',
+        \ 'row': row,
+        \ 'col': col,
+        \ 'width': width,
+        \ 'height': height
+        \ }
+
+  call nvim_open_win(buf, v:true, opts)
 endfunction
 
 function! s:fzf_files() abort
@@ -252,10 +285,11 @@ endfunction
 nnoremap [fzf] <Nop>
 nmap <Space>f [fzf]
 " nnoremap <silent> [fzf]f :<C-u>call <SID>fzf_files()<CR>
+nnoremap <silent> [fzf]g :<C-u>GitFiles<CR>
 nnoremap <silent> [fzf]f :<C-u>Files<CR>
 nnoremap <silent> [fzf]m :<C-u>History<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
-nnoremap <silent> [fzf]l :<C-u>Lines<CR>
+nnoremap <silent> [fzf]l :<C-u>BLines<CR>
 nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 
 " deoplete.nvim {{{
@@ -321,9 +355,6 @@ if executable('opam')
   augroup END
 endif
 
-"" C++
-let g:neomake_cpp_enabled_markers = ['clang']
-let g:neomake_c_enabled_markers = ['clang']
 
 "" ruby
 augroup myvimrc
@@ -364,11 +395,11 @@ set nonumber
 set scrolloff=5
 set wrap
 set display=lastline
-set showbreak=+\
+" set showbreak=+\
 set breakindent
 " set cursorline
-set cursorcolumn
-set colorcolumn=80
+" set cursorcolumn
+" set colorcolumn=80
 set ruler
 set tabstop=4
 set softtabstop=4
@@ -378,7 +409,7 @@ set laststatus=2
 set foldmethod=marker
 set foldlevel=100
 set list
-set listchars=tab:▸\ ,trail:-,eol:¬
+" set listchars=tab:▸\ ,trail:-,eol:¬
 " 補完ポップアップの高さ設定
 set pumheight=10
 syntax on
