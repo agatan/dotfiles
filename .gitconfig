@@ -2,7 +2,7 @@
     name = agatan
     email = agatan039@gmail.com
 [alias]
-    st = status
+    st = status --short --branch
     co = checkout
 [ghq]
     root = ~/repos/src
