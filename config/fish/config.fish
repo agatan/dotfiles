@@ -33,6 +33,11 @@ if [ -d $HOME/.anyenv ]
   eval (anyenv init - fish | source)
 end
 
+# direnv
+if which direnv >/dev/null
+  eval (direnv hook fish)
+end
+
 # python
 if [ -d $HOME/.poetry ]
   set -x PATH $HOME/.poetry/bin $PATH
