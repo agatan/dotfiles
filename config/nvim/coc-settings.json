@@ -1,0 +1,10 @@
+{
+    "languageserver": {
+        "golang": {
+            "command": "gopls",
+            "filetypes": [
+                "go"
+            ]
+        }
+    }
+}

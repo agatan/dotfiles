@@ -65,24 +65,12 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
 " Plug 'maralla/completor.vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'ncm2/float-preview.nvim'
 set completeopt-=preview
 set completeopt+=noinsert
-let g:float_preview#docked = 0
 Plug 'Shougo/echodoc.vim'
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-nnoremap <Space>ls :call LanguageClient_contextMenu()<CR>
-" Or map each action separately
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-" let g:LanguageClient_changeThrottle = 5
-let g:LanguageClient_useFloatingHover = 1
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+
 let g:LanguageClient_serverCommands = {
             \ 'rust': ['rustup', 'run', 'stable', 'rls'],
             \ 'typescript': ['javascript-typescript-stdio'],
@@ -292,13 +280,66 @@ nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
 nnoremap <silent> [fzf]l :<C-u>BLines<CR>
 nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 
-" deoplete.nvim {{{
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_ignore_case = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#auto_complete_delay = 10
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-" }}}
+"" {{{ coc.nvim
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+"" }}}
+
+"" {{{ lightline.vim
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
+
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status',
+      \   'currentfunction': 'CocCurrentFunction'
+      \ },
+      \ }
+"" }}}
 
 " echodoc {{{
 let g:echodoc#enable_at_startup = 1
@@ -379,6 +420,8 @@ set t_vb=
 set visualbell
 set noerrorbells
 set wildmenu wildmode=list:longest
+set updatetime=300
+set shortmess+=c
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
@@ -388,7 +431,9 @@ set t_ut=
 syntax enable
 set background=dark
 silent! colorscheme iceberg
+set noshowmode
 
+set signcolumn=yes
 set cmdheight=2
 set hidden
 set nonumber
