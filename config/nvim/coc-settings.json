@@ -1,10 +1,17 @@
 {
-    "languageserver": {
-        "golang": {
-            "command": "gopls",
-            "filetypes": [
-                "go"
-            ]
-        }
+  "suggest.enablePreselect": false,
+  "languageserver": {
+    "golang": {
+      "command": "gopls",
+      "filetypes": [
+        "go"
+      ]
     }
+  },
+
+  "python.linting.mypyEnabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "black",
+  "python.jediEnabled": false
 }
