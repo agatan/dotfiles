@@ -13,6 +13,7 @@ indent_size = 2
 indent_style = tab
 
 [*.go]
+indent_size = 4
 indent_style = tab
 
 [*.go.y]
@@ -38,3 +39,6 @@ indent_size = 2
 
 [*.{kt,java}]
 indent_size = 4
+
+[*.proto]
+indent_sie = 2
