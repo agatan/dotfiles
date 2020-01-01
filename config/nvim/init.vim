@@ -49,7 +49,7 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 Plug 'itchyny/vim-cursorword'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
 
 Plug 'airblade/vim-rooter'
 let g:rooter_use_lcd = 1
@@ -64,25 +64,10 @@ endif
 Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
-" Plug 'maralla/completor.vim'
-set completeopt-=preview
-set completeopt+=noinsert
+set completeopt=noinsert,noselect,menuone
 Plug 'Shougo/echodoc.vim'
 
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-
-let g:LanguageClient_serverCommands = {
-            \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-            \ 'typescript': ['javascript-typescript-stdio'],
-            \ 'typescript.tsx': ['javascript-typescript-stdio'],
-            \ 'javascript': ['javascript-typescript-stdio'],
-            \ 'javascript.jsx': ['javascript-typescript-stdio'],
-            \ 'go': ['gopls'],
-            \ 'ruby': ['solargraph', 'stdio'],
-            \ }
-if executable($HOME . '/bin/pyls-wrap')
-  let g:LanguageClient_serverCommands["python"] = ["pyls-wrap"]
-endif
 
 Plug 'osyo-manga/vim-anzu'
 nmap n <Plug>(anzu-n-with-echo)
@@ -158,8 +143,8 @@ let g:haskell_conceal = 0
 "" }}}
 
 "" {{{ rust
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-let g:rustfmt_autosave = 1
+" Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+" let g:rustfmt_autosave = 1
 
 "" }}}
 
@@ -195,6 +180,10 @@ Plug 'mattn/emmet-vim'
 Plug 'mrk21/yaml-vim'
 "" }}}
 
+"" {{{ toml
+Plug 'cespare/vim-toml'
+"" }}}
+
 call plug#end() " }}}
 
 filetype plugin indent on
@@ -213,25 +202,25 @@ endfunction
 
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'TabLine'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+ \ 'bg':      ['bg', 'TabLine'],
+ \ 'hl':      ['fg', 'Statement'],
+ \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+ \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+ \ 'hl+':     ['fg', 'Statement'],
+ \ 'info':    ['fg', 'PreProc'],
+ \ 'border':  ['fg', 'Ignore'],
+ \ 'prompt':  ['fg', 'Conditional'],
+ \ 'pointer': ['fg', 'Exception'],
+ \ 'marker':  ['fg', 'Keyword'],
+ \ 'spinner': ['fg', 'Label'],
+ \ 'header':  ['fg', 'Comment'] }
 
 command! -bang -nargs=* Rg
-  \ call fzf#vim#grep(
-  \   'rg --column --line-number --no-heading --color always --colors path:fg:0xb2,0x94,0xbb --colors line:fg:0x6c,0x7a,0x80 --colors column:fg:0x6c,0x7a,0x80 --smart-case --hidden --glob "!/.git" '.shellescape(<q-args>), 1,
-  \   <bang>0 ? fzf#vim#with_preview({'options': '--color dark,hl:#8abeb7,hl+:#8abeb7,prompt:#8abeb7,pointer:#8abeb7 --delimiter : --nth 4..'}, 'up:60%')
-  \           : fzf#vim#with_preview({'options': '--color dark,hl:#8abeb7,hl+:#8abeb7,prompt:#8abeb7,pointer:#8abeb7 --delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
-  \   <bang>0)
+ \ call fzf#vim#grep(
+ \   'rg --column --line-number --no-heading --color always --colors path:fg:0xb2,0x94,0xbb --colors line:fg:0x6c,0x7a,0x80 --colors column:fg:0x6c,0x7a,0x80 --smart-case --hidden --glob "!/.git" '.shellescape(<q-args>), 1,
+ \   <bang>0 ? fzf#vim#with_preview({'options': '--color dark,hl:#8abeb7,hl+:#8abeb7,prompt:#8abeb7,pointer:#8abeb7 --delimiter : --nth 4..'}, 'up:60%')
+ \           : fzf#vim#with_preview({'options': '--color dark,hl:#8abeb7,hl+:#8abeb7,prompt:#8abeb7,pointer:#8abeb7 --delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+ \   <bang>0)
 
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
@@ -245,12 +234,12 @@ function! FloatingFZF()
   let col = float2nr((&columns - width) / 2)
 
   let opts = {
-        \ 'relative': 'editor',
-        \ 'row': row,
-        \ 'col': col,
-        \ 'width': width,
-        \ 'height': height
-        \ }
+       \ 'relative': 'editor',
+       \ 'row': row,
+       \ 'col': col,
+       \ 'width': width,
+       \ 'height': height
+       \ }
 
   call nvim_open_win(buf, v:true, opts)
 endfunction
@@ -265,9 +254,9 @@ endfunction
 
 function! s:all_files()
   return extend(
-        \ filter(copy(v:oldfiles),
-        \        "v:val !~# 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
-        \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
+       \ filter(copy(v:oldfiles),
+       \        "v:val !~# 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+       \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
 endfunction
 
 nnoremap [fzf] <Nop>
@@ -287,12 +276,14 @@ function! s:check_back_space() abort
 endfunction
 
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+     \ pumvisible() ? "\<C-n>" :
+     \ <SID>check_back_space() ? "\<TAB>" :
+     \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 inoremap <silent><expr> <c-space> coc#refresh()
+" inoremap <expr><CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" inoremap <expr><CR> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -320,8 +311,11 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
+command! -nargs=0 Fmt :call CocAction('format')
+nnoremap fmt :call CocAction('format')<CR>
 
 "" }}}
+
 
 "" {{{ lightline.vim
 function! CocCurrentFunction()
