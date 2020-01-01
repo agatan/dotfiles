@@ -1,20 +1,20 @@
 [user]
-    name = agatan
-    email = agatan039@gmail.com
+  name = agatan
+  email = agatan039@gmail.com
 [alias]
-    st = status --short --branch
-    co = checkout
+  st = status
+  co = checkout
 [ghq]
-    root = ~/repos/src
+  root = ~/repos/src
 [core]
-    excludesfile = ~/.gitignore
+  excludesfile = ~/.gitignore
 [github]
-    privatekey = ~/.ssh/id_rsa
-    user = agatan
+  privatekey = ~/.ssh/id_rsa
+  user = agatan
 [filter "lfs"]
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-	clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
