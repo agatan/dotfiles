@@ -6,10 +6,16 @@ nnoremap <Space>. :edit $MYVIMRC<CR>
 " :ReloadVimrc load $MYVIMRC
 command! ReloadVimrc source $MYVIMRC
 
+" neovim python3 client
+if isdirectory(expand($HOME . '/venvs/neovim/'))
+  let g:python3_host_prog = expand($HOME . '/venvs/neovim/bin/python3')
+else
+  throw 'python3 venv for neovim is not found'
+endif
+
 augroup myvimrc
   autocmd!
 augroup END
-
 
 "" Plugins
 
@@ -26,7 +32,6 @@ if has('vim_starting')
 endif
 call plug#begin(s:vim_plug_path) " {{{
 
-Plug 'Shougo/vimproc', { 'do': 'make' }
 Plug 'vim-jp/vimdoc-ja'
 
 " {{{ color
@@ -44,6 +49,7 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
 Plug 'itchyny/vim-cursorword'
+" Plug 'airblade/vim-gitgutter'
 
 Plug 'airblade/vim-rooter'
 let g:rooter_use_lcd = 1
@@ -55,81 +61,17 @@ endif
 " }}}
 
 " {{{ edit
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-
-function! s:configure_lsp() abort
-  setlocal omnifunc=lsp#complete
-  nnoremap <buffer> <C-]> :<C-u>LspDefinition<CR>
-  nnoremap <buffer> gd :<C-u>LspDefinition<CR>
-  nnoremap <buffer> gD :<C-u>LspReference<CR>
-  nnoremap <buffer> gs :<C-u>LspDocumentSymbol<CR>
-  nnoremap <buffer> gS :<C-u>LspWorkspaceSymbol<CR>
-  nnoremap <buffer> K :<C-u>LspHover<CR>
-  nnoremap <buffer> fmt :<C-u>LspDocumentFormat<CR>
-endfunction
-
-augroup MyLsp
-  if executable($HOME . '/bin/pyls-wrap')
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'pyls-wrap',
-          \ 'cmd': {server_info->['pyls-wrap']},
-          \ 'whitelist': ['python'],
-          \ })
-    autocmd FileType python call s:configure_lsp()
-  elseif executable('pyls')
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'pyls',
-          \ 'cmd': {server_info->['pyls']},
-          \ 'whitelist': ['python'],
-          \ })
-    autocmd FileType python call s:configure_lsp()
-  endif
-  if executable('rls')
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'rls',
-          \ 'cmd': {server_info->['rls']},
-          \ 'workspace_config': {'rust': {'clippy_preference': 'on'}},
-          \ 'whitelist': ['rust'],
-          \ })
-    autocmd FileType rust call s:configure_lsp()
-  endif
-  if executable('gopls')
-    au User lsp_setup call lsp#register_server({
-         \ 'name': 'gopls',
-         \ 'cmd': {server_info->['gopls']},
-         \ 'whitelist': ['go'],
-         \ })
-    autocmd FileType go call s:configure_lsp()
-  endif
-  if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-          \ 'name': 'typescript-language-server',
-          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-          \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-          \ 'whitelist': ['typescript', 'typescript.tsx'],
-          \ })
-    autocmd FileType typescript call s:configure_lsp()
-  endif
-augroup END
-
-" let g:lsp_log_verbose = 1
-" let g:lsp_log_file = expand("/tmp/vim-lsp.log")
-let g:lsp_async_completion = 1
-let g:lsp_diagnostics_echo_cursor = 1
-
 Plug 'editorconfig/editorconfig-vim'
 Plug 'thinca/vim-qfreplace', { 'on': ['Qfreplace'] }
 
-" Plug 'maralla/completor.vim'
-" Plug 'maralla/completor-neosnippet'
-" Plug 'Shougo/neosnippet'
-" Plug 'Shougo/neosnippet-snippets'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
+set completeopt=noinsert,noselect,menuone
 Plug 'Shougo/echodoc.vim'
+
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 
 Plug 'osyo-manga/vim-anzu'
 nmap n <Plug>(anzu-n-with-echo)
@@ -168,8 +110,14 @@ Plug 'thinca/vim-quickrun'
 "" tmux
 Plug 'tmux-plugins/vim-tmux'
 
+"" fish
+Plug 'dag/vim-fish'
+
 "" {{{ golang
-Plug 'yosssi/vim-ace', { 'for': 'ace' }
+Plug 'fatih/vim-go', { 'for': ['go'] }
+let g:go_fmt_command = 'goimports'
+let g:go_def_mapping_enabled = 0
+let g:go_doc_keywordprg_enabled = 0
 "" }}}
 
 "" {{{ cpp c++
@@ -180,13 +128,9 @@ augroup myvimrc
   autocmd FileType c,cpp map <buffer><Leader>f <Plug>(operator-clang-format)
 augroup END
 Plug 'justmao945/vim-clang', { 'for': ['c', 'cpp'] }
-" let g:clang_auto = 0
+let g:clang_auto = 0
 let g:clang_cpp_options = '-std=c++14'
 let g:clang_diagsopt = ''
-"" }}}
-
-"" {{{ dlang
-Plug 'idanarye/vim-dutyl', { 'for': 'd' }
 "" }}}
 
 "" {{{ haskell
@@ -211,13 +155,6 @@ let g:haskell_conceal = 0
 "" {{{ python
 Plug 'heavenshell/vim-pydocstring'
 "" }}}
-
-""" {{{ ruby
-Plug 'vim-ruby/vim-ruby'
-Plug 'thoughtbot/vim-rspec', { 'for': ['ruby'] }
-Plug 'tpope/vim-dispatch'
-let g:rspec_command = 'Dispatch bundle exec rspec {spec}'
-""" }}}
 
 "" {{{ crystal
 Plug 'rhysd/vim-crystal', { 'for': 'crystal' }
@@ -247,6 +184,10 @@ Plug 'mattn/emmet-vim'
 Plug 'mrk21/yaml-vim'
 "" }}}
 
+"" {{{ toml
+Plug 'cespare/vim-toml'
+"" }}}
+
 call plug#end() " }}}
 
 filetype plugin indent on
@@ -263,6 +204,29 @@ function! s:is_git_repo() abort
   return 0
 endfunction
 
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+ \ 'bg':      ['bg', 'TabLine'],
+ \ 'hl':      ['fg', 'Statement'],
+ \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+ \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+ \ 'hl+':     ['fg', 'Statement'],
+ \ 'info':    ['fg', 'PreProc'],
+ \ 'border':  ['fg', 'Ignore'],
+ \ 'prompt':  ['fg', 'Conditional'],
+ \ 'pointer': ['fg', 'Exception'],
+ \ 'marker':  ['fg', 'Keyword'],
+ \ 'spinner': ['fg', 'Label'],
+ \ 'header':  ['fg', 'Comment'] }
+
+command! -bang -nargs=* Rg
+ \ call fzf#vim#grep(
+ \   'rg --column --line-number --no-heading --color always --colors path:fg:0xb2,0x94,0xbb --colors line:fg:0x6c,0x7a,0x80 --colors column:fg:0x6c,0x7a,0x80 --smart-case --hidden --glob "!/.git" '.shellescape(<q-args>), 1,
+ \   <bang>0 ? fzf#vim#with_preview({'options': '--color dark,hl:#8abeb7,hl+:#8abeb7,prompt:#8abeb7,pointer:#8abeb7 --delimiter : --nth 4..'}, 'up:60%')
+ \           : fzf#vim#with_preview({'options': '--color dark,hl:#8abeb7,hl+:#8abeb7,prompt:#8abeb7,pointer:#8abeb7 --delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+ \   <bang>0)
+
+
 function! s:fzf_files() abort
   if s:is_git_repo()
     GFiles
@@ -273,9 +237,9 @@ endfunction
 
 function! s:all_files()
   return extend(
-        \ filter(copy(v:oldfiles),
-        \        "v:val !~# 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
-        \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
+       \ filter(copy(v:oldfiles),
+       \        "v:val !~# 'fugitive:\\|NERD_tree\\|^/tmp/\\|.git/'"),
+       \ map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'))
 endfunction
 
 nnoremap [fzf] <Nop>
@@ -288,11 +252,51 @@ nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
 nnoremap <silent> [fzf]l :<C-u>BLines<CR>
 nnoremap <silent> [fzf]t :<C-u>Tags<CR>
 
-" fugitive
-nnoremap <Space>g :<C-u>Ggrep
 
+"" {{{ lightline.vim
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
+
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'cocstatus', 'currentfunction', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'cocstatus': 'coc#status',
+      \   'currentfunction': 'CocCurrentFunction'
+      \ },
+      \ }
+"" }}}
+
+" echodoc {{{
+let g:echodoc#enable_at_startup = 1
+" }}}
 
 " language support {{{
+
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> <f2> <plug>(lsp-rename)
+  inoremap <expr> <cr> pumvisible() ? "\<c-y>\<cr>" : "\<cr>"
+endfunction
+
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
+
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_popup_delay = 200
+let g:lsp_text_edit_enabled = 1
 
 "" OCaml
 if executable('opam')
@@ -325,7 +329,7 @@ if executable('opam')
     command! OcpIndent call s:ocaml_format()
   endif
 
-  augroup myvimrc
+  augroup myvirmc
     autocmd FileType ocaml call s:ocaml_setup()
   augroup END
 endif
@@ -348,34 +352,37 @@ augroup END
 " 全般
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:mapleader = ','
-let &backupdir = expand('~/.vim/_backup')
+" let &backupdir = expand('~/.vim/_backup')
 set clipboard=unnamed,unnamedplus
 set t_vb=
 set visualbell
 set noerrorbells
 set wildmenu wildmode=list:longest
+set updatetime=300
+set shortmess+=c
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " set termguicolors
-" colorscheme spring-night
 set t_ut=
 syntax enable
 set background=dark
-silent! colorscheme iceberg " suppress error message even if hybrid is not installed.
+silent! colorscheme iceberg
+set noshowmode
 
+set signcolumn=yes
 set cmdheight=2
 set hidden
 set nonumber
 set scrolloff=5
 set wrap
 set display=lastline
-set showbreak=+\
+" set showbreak=+\
 set breakindent
 " set cursorline
-set cursorcolumn
-set colorcolumn=80
+" set cursorcolumn
+" set colorcolumn=80
 set ruler
 set tabstop=4
 set softtabstop=4
@@ -404,6 +411,10 @@ if !exists('loaded_matchit')
 endif
 
 nnoremap <C-]> g<C-]>
+augroup grepquickfix
+  autocmd!
+  autocmd QuickFixCmdPost *grep* cwindow
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""
 " input
@@ -415,11 +426,6 @@ set showmatch
 set matchtime=1
 set whichwrap=b,s,h,l,<,>,[,]
 set smarttab
-" set completeopt-=preview
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-let g:UltiSnipsExpandTrigger = '<c-k>'
-" inoremap <expr> <Tab> pumvisible() ? '<C-y>' :  '<CR>'
 
 nnoremap ; :
 vnoremap ; :
