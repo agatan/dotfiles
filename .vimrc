@@ -70,6 +70,15 @@ else
   let g:asyncomplete_auto_completeopt = 0
   let g:asyncomplete_popup_delay = 200
   let g:lsp_text_edit_enabled = 1
+  let g:lsp_settings = {
+        \   'pyls': {
+        \     'workspace_config': {
+        \         'plugins': {
+        \           'pyls_mypy': { 'enabled': v:true, 'live_mode': v:false }
+        \         }
+        \     }
+        \   }
+        \ }
 
   call minpac#add('tyru/caw.vim')
   nmap <Space>c <Plug>(caw:hatpos:toggle)
