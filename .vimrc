@@ -91,6 +91,7 @@ else
 
   call minpac#add('cespare/vim-toml')
   call minpac#add('mrk21/yaml-vim')
+  call minpac#add('mattn/vim-goimports')
 end
 
 command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'do': 'call minpac#status()'})
