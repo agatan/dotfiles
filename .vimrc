@@ -141,6 +141,7 @@ set noshowmode
 set signcolumn=yes
 set scrolloff=5
 set cmdheight=2
+set wildmode=list:longest
 set breakindent
 set ruler
 set laststatus=2
@@ -165,7 +166,7 @@ set completeopt=noinsert,noselect,menuone
 
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
+" inoremap <expr> <cr>    pumvisible() ? "\<C-y>" : "\<cr>"
 
 nnoremap ; :
 vnoremap ; :
