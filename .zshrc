@@ -6,6 +6,7 @@ elif which emacs >/dev/null; then
   export EDITOR=emacs
 fi
 
+export PATH=$HOME/bin:$PATH
 export GOPATH=$HOME/repos
 export PATH=$GOPATH/bin:$PATH
 
