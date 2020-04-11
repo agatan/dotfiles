@@ -61,7 +61,7 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}  # 補完時の色
 setopt prompt_subst
 autoload -Uz colors
 colors
-PROMPT="%{$fg[green]%}$(basename $(pwd)) %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%} $ "
+PROMPT='%{$fg[green]%}$(basename $(pwd)) %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%} $ '
 
 git-current-status() {
   if [ ! -d ".git" ]; then
