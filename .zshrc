@@ -104,7 +104,6 @@ export FZF_DEFAULT_OPTS='--extended --ansi --multi --height 40% --reverse --bind
 
 # aliases
 alias ls='ls -F -G'
-alias rm='rm -i'
 alias ec=envchain
 
 g() {
