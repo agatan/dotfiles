@@ -31,6 +31,11 @@ if [ -f "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env" ]; then
   source "${GHCUP_INSTALL_BASE_PREFIX:=$HOME}/.ghcup/env"
 fi
 
+# stack
+if [ -d $HOME/.local/bin ]; then
+  export PATH=$HOME/.local/bin:$PATH
+fi
+
 # basis
 setopt ignoreeof  # Ignore Ctrl-D
 unsetopt LIST_BEEP  # 補完時にベルを鳴らさない
