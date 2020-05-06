@@ -13,86 +13,87 @@ packadd minpac
 
 if !exists('*minpac#init')
   " minpac not found.
-  throw 'minpac not found. Run `git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac`.'
-else
-  call minpac#init()
+  echo 'minpac not found. Run `git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac`.'
+  call system("git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac")
+endif
 
-  call minpac#add('cocopon/iceberg.vim')
-  call minpac#add('itchyny/lightline.vim')
-  let g:lightline = {
-      \ 'colorscheme': 'powerline',
-      \   'active': {
-      \     'left': [ [ 'mode', 'paste' ],
-      \               ['readonly', 'filename', 'modified' ] ]
-      \   },
+call minpac#init()
+
+call minpac#add('cocopon/iceberg.vim')
+call minpac#add('itchyny/lightline.vim')
+let g:lightline = {
+    \ 'colorscheme': 'powerline',
+    \   'active': {
+    \     'left': [ [ 'mode', 'paste' ],
+    \               ['readonly', 'filename', 'modified' ] ]
+    \   },
+    \ }
+
+call minpac#add('editorconfig/editorconfig-vim')
+
+call minpac#add('junegunn/fzf')
+call minpac#add('junegunn/fzf.vim')
+nnoremap [fzf] <Nop>
+nmap <Space>f [fzf]
+nnoremap <silent> [fzf]f :<C-u>Files<CR>
+nnoremap <silent> [fzf]m :<C-u>History<CR>
+nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
+
+call minpac#add('itchyny/vim-cursorword')
+
+call minpac#add('thinca/vim-qfreplace')
+
+call minpac#add('prabirshrestha/async.vim')
+call minpac#add('prabirshrestha/asyncomplete.vim')
+call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
+call minpac#add('prabirshrestha/vim-lsp')
+call minpac#add('mattn/vim-lsp-settings')
+call minpac#add('hrsh7th/vim-vsnip')
+call minpac#add('hrsh7th/vim-vsnip-integ')
+function! s:on_lsp_buffer_enabled() abort
+  setlocal omnifunc=lsp#complete
+  setlocal signcolumn=yes
+  nmap <buffer> gd <plug>(lsp-definition)
+  nmap <buffer> <f2> <plug>(lsp-rename)
+  nmap <buffer> fmt <plug>(lsp-document-format)
+  nmap <buffer> K <plug>(lsp-hover)
+  inoremap <expr> <cr> pumvisible() ? "\<c-y>\<cr>" : "\<cr>"
+endfunction
+
+augroup lsp_install
+  au!
+  autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
+
+let g:lsp_diagnostics_enabled = 1
+let g:lsp_diagnostics_echo_cursor = 1
+let g:asyncomplete_auto_popup = 1
+let g:asyncomplete_auto_completeopt = 0
+let g:asyncomplete_popup_delay = 200
+let g:lsp_text_edit_enabled = 1
+let g:lsp_settings = {
+      \   'pyls': {
+      \     'workspace_config': {
+      \         'plugins': {
+      \           'pyls_mypy': { 'enabled': v:true, 'live_mode': v:false }
+      \         }
+      \     }
+      \   }
       \ }
 
-  call minpac#add('editorconfig/editorconfig-vim')
+call minpac#add('tyru/caw.vim')
+nmap <Space>c <Plug>(caw:hatpos:toggle)
+vmap <Space>c <Plug>(caw:hatpos:toggle)
 
-  call minpac#add('junegunn/fzf')
-  call minpac#add('junegunn/fzf.vim')
-  nnoremap [fzf] <Nop>
-  nmap <Space>f [fzf]
-  nnoremap <silent> [fzf]f :<C-u>Files<CR>
-  nnoremap <silent> [fzf]m :<C-u>History<CR>
-  nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
+call minpac#add('junegunn/vim-easy-align')
 
-  call minpac#add('itchyny/vim-cursorword')
+call minpac#add('tpope/vim-endwise')
+call minpac#add('tpope/vim-surround')
 
-  call minpac#add('thinca/vim-qfreplace')
-
-  call minpac#add('prabirshrestha/async.vim')
-  call minpac#add('prabirshrestha/asyncomplete.vim')
-  call minpac#add('prabirshrestha/asyncomplete-lsp.vim')
-  call minpac#add('prabirshrestha/vim-lsp')
-  call minpac#add('mattn/vim-lsp-settings')
-  call minpac#add('hrsh7th/vim-vsnip')
-  call minpac#add('hrsh7th/vim-vsnip-integ')
-  function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-    nmap <buffer> gd <plug>(lsp-definition)
-    nmap <buffer> <f2> <plug>(lsp-rename)
-    nmap <buffer> fmt <plug>(lsp-document-format)
-    nmap <buffer> K <plug>(lsp-hover)
-    inoremap <expr> <cr> pumvisible() ? "\<c-y>\<cr>" : "\<cr>"
-  endfunction
-
-  augroup lsp_install
-    au!
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-  augroup END
-  command! LspDebug let lsp_log_verbose=1 | let lsp_log_file = expand('~/lsp.log')
-
-  let g:lsp_diagnostics_enabled = 1
-  let g:lsp_diagnostics_echo_cursor = 1
-  let g:asyncomplete_auto_popup = 1
-  let g:asyncomplete_auto_completeopt = 0
-  let g:asyncomplete_popup_delay = 200
-  let g:lsp_text_edit_enabled = 1
-  let g:lsp_settings = {
-        \   'pyls': {
-        \     'workspace_config': {
-        \         'plugins': {
-        \           'pyls_mypy': { 'enabled': v:true, 'live_mode': v:false }
-        \         }
-        \     }
-        \   }
-        \ }
-
-  call minpac#add('tyru/caw.vim')
-  nmap <Space>c <Plug>(caw:hatpos:toggle)
-  vmap <Space>c <Plug>(caw:hatpos:toggle)
-
-  call minpac#add('junegunn/vim-easy-align')
-
-  call minpac#add('tpope/vim-endwise')
-  call minpac#add('tpope/vim-surround')
-
-  call minpac#add('cespare/vim-toml')
-  call minpac#add('mrk21/yaml-vim')
-  call minpac#add('mattn/vim-goimports')
-end
+call minpac#add('cespare/vim-toml')
+call minpac#add('mrk21/yaml-vim')
+call minpac#add('mattn/vim-goimports')
 
 command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'do': 'call minpac#status()'})
 command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
