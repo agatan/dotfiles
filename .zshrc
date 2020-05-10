@@ -36,6 +36,11 @@ if [ -d $HOME/.local/bin ]; then
   export PATH=$HOME/.local/bin:$PATH
 fi
 
+# flutter
+if [ -d $HOME/flutter/bin ]; then
+  export PATH=$HOME/flutter/bin:$PATH
+fi
+
 # basis
 setopt ignoreeof  # Ignore Ctrl-D
 unsetopt LIST_BEEP  # 補完時にベルを鳴らさない
