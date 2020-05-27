@@ -1,10 +1,16 @@
-if which vim >/dev/null; then
+executable() {
+  type "$1" >/dev/null 2>&1
+}
+
+if executable vim; then
   export EDITOR=vim
-elif which vi >/dev/null; then
+elif executable vi; then
   export EDITOR=vi
-elif which emacs >/dev/null; then
-  export EDITOR=emacs
+elif executable emacs; then
+  export EDTIOR=emacs
 fi
+
+bindkey -e
 
 export PATH=$HOME/bin:$PATH
 export GOPATH=$HOME/repos
@@ -76,7 +82,7 @@ zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:
 setopt prompt_subst
 autoload -Uz colors
 colors
-PROMPT='%{$fg[green]%}$(basename $(pwd)) %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%}%(1j. %{$fg[red]%}(%j)%{$reset_color%}.) $ '
+PROMPT='%{$fg[green]%}$(basename $(pwd))%{${reset_color}%} %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%}%(1j. %{$fg[red]%}(%j)%{$reset_color%}.) $ '
 
 git-current-status() {
   if [ ! -d ".git" ]; then
