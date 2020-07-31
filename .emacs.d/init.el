@@ -76,6 +76,36 @@
   (setq vc-follow-symlinks t))
 
 
+(leaf *Navigation
+  :config
+  (leaf posframe :ensure t)
+  (leaf ivy
+    :ensure t
+    :blackout ivy-mode
+    :custom ((ivy-use-virtual-buffers . t)
+	     (ivy-truncate-lines . nil)
+	     (ivy-wrap . t)
+	     (ivy-mode . t)
+	     (counsel-mode . t))
+    :init
+    (leaf *ivy-requirements
+      :config
+      (leaf swiper
+	:ensure t
+	:bind (([remap isearch-forward] . swiper)))
+      (leaf counsel
+	:ensure t
+	:blackout counsel-mode
+	:bind (("C-x C-r" . counsel-recentf))))
+    (leaf ivy-posframe
+      :after ivy posframe
+      :ensure t
+      :custom ((ivy-posframe-mode . t)
+	       (ivy-posframe-height-alist . '((swiper . 30) (t . 40)))
+	       (ivy-posframe-display-functions-alist
+		. '((swiper . ivy-display-function-fallback)
+		    (t . ivy-posframe-display-at-frame-center)))))))
+
 (leaf *Keybindings
   :config
   (when (eq system-type 'darwin)
@@ -89,6 +119,7 @@
 (leaf *Edit
   :config
   (leaf smartparens :ensure t
+    :require smartparens-config
     :bind ((:smartparens-mode-map
 	    ;; basis
 	    ("C-M-f" . sp-forward-sexp)
@@ -96,24 +127,23 @@
 	    ("C-M-n" . sp-next-sexp)
 	    ("C-M-p" . sp-previous-sexp)
 	    ("C-M-a" . sp-beginning-of-sexp)
-	    ("C-M-e" . sp-end-of-sexp))))
-    :config
-    (smartparens-global-mode t))
+	    ("C-M-e" . sp-end-of-sexp)))
+    :custom
+    ((smartparens-global-mode . t)))
   (leaf flycheck :ensure t)
   (leaf company
     :ensure t
     :custom
     ((company-selection-wrap-around . t)
      (company-idle-delay . 0)
-     (company-minimum-prefix-length . 2))
+     (company-minimum-prefix-length . 2)
+     (global-company-mode . t))
     :bind
     (:company-active-map
      ("M-n" . nil)
      ("M-p" . nil)
      ("C-n" . company-select-next)
-     ("C-p" . company-select-previous))
-    :config
-    (global-company-mode t)))
+     ("C-p" . company-select-previous))))
 
 (provide 'init)
 ;;; init.el ends here
