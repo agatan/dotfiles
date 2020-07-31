@@ -128,6 +128,15 @@
 	:ensure t
 	:blackout counsel-mode
 	:bind (("C-x C-r" . counsel-recentf))))
+    (leaf ivy-rich
+      :ensure t
+      :after ivy
+      :custom ((ivy-rich-mode . t))
+      :init
+      (leaf all-the-icons-ivy-rich
+        :ensure t
+        :after ivy-rich
+        :custom ((all-the-icons-ivy-rich-mode . t))))
     (leaf ivy-posframe
       :after ivy
       :ensure t
@@ -150,7 +159,7 @@
 
   (leaf which-key
     :ensure t
-    :custom ((which-key-idle-delay . 0.2)
+    :custom ((which-key-idle-delay . 0.5)
              (which-key-mode . t))
     :init
     (leaf which-key-posframe
