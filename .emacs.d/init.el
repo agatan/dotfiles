@@ -59,6 +59,10 @@
     (find-file user-init-file))
   (defalias 'yes-or-no-p 'y-or-n-p)
 
+  (leaf better-defaults
+    :ensure t
+    :require t)
+
   (leaf exec-path-from-shell
     :ensure t
     :require t
@@ -92,7 +96,7 @@
       :config
       (leaf swiper
 	:ensure t
-	:bind (([remap isearch-forward] . swiper)))
+	:bind (([remap isearch-forward-regexp] . swiper)))
       (leaf counsel
 	:ensure t
 	:blackout counsel-mode
@@ -105,6 +109,22 @@
 	       (ivy-posframe-display-functions-alist
 		. '((swiper . ivy-display-function-fallback)
 		    (t . ivy-posframe-display-at-frame-center)))))))
+
+
+(leaf *Visual
+  :config
+  (setq visible-bell nil)
+  (leaf window-divider
+    :custom-face (window-divider . '((t (:foreground "#4a4a4a"))))
+    :custom ((window-divider-default-right-width . 8)
+             (window-divider-mode . t)))
+  (leaf doom-themes
+    :ensure t
+    :custom ((doom-themes-enable-italic . t)
+	     (doom-themes-enable-bold . t))
+    :config
+    (load-theme 'doom-vibrant t)))
+
 
 (leaf *Keybindings
   :config
@@ -137,6 +157,8 @@
     (leaf flycheck-posframe
       :ensure t
       :after flycheck
+      :custom-face
+      (flycheck-posframe-face . '((t (:foreground "#4a4a4a" :background "#5d4a4f"))))
       :hook ((flycheck-mode-hook . flycheck-posframe-mode))))
   (leaf company
     :ensure t
