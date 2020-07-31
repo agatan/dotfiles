@@ -104,7 +104,7 @@
     (leaf ivy-posframe
       :after ivy
       :ensure t
-      :custom-face (ivy-posframe . '((t (:background "dark slate grey"))))
+      :custom-face (ivy-posframe . '((t (:background "#224b4b"))))
       :custom ((ivy-posframe-mode . t)
 	       (ivy-posframe-height-alist . '((swiper . 30) (t . 40)))
 	       (ivy-posframe-display-functions-alist
@@ -134,7 +134,18 @@
 
   (leaf *global-key-maps
     :bind
-    (("C-h" . delete-backward-char))))
+    (("C-h" . delete-backward-char)))
+
+  (leaf which-key
+    :ensure t
+    :custom ((which-key-idle-delay . 0.2)
+             (which-key-mode . t))
+    :init
+    (leaf which-key-posframe
+      :ensure t
+      :after which-key
+      :custom-face (which-key-posframe . '((t (:background "#224b4b"))))
+      :custom ((which-key-posframe-mode . t)))))
 
 
 (leaf *Edit
