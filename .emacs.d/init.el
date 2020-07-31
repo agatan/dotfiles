@@ -209,6 +209,17 @@
       :hook ((company-mode-hook . company-box-mode))
       :custom ((company-box-icons-alist . 'company-box-icons-all-the-icons))))
 
+  (leaf projectile
+    :ensure t
+    :custom ((projectile-project-search-path . '("~/repos/src/github.com/agatan" "~/repos/src/github.com/wantedly/"))
+             (projectile-mode . t))
+    :bind (("C-c p" . projectile-command-map))
+    :init
+    (leaf counsel-projectile
+      :ensure t
+      :after projectile
+      :custom ((counsel-projectile-mode . t))))
+
   (leaf lsp-mode
     :ensure t
     :hook ((lsp-mode-hook . lsp-enable-which-key-integration))
