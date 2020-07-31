@@ -80,6 +80,33 @@
   (setq vc-follow-symlinks t))
 
 
+(leaf *Visual
+  :config
+  (setq visible-bell nil)
+  (leaf window-divider
+    :custom-face (window-divider . '((t (:foreground "#4a4a4a"))))
+    :custom ((window-divider-default-right-width . 8)
+             (window-divider-mode . t)))
+
+  (leaf all-the-icons
+    :ensure t)
+
+  (leaf doom-themes
+    :ensure t
+    :custom ((doom-themes-enable-italic . t)
+	     (doom-themes-enable-bold . t)
+             (doom-theme . 'doom-vibrant))
+    :hook ((after-init-hook . (lambda () (load-theme 'doom-vibrant t)))))
+  (leaf doom-modeline
+    :ensure t
+    :custom ((doom-modeline-unicode-fallback . t))
+    :hook ((after-init-hook . doom-modeline-mode))
+    :config
+    (doom-modeline-def-modeline 'main
+      '(bar workspace-name window-number matches buffer-info remote-host buffer-position selection-info)
+      '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker))))
+
+
 (leaf *Navigation
   :config
   (leaf posframe :ensure t)
@@ -110,21 +137,6 @@
 	       (ivy-posframe-display-functions-alist
 		. '((swiper . ivy-display-function-fallback)
 		    (t . ivy-posframe-display-at-frame-center)))))))
-
-
-(leaf *Visual
-  :config
-  (setq visible-bell nil)
-  (leaf window-divider
-    :custom-face (window-divider . '((t (:foreground "#4a4a4a"))))
-    :custom ((window-divider-default-right-width . 8)
-             (window-divider-mode . t)))
-  (leaf doom-themes
-    :ensure t
-    :custom ((doom-themes-enable-italic . t)
-	     (doom-themes-enable-bold . t))
-    :config
-    (load-theme 'doom-vibrant t)))
 
 
 (leaf *Keybindings
