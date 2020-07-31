@@ -207,7 +207,26 @@
       :ensure t
       :after company all-the-icons
       :hook ((company-mode-hook . company-box-mode))
-      :custom ((company-box-icons-alist . 'company-box-icons-all-the-icons)))))
+      :custom ((company-box-icons-alist . 'company-box-icons-all-the-icons))))
+
+  (leaf lsp-mode
+    :ensure t
+    :hook ((lsp-mode-hook . lsp-enable-which-key-integration))
+    :commands lsp
+    :init
+    (leaf *lsp-basis
+      :config
+      (leaf lsp-ui
+        :ensure t
+        :after lsp-mode))
+    (leaf *lsp-languages
+      :config
+      (leaf lsp-python-ms
+        :ensure t
+        :after lsp-mode
+        :hook ((python-mode-hook . (lambda ()
+                                     (require 'lsp-python-ms)
+                                     (lsp))))))))
 
 
 (provide 'init)
