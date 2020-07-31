@@ -126,6 +126,7 @@ export FZF_DEFAULT_OPTS='--extended --ansi --multi --height 40% --reverse --bind
 # aliases
 alias ls='ls -F -G'
 alias ec=envchain
+alias e='emacsclient --no-wait'
 
 g() {
   local src=$(ghq list | fzf --preview "ls -lTp $(ghq root)/{} | tail -n+2 | awk '{print \$9\"/\"\$6\"/\"\$7 \" \" \$10}'")
