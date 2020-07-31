@@ -1,4 +1,17 @@
 ;;; Code:
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(require 'package)
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ;; ("melpa-stable" . "https://stable.melpa.org/packages/")
+        ("org" . "https://orgmode.org/elpa/")
+        ("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+
 (when load-file-name
   (setq user-emacs-directory (expand-file-name
                               (file-name-directory load-file-name))))
@@ -9,7 +22,6 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;; install straight.el (copy from https://github.com/raxod502/straight.el)
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -22,9 +34,7 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
-
 (straight-use-package 'use-package)
-
 (setq straight-use-package-by-default t)
 
 (eval-when-compile
@@ -33,6 +43,13 @@
 (use-package use-package-ensure-system-package)
 
 (use-package better-defaults)
+
+(use-package exec-path-from-shell
+  :config
+  (when (executable-find "zsh")
+    (setq exec-path-from-shell-shell-name "zsh"))
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; View
@@ -48,7 +65,6 @@
   (doom-themes-enable-bold t)
   :config
   (load-theme 'doom-vibrant t))
-
 
 (use-package doom-modeline
   :custom
@@ -86,7 +102,6 @@
     (interactive)
     (setq elscreen-display-tab (not elscreen-display-tab))))
 
-(use-package helm-elscreen)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; User Interface
@@ -122,33 +137,51 @@
 ;;   (setq ido-ghq-short-list t)
 ;;   :ensure-system-package ghq)
 
+;;; ivy
+(use-package hydra)
 
-;;; helm
-(use-package helm
-  :bind (("M-x" . helm-M-x)
-         ("C-x b" . helm-mini)
-         ("C-x C-f" . helm-find-files)
-         ("C-c o" . helm-occur))
+(use-package ivy
   :init
-  (setq helm-M-x-fuzzy-match t)
-  (setq helm-buffers-fuzzy-matching t)
-  (setq helm-recentf-fuzzy-match t)
-  (setq helm-mode-fuzzy-match t)
-  (setq helm-completion-in-region-fuzzy-match t))
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-truncate-lines nil)
+  (setq ivy-wrap t)
+  (ivy-mode 1)
+  (setq ivy-count-format "(%d/%d) "))
 
+(use-package counsel
+  :bind (("M-x" . 'counsel-M-x)
+         ("M-y" . 'counsel-yank-pop)
+         ("C-M-z" . 'counsel-fzf)
+         ("C-x C-r" . 'counsel-recentf)
+         ("C-x b" . 'counsel-ibuffer)
+         ("C-c g" . 'counsel-git-grep))
+  :init
+  (counsel-mode 1))
 
-(use-package helm-projectile
+(use-package swiper
+  :bind ("C-c s" . 'swiper))
+
+(use-package  ivy-rich
+  :init
+  (ivy-rich-mode 1))
+
+(use-package ivy-posframe
   :config
-  (helm-projectile-on))
+  (use-package posframe)
+  (setq ivy-posframe-display-functions-alist
+        '((swiper . ivy-posframe-display)
+          (counsel-M-x . ivy-posframe-display)
+          (t . ivy-posframe-display-at-frame-center)))
+  (setq ivy-posframe-parameters
+        '((left-fringe . 8)
+          (right-fringe . 8)))
+  (custom-set-faces '(ivy-posframe ((t (:background "#1a1a1a")))))
+  (ivy-posframe-mode 1))
 
-(use-package helm-ghq
-  :defer t
-  :commands 'helm-ghq)
-
-(use-package helm-rg
-  :defer t
-  :commands 'helm-rg)
-;;; << helm
+(use-package counsel-projectile
+  :after projectile
+  :config
+  (counsel-projectile-mode 1))
 
 (use-package shackle
   :config
@@ -168,6 +201,11 @@
   (setq iflipb-wrap-around t))
 
 (use-package all-the-icons)
+(use-package all-the-icons-ivy
+  :config
+  (dolist (command '(counsel-projectile-switch-project counsel-ibuffer counsel-fzf))
+    (add-to-list 'all-the-icons-ivy-buffer-commands command))
+  (all-the-icons-ivy-setup))
 
 (use-package ace-window
   :functions ace-window
@@ -176,6 +214,22 @@
   (aw-keys '(?j ?k ?l ?i ?o ?h ?y ?u ?p)f)
   :custom-face
   (aw-leading-char-face ((t (:height 4.0 :foreground "#f1fa8c")))))
+
+;; 同名シンボルのハイライト
+(use-package symbol-overlay
+  :custom-face
+  (symbol-overlay-default-face ((t (:background "#334d66"))))
+  :config
+  (symbol-overlay-mode 1))
+
+;; 非アクティブな window を暗くする
+(use-package dimmer
+  :config
+  (dimmer-configure-company-box)
+  (dimmer-configure-hydra)
+  (dimmer-configure-posframe)
+  (dimmer-configure-which-key)
+  (dimmer-mode t))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Editing
@@ -212,13 +266,9 @@
   (setq projectile-switch-project-action #'projectile-dired)
   (setq projectile-enable-caching t))
 
-(defun my/recentf-find-file ()
-  (interactive)
-  (find-file (ido-completing-read "Find recent file: " recentf-list)))
 (use-package recentf
   :config
   (recentf-mode))
-(bind-key "C-x C-r" 'my/recentf-find-file)
 (setq recentf-max-saved-items 200)
 
 (use-package flycheck
@@ -246,8 +296,8 @@
 (use-package bind-key)
 (bind-key "C-h" 'delete-backward-char)
 (winner-mode t)
-(bind-key "C-z" 'winner-undo)
-(bind-key "C-M-z" 'winner-redo)
+(bind-key "C-c z" 'winner-undo)
+(bind-key "C-c M-z" 'winner-redo)
 ;; For macos
 (when (eq system-type 'darwin)
   (setq ns-command-modifier 'meta))
@@ -287,9 +337,13 @@
     :after lsp-mode
     :config
     (setq lsp-ui-doc-use-childframe t)
-    (setq lsp-ui-doc-use-webkit t)
-    (setq lsp-ui-flycheck-enable nil)
+    (setq lsp-ui-doc-use-webkit nil)
+    (setq lsp-ui-flycheck-enable t)
     :hook (lsp-mode . lsp-ui-mode)
+    :custom
+    (lsp-ui-doc-position 'top)
+    :custom-face
+    (lsp-ui-doc-background ((t (:background "#101010"))))
     :bind
     (:map lsp-mode-map
           ("C-c C-r" . lsp-ui-peek-find-references)
@@ -319,6 +373,10 @@
     :major-modes '(d-mode)
     :server-id 'dls)))
 
+(use-package lsp-python-ms
+  :init
+  (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda () (require 'lsp-python-ms) (lsp))))
 
 ;;; ruby
 (use-package rspec-mode
@@ -328,14 +386,6 @@
 
 
 ;;; Python
-(use-package pipenv
-  :hook
-  (python-mode . pipenv-mode)
-  :init
-  (setq
-   pipenv-projectile-after-switch-function
-   #'pipenv-projectile-after-switch-extended))
-
 
 ;;; markdown
 (use-package markdown-mode
@@ -428,6 +478,6 @@
    ("C-c g" . org-clock-goto)
    ("C-c i" . my:org-goto-inbox)
    :map org-mode-map
-   ("C-m" . org-return-indent)
+   ("C-m" . org-indent)
    ("M-n" . org-forward-heading-same-level)
    ("M-p" . org-backward-heading-same-level)))
