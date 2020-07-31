@@ -244,7 +244,12 @@
         :after lsp-mode
         :hook ((python-mode-hook . (lambda ()
                                      (require 'lsp-python-ms)
-                                     (lsp))))))))
+                                     (lsp)))))))
+
+  (leaf *LanguageSupport
+    :config
+    (leaf dockerfile-mode
+      :ensure t)))
 
 
 (provide 'init)
