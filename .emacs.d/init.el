@@ -100,11 +100,7 @@
   (leaf doom-modeline
     :ensure t
     :custom ((doom-modeline-unicode-fallback . t))
-    :hook ((after-init-hook . doom-modeline-mode))
-    :config
-    (doom-modeline-def-modeline 'main
-      '(bar workspace-name window-number matches buffer-info remote-host buffer-position selection-info)
-      '(misc-info persp-name lsp github debug minor-modes input-method major-mode process vcs checker))))
+    :hook ((after-init-hook . doom-modeline-mode))))
 
 
 (leaf *Navigation
@@ -205,7 +201,14 @@
      ("M-n" . nil)
      ("M-p" . nil)
      ("C-n" . company-select-next)
-     ("C-p" . company-select-previous))))
+     ("C-p" . company-select-previous))
+    :config
+    (leaf company-box
+      :ensure t
+      :after company all-the-icons
+      :hook ((company-mode-hook . company-box-mode))
+      :custom ((company-box-icons-alist . 'company-box-icons-all-the-icons)))))
+
 
 (provide 'init)
 ;;; init.el ends here
