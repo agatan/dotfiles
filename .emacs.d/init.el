@@ -104,6 +104,7 @@
     (leaf ivy-posframe
       :after ivy
       :ensure t
+      :custom-face (ivy-posframe . '((t (:background "dark slate grey"))))
       :custom ((ivy-posframe-mode . t)
 	       (ivy-posframe-height-alist . '((swiper . 30) (t . 40)))
 	       (ivy-posframe-display-functions-alist
