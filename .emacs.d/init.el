@@ -98,7 +98,7 @@
 	:blackout counsel-mode
 	:bind (("C-x C-r" . counsel-recentf))))
     (leaf ivy-posframe
-      :after ivy posframe
+      :after ivy
       :ensure t
       :custom ((ivy-posframe-mode . t)
 	       (ivy-posframe-height-alist . '((swiper . 30) (t . 40)))
@@ -130,7 +130,14 @@
 	    ("C-M-e" . sp-end-of-sexp)))
     :custom
     ((smartparens-global-mode . t)))
-  (leaf flycheck :ensure t)
+  (leaf flycheck
+    :ensure t
+    :config
+    (global-flycheck-mode)
+    (leaf flycheck-posframe
+      :ensure t
+      :after flycheck
+      :hook ((flycheck-mode-hook . flycheck-posframe-mode))))
   (leaf company
     :ensure t
     :custom
