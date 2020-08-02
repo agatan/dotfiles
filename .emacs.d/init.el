@@ -267,8 +267,10 @@
 
     (leaf go-mode
       :ensure t
-      :after lsp
-      :hook (go-mode-hook . lsp))))
+      :custom ((gofmt-command . "goimports"))
+      :hook (go-mode-hook . (lambda ()
+                              (add-hook 'before-save-hook 'gofmt-before-save)
+                              (lsp))))))
 
 
 (provide 'init)
