@@ -250,6 +250,9 @@
         :after lsp-mode))
     (leaf *lsp-languages
       :config
+      (leaf *python
+        :custom ((python-shell-interpreter . "ipython")
+                 (python-shell-interpreter-args . "-i --simple-prompt --InteractiveShell.display_page=True")))
       (leaf lsp-python-ms
         :ensure t
         :after lsp-mode
