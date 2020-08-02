@@ -93,6 +93,10 @@
 (leaf *Visual
   :config
   (setq visible-bell nil)
+  (let ((font "JetBrains Mono"))
+    (when (member font (font-family-list))
+      (add-to-list 'default-frame-alist `(font . ,font))))
+
   (leaf window-divider
     :custom-face (window-divider . '((t (:foreground "#4a4a4a"))))
     :custom ((window-divider-default-right-width . 8)
@@ -176,8 +180,8 @@
 
 
 (leaf *Edit
-  :hook ((before-save-hook . delete-trailing-whitespace))
   :config
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (leaf smartparens :ensure t
     :require smartparens-config
     :bind ((:smartparens-mode-map
