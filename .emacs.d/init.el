@@ -176,6 +176,7 @@
 
 
 (leaf *Edit
+  :hook ((before-save-hook . delete-trailing-whitespace))
   :config
   (leaf smartparens :ensure t
     :require smartparens-config
@@ -252,6 +253,9 @@
   (leaf *LanguageSupport
     :config
     (leaf dockerfile-mode
+      :ensure t)
+
+    (leaf markdown-mode
       :ensure t)))
 
 
