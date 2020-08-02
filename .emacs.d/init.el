@@ -263,7 +263,12 @@
       :ensure t)
 
     (leaf markdown-mode
-      :ensure t)))
+      :ensure t)
+
+    (leaf go-mode
+      :ensure t
+      :after lsp
+      :hook (go-mode-hook . lsp))))
 
 
 (provide 'init)
