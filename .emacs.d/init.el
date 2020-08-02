@@ -129,6 +129,8 @@
 	     (ivy-wrap . t)
 	     (ivy-mode . t)
 	     (counsel-mode . t))
+    :custom-face
+    (ivy-current-match . '((t (:background "#557b7b"))))
     :init
     (leaf *ivy-requirements
       :config
