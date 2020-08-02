@@ -16,13 +16,6 @@
 	   (file-name-directory (or load-file-name byte-compile-current-file))))))
 
 
-;; Start server for emacsclient
-(when (memq window-system '(mac ns x))
-  (require 'server)
-  (unless (server-running-p)
-    (server-start)))
-
-
 (prog1 "leaf installation: https://qiita.com/conao3/items/347d7e472afd0c58fbd7"
   (eval-and-compile
     (customize-set-variable
@@ -57,6 +50,16 @@
 (leaf macrostep
   :ensure t
   :bind (("C-c e" . macrostep-expand)))
+
+
+;; Start server for emacsclient
+(leaf server
+  :require t
+  :when (memq window-system '(mac ns x))
+  :commands (server-running-p server-start)
+  :config
+  (unless (server-running-p)
+    (server-start)))
 
 
 (leaf *Basis
