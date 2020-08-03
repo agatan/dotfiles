@@ -158,7 +158,15 @@
 	       (ivy-posframe-height-alist . '((swiper . 30) (t . 40)))
 	       (ivy-posframe-display-functions-alist
 		. '((swiper . ivy-display-function-fallback)
-		    (t . ivy-posframe-display-at-frame-center)))))))
+		    (t . ivy-posframe-display-at-frame-center))))))
+
+  (leaf ace-window
+    :ensure t
+    :bind (("C-M-o" . ace-window))
+    :custom
+    ((aw-keys . '(?j ?k ?l ?i ?o ?h ?y ?u ?p)))
+    :custom-face
+    ((aw-leading-char-face . '((t (:height 3.0 :foreground "red")))))))
 
 
 (leaf *Keybindings
@@ -266,6 +274,9 @@
       :ensure t)
 
     (leaf markdown-mode
+      :ensure t)
+
+    (leaf yaml-mode
       :ensure t)
 
     (leaf go-mode
