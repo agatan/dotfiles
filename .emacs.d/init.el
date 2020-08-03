@@ -115,7 +115,17 @@
   (leaf doom-modeline
     :ensure t
     :custom ((doom-modeline-unicode-fallback . t))
-    :hook ((after-init-hook . doom-modeline-mode))))
+    :hook ((after-init-hook . doom-modeline-mode)))
+
+  ;; 非アクティブな window を暗くする
+  (leaf dimmer
+    :ensure t
+    :config
+    (dimmer-configure-company-box)
+    (dimmer-configure-hydra)
+    (dimmer-configure-posframe)
+    (dimmer-configure-which-key)
+    (dimmer-mode t)))
 
 
 (leaf *Navigation
