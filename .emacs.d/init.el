@@ -122,6 +122,7 @@
   ;; 非アクティブな window を暗くする
   (leaf dimmer
     :ensure t
+    :disabled t
     :config
     (dimmer-configure-company-box)
     (dimmer-configure-hydra)
@@ -217,12 +218,20 @@
 	    ("C-M-e" . sp-end-of-sexp)))
     :custom
     ((smartparens-global-mode . t)))
+  (leaf yasnippet
+    :ensure t
+    :custom ((yas-global-mode . t))
+    :init
+    (leaf yasnippet-snippets
+      :ensure t
+      :after yasnippet))
   (leaf flycheck
     :ensure t
     :config
     (global-flycheck-mode)
     (leaf flycheck-posframe
       :ensure t
+      :disabled t
       :after flycheck
       :custom-face
       (flycheck-posframe-face . '((t (:foreground "#4a4a4a" :background "#5d4a4f"))))
@@ -261,12 +270,14 @@
   (leaf lsp-mode
     :ensure t
     :hook ((lsp-mode-hook . lsp-enable-which-key-integration))
+    :custom ((lsp-completion-provider . :capf))
     :commands lsp
     :init
     (leaf *lsp-basis
       :config
       (leaf lsp-ui
         :ensure t
+        :custom-face (lsp-ui-doc-background . '((t (:background "#224a4a"))))
         :after lsp-mode))
     (leaf *lsp-languages
       :config
@@ -275,7 +286,6 @@
                  (python-shell-interpreter-args . "-i --simple-prompt --InteractiveShell.display_page=True")))
       (leaf lsp-python-ms
         :ensure t
-        :after lsp-mode
         :hook ((python-mode-hook . (lambda ()
                                      (require 'lsp-python-ms)
                                      (lsp)))))))
