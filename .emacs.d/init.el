@@ -95,10 +95,10 @@
 (leaf *Visual
   :config
   (setq visible-bell nil)
-  (when (every (lambda (n) (member n (font-family-list))) '("Hiragino Kaku Gothic ProN" "JetBrains Mono"))
-    (create-fontset-from-ascii-font "JetBrains Mono:slant=normal" nil "monokakugo")
-    (set-fontset-font "fontset-monokakugo" 'unicode (font-spec :family "Hiragino Kaku Gothic ProN") nil 'append)
-    (add-to-list 'default-frame-alist '(font . "fontset-monokakugo")))
+  (when (every (lambda (n) (member n (font-family-list))) '("Hiragino Sans" "JetBrains Mono"))
+    (create-fontset-from-ascii-font "JetBrains Mono:slant=normal" nil "monohiragino")
+    (set-fontset-font "fontset-monohiragino" 'unicode (font-spec :family "Hiragino Sans") nil 'append)
+    (add-to-list 'default-frame-alist '(font . "fontset-monohiragino")))
 
   (leaf window-divider
     :custom-face (window-divider . '((t (:foreground "#4a4a4a"))))
