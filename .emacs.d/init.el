@@ -87,7 +87,9 @@
     :doc "tools forr customizing Emacs and List packages"
     :custom `((custom-file . ,(locate-user-emacs-file "custom.el"))))
 
-  (setq vc-follow-symlinks t))
+  (setq vc-follow-symlinks t)
+  (setq gc-cons-threshold 12800000)
+  (setq read-process-output-max (* 1024 1024)))
 
 
 (leaf *Visual
