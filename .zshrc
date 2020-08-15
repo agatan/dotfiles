@@ -47,6 +47,11 @@ if [ -d $HOME/flutter/bin ]; then
   export PATH=$HOME/flutter/bin:$PATH
 fi
 
+# OCaml
+if executable opam; then
+  eval $(opam env)
+fi
+
 # basis
 setopt ignoreeof  # Ignore Ctrl-D
 unsetopt LIST_BEEP  # 補完時にベルを鳴らさない
