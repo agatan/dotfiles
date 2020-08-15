@@ -206,6 +206,11 @@
 (leaf *Edit
   :config
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+  (leaf undo-tree
+    :ensure t
+    :custom ((global-undo-tree-mode . t)))
+
   (leaf smartparens :ensure t
     :require smartparens-config
     :bind ((:smartparens-mode-map
@@ -240,8 +245,9 @@
     :ensure t
     :custom
     ((company-selection-wrap-around . t)
-     (company-idle-delay . 0)
+     (company-idle-delay . 0.4)
      (company-minimum-prefix-length . 2)
+     (company-dabbrev-downcase . nil)
      (global-company-mode . t))
     :bind
     (:company-active-map
@@ -270,7 +276,8 @@
   (leaf lsp-mode
     :ensure t
     :hook ((lsp-mode-hook . lsp-enable-which-key-integration))
-    :custom ((lsp-completion-provider . :capf))
+    :custom ((lsp-completion-provider . :capf)
+             (lsp-response-time . 0.5))
     :commands lsp
     :init
     (leaf *lsp-basis
@@ -306,7 +313,19 @@
       :custom ((gofmt-command . "goimports"))
       :hook (go-mode-hook . (lambda ()
                               (add-hook 'before-save-hook 'gofmt-before-save)
-                              (lsp))))))
+                              (lsp))))
+
+    (leaf protobuf-mode
+      :ensure t)
+
+    (leaf rustic
+      :ensure t)
+
+    (leaf *OCaml
+      :config
+      (leaf tuareg
+        :ensure t
+        :hook (tuareg-mode-hook . lsp)))))
 
 
 (provide 'init)
