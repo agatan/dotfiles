@@ -11,7 +11,7 @@ command! ReloadVimrc source $MYVIMRC
 
 packadd minpac
 
-if !exists('*minpac#init')
+if !exists('g:loaded_minpac')
   " minpac not found.
   echo 'minpac not found. Run `git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac`.'
   call system("git clone https://github.com/k-takata/minpac.git ~/.vim/pack/minpac/opt/minpac")
