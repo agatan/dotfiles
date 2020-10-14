@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -xeuC
+
+ensureRubyInstalled() {
+  ruby_version=$1
+  if [ rbenv versions | grep $ruby_version ]; then
+    return
+  fi
+  if [ ! rbenv install --list | grep $ruby_version ]; then
+    anyenv update
+  fi
+  rbenv install $ruby_version
+}
+
+ensureRubyGemsForDevelopment() {
+  gem install --no-document pry solargraph
+}
+
+ruby_version=$(echo -n $(cat .ruby-version))
+
+ensureRubyInstalled $ruby_version
+ensureRubyGemsForDevelopment $ruby_version
+bundle install
