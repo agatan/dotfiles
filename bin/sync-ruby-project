@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -xeuC
+set -euC
+set -o pipefail
 
 ensureRubyInstalled() {
   ruby_version=$1
@@ -16,6 +17,11 @@ ensureRubyInstalled() {
 ensureRubyGemsForDevelopment() {
   gem install --no-document pry solargraph
 }
+
+if [ ! -f .ruby-version ]; then
+  echo ".ruby-version not found" >&2
+  exit 1
+fi
 
 ruby_version=$(echo -n $(cat .ruby-version))
 
