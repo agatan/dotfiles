@@ -20,9 +20,10 @@ endif
 call minpac#init()
 
 call minpac#add('cocopon/iceberg.vim')
+call minpac#add('ghifarit53/tokyonight-vim')
 call minpac#add('itchyny/lightline.vim')
 let g:lightline = {
-    \ 'colorscheme': 'powerline',
+    \ 'colorscheme': 'tokyonight',
     \   'active': {
     \     'left': [ [ 'mode', 'paste' ],
     \               ['readonly', 'filename', 'modified' ] ]
@@ -95,6 +96,8 @@ call minpac#add('cespare/vim-toml')
 call minpac#add('mrk21/yaml-vim')
 call minpac#add('mattn/vim-goimports')
 
+call minpac#add('tpope/vim-rails')
+
 command! PackUpdate packadd minpac | source $MYVIMRC | call minpac#update('', {'do': 'call minpac#status()'})
 command! PackClean  packadd minpac | source $MYVIMRC | call minpac#clean()
 command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
@@ -119,7 +122,9 @@ filetype plugin indent on
 syntax enable
 
 set background=dark
-colorscheme iceberg
+" let g:tokyonight_enable_italic = 1
+let g:tokyonight_disable_italic_comment = 1
+colorscheme tokyonight
 
 set incsearch
 set ignorecase
