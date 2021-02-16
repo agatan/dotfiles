@@ -182,3 +182,7 @@ nnoremap q; q:
 vnoremap q; q:
 
 " }}}
+
+
+" F#, fsharp
+autocmd BufNewFile,BufRead *.fs,*.fsi,*.fsx set filetype=fsharp

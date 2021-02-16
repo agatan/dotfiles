@@ -41,4 +41,7 @@ indent_size = 2
 indent_size = 4
 
 [*.proto]
-indent_sie = 2
+indent_size = 2
+
+[*.{fs,fsi,fsx}]
+indent_size = 4
