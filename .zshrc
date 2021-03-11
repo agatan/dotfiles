@@ -15,7 +15,13 @@ bindkey -e
 export PATH=$HOME/bin:$PATH
 export GOPATH=$HOME/repos
 export PATH=$GOPATH/bin:$PATH
-export PATH=/opt/homebrew/bin:$PATH
+
+ARCH=$(uname -m)
+if [[ $ARCH == arm64 ]]; then
+  [ -x /opt/homebrew/bin/brew ] && echo $(/opt/homebrew/bin/brew shellenv)
+elif [[ $ARCH == x86_64 ]]; then
+  [ -x /usr/local/bin/brew ] && echo $(/usr/local/bin/brew shellenv)
+fi
 
 if [ -d $HOME/.anyenv ]; then
   export PATH=$HOME/.anyenv/bin:$PATH
@@ -95,7 +101,7 @@ zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:
 setopt prompt_subst
 autoload -Uz colors
 colors
-PROMPT='%{$fg[green]%}$(basename $(pwd))%{${reset_color}%} %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%}%(1j. %{$fg[red]%}(%j)%{$reset_color%}.) $ '
+PROMPT='%{$fg[blue]%}$(uname -m) %{$fg[green]%}$(basename $(pwd))%{${reset_color}%} %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%}%(1j. %{$fg[red]%}(%j)%{$reset_color%}.) $ '
 
 git-current-status() {
   if [ ! -d ".git" ]; then
