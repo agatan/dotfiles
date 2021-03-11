@@ -43,3 +43,8 @@ vendor/bundle
 .vim/
 
 telepresence.log
+
+.devcontainer/
+.node-version
+
+serviceAccountKey.json

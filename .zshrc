@@ -15,6 +15,7 @@ bindkey -e
 export PATH=$HOME/bin:$PATH
 export GOPATH=$HOME/repos
 export PATH=$GOPATH/bin:$PATH
+export PATH=/opt/homebrew/bin:$PATH
 
 if [ -d $HOME/.anyenv ]; then
   export PATH=$HOME/.anyenv/bin:$PATH
@@ -46,6 +47,13 @@ fi
 if [ -d $HOME/flutter/bin ]; then
   export PATH=$HOME/flutter/bin:$PATH
 fi
+if [ -d $HOME/.pub-cache/bin ]; then
+  export PATH=$HOME/.pub-cache/bin:$PATH
+fi
+
+# nvm
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # OCaml
 if executable opam; then
@@ -145,3 +153,9 @@ g() {
 if [ -r $HOME/.zsh/local.zsh ]; then
   . $HOME/.zsh/local.zsh
 fi
+
+export PATH="$HOME/.poetry/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

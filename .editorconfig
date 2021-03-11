@@ -45,3 +45,6 @@ indent_size = 2
 
 [*.{fs,fsi,fsx}]
 indent_size = 4
+
+[*.gradle]
+indent_size = 4

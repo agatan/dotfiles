@@ -1,0 +1,9 @@
+set visualbell
+set noerrorbells
+
+nnoremap ; :
+vnoremap ; :
+nnoremap : ;
+vnoremap : ;
+nnoremap q; q:
+vnoremap q; q:

@@ -66,6 +66,7 @@ endfunction
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
@@ -110,6 +111,9 @@ nnoremap <silent> [fzf]* :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-s
 
 noremap <dev> <Nop>
 map m <dev>
+nnoremap <silent> <dev>f  :<C-u>call CocAction('format')<CR>
+nnoremap <silent> <dev>a  :<C-u>CocAction<CR>
+vnoremap <silent> <dev>a  :<C-u>CocAction<CR>
 nnoremap <silent> <dev>q  :<C-u>CocCommand fzf-preview.CocCurrentDiagnostics<CR>
 nnoremap <silent> <dev>Q  :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
 nnoremap <silent> <dev>rf :<C-u>CocCommand fzf-preview.CocReferences<CR>
