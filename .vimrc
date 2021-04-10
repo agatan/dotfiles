@@ -67,6 +67,8 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
+command! -nargs=0 Format <Plug>(coc-format)
+nmap <silent> fmt <Plug>(coc-format)
 " Formatting selected code.
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)

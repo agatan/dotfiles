@@ -18,9 +18,9 @@ export PATH=$GOPATH/bin:$PATH
 
 ARCH=$(uname -m)
 if [[ $ARCH == arm64 ]]; then
-  [ -x /opt/homebrew/bin/brew ] && echo $(/opt/homebrew/bin/brew shellenv)
+  [ -x /opt/homebrew/bin/brew ] && eval $(/opt/homebrew/bin/brew shellenv)
 elif [[ $ARCH == x86_64 ]]; then
-  [ -x /usr/local/bin/brew ] && echo $(/usr/local/bin/brew shellenv)
+  [ -x /usr/local/bin/brew ] && eval $(/usr/local/bin/brew shellenv)
 fi
 
 if [ -d $HOME/.anyenv ]; then
