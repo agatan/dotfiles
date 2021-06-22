@@ -99,17 +99,16 @@ command! PackStatus packadd minpac | source $MYVIMRC | call minpac#status()
 " }}}
 
 " ================================================================================
-" fzf-preview {{{
-nnoremap [fzf] <Nop>
+" fzf {{{
+command! FZFMru call fzf#run(fzf#wrap(fzf#vim#with_preview({
+      \ 'source': v:oldfiles,
+      \ 'sink': 'e',
+      \ })))
+noremap [fzf] <Nop>
 nmap <Space>f [fzf]
-nnoremap <silent> [fzf]f :<C-u>CocCommand fzf-preview.ProjectFiles<CR>
-nnoremap <silent> [fzf]m :<C-u>CocCommand fzf-preview.ProjectMruFiles<CR>
-nnoremap <silent> [fzf]b :<C-u>CocCommand fzf-preview.Buffers<CR>
-nnoremap <silent> [fzf]c :<C-u>CocCommand fzf-preview.Changes<CR>
-nnoremap <silent> [fzf]g :<C-u>CocCommand fzf-preview.GitActions<CR>
-nnoremap <silent> [fzf]s :<C-u>CocCommand fzf-preview.GitStatus<CR>
-nnoremap <silent> [fzf]; :<C-u>CocCommand fzf-preview.CommandPalette<CR>
-nnoremap <silent> [fzf]* :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap <silent> [fzf]f :<C-u>Files<CR>
+nnoremap <silent> [fzf]m :<C-u>FZFMru<CR>
+nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
 
 noremap <dev> <Nop>
 map m <dev>
@@ -121,9 +120,9 @@ nnoremap <silent> <dev>Q  :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
 nnoremap <silent> <dev>rf :<C-u>CocCommand fzf-preview.CocReferences<CR>
 nnoremap <silent> <dev>t  :<C-u>CocCommand fzf-preview.CocTypeDefinitions<CR>
 
-command! -nargs=1 G CocCommand fzf-preview.ProjectGrep <f-args>
-
-let g:fzf_preview_grep_cmd = 'rg --line-number --no-heading --color=never --sort=path'
+let g:fzf_buffers_jump = 1
+let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+let g:fzf_layout = { 'window': { 'width': 0.8, 'height': 0.8, 'highlight': 'Todo', 'border': 'sharp' } }
 let $FZF_PREVIEW_PREVIEW_BAT_THEME = 'gruvbox'
 " }}}
 
