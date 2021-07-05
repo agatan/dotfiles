@@ -110,6 +110,9 @@ nnoremap <silent> [fzf]f :<C-u>Files<CR>
 nnoremap <silent> [fzf]m :<C-u>FZFMru<CR>
 nnoremap <silent> [fzf]b :<C-u>Buffers<CR>
 
+nnoremap <silent> * :<C-u>Lines <C-R><C-W><CR>
+nnoremap <silent> <C-]> :<C-u>Tags <C-R><C-W><CR>
+
 noremap <dev> <Nop>
 map m <dev>
 nnoremap <silent> <dev>f  :<C-u>call CocAction('format')<CR>
@@ -119,6 +122,7 @@ nnoremap <silent> <dev>q  :<C-u>CocCommand fzf-preview.CocCurrentDiagnostics<CR>
 nnoremap <silent> <dev>Q  :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
 nnoremap <silent> <dev>rf :<C-u>CocCommand fzf-preview.CocReferences<CR>
 nnoremap <silent> <dev>t  :<C-u>CocCommand fzf-preview.CocTypeDefinitions<CR>
+nnoremap <silent> <Space>e :<C-u>CocCommand explorer<CR>
 
 let g:fzf_buffers_jump = 1
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
@@ -169,7 +173,6 @@ if !exists('loaded_matchit')
   runtime macros/matchit.vim
 endif
 
-nnoremap <C-]> g<C-]>
 augroup grepquickfix
   autocmd!
   autocmd QuickFixCmdPost *grep* cwindow
