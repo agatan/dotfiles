@@ -260,6 +260,9 @@
       :hook ((company-mode-hook . company-box-mode))
       :custom ((company-box-icons-alist . 'company-box-icons-all-the-icons))))
 
+  (leaf magit
+    :ensure t)
+
   (leaf projectile
     :ensure t
     :custom ((projectile-project-search-path . '("~/repos/src/github.com/agatan" "~/repos/src/github.com/bw-company/"))
