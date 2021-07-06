@@ -87,6 +87,12 @@
     :doc "tools forr customizing Emacs and List packages"
     :custom `((custom-file . ,(locate-user-emacs-file "custom.el"))))
 
+  ;; restart-emacs command
+  (leaf restart-emacs
+    :ensure t)
+
+  (recentf-mode t)
+
   (setq vc-follow-symlinks t)
   (setq gc-cons-threshold 12800000)
   (setq read-process-output-max (* 1024 1024)))
@@ -95,7 +101,7 @@
 (leaf *Visual
   :config
   (setq visible-bell nil)
-  (when (every (lambda (n) (member n (font-family-list))) '("Hiragino Sans" "JetBrains Mono"))
+  (when (cl-every (lambda (n) (member n (font-family-list))) '("Hiragino Sans" "JetBrains Mono"))
     (create-fontset-from-ascii-font "JetBrains Mono:slant=normal" nil "monohiragino")
     (set-fontset-font "fontset-monohiragino" 'unicode (font-spec :family "Hiragino Sans") nil 'append)
     (add-to-list 'default-frame-alist '(font . "fontset-monohiragino")))
@@ -134,44 +140,43 @@
 (leaf *Navigation
   :config
   (leaf posframe :ensure t)
-  (leaf ivy
+
+  (leaf consult
     :ensure t
-    :blackout ivy-mode
-    :custom ((ivy-use-virtual-buffers . t)
-	     (ivy-truncate-lines . nil)
-	     (ivy-wrap . t)
-	     (ivy-mode . t)
-	     (counsel-mode . t))
-    :custom-face
-    (ivy-current-match . '((t (:background "#557b7b"))))
+    :custom ((consult-project-root-function . (lambda ()
+                                                (when-let (project (project-current))
+                                                  (project-root project))))))
+  (leaf vertico
+    :ensure t
+    :custom ((vertico-cycle . t)
+             (vertico-count . 20))
     :init
-    (leaf *ivy-requirements
-      :config
-      (leaf swiper
-	:ensure t
-	:bind (([remap isearch-forward-regexp] . swiper)))
-      (leaf counsel
-	:ensure t
-	:blackout counsel-mode
-	:bind (("C-x C-r" . counsel-recentf))))
-    (leaf ivy-rich
-      :ensure t
-      :after ivy
-      :custom ((ivy-rich-mode . t))
-      :init
-      (leaf all-the-icons-ivy-rich
-        :ensure t
-        :after ivy-rich
-        :custom ((all-the-icons-ivy-rich-mode . t))))
-    (leaf ivy-posframe
-      :after ivy
-      :ensure t
-      :custom-face (ivy-posframe . '((t (:background "#224b4b"))))
-      :custom ((ivy-posframe-mode . t)
-	       (ivy-posframe-height-alist . '((swiper . 30) (t . 40)))
-	       (ivy-posframe-display-functions-alist
-		. '((swiper . ivy-display-function-fallback)
-		    (t . ivy-posframe-display-at-frame-center))))))
+    (leaf orderless :ensure t)
+    (leaf savehist :ensure t)
+    (leaf marginalia :ensure t)
+    (leaf affe :ensure t
+      :bind (("C-x f" . affe-find))
+      :custom ((affe-regexp-function . #'orderless-pattern-compiler)
+               (affe-highlight-function . #'orderless--highlight)
+               (affe-find-command . "fd --color=never --full-path --no-ignore --hidden")))
+    (leaf consult-ghq :ensure t)
+    :config
+    (vertico-mode)
+    (marginalia-mode)
+    (savehist-mode)
+    (setq completion-styles '(orderless)
+          completion-category-defaults nil
+          completion-category-overrides '((file (styles partial-completion))))
+
+    (defun my-consult-line (&optional at-point)
+      "Consult-line uses things-at-point if set C-u prefix."
+      (interactive "P")
+      (if at-point
+          (consult-line (thing-at-point 'symbol))
+        (consult-line)))
+    (global-set-key (kbd "C-s") 'my-consult-line)
+    (global-set-key [remap goto-line] 'consult-goto-line)
+    (global-set-key (kbd "C-x b") 'consult-buffer))
 
   (leaf ace-window
     :ensure t
@@ -193,15 +198,8 @@
 
   (leaf which-key
     :ensure t
-    :custom ((which-key-idle-delay . 0.5)
-             (which-key-mode . t))
-    :init
-    (leaf which-key-posframe
-      :ensure t
-      :after which-key
-      :custom-face (which-key-posframe . '((t (:background "#224b4b"))))
-      :custom ((which-key-posframe-mode . t)))))
-
+    :custom ((which-key-idle-time . 0.5)
+             (which-key-mode . t))))
 
 (leaf *Edit
   :config
@@ -264,7 +262,7 @@
 
   (leaf projectile
     :ensure t
-    :custom ((projectile-project-search-path . '("~/repos/src/github.com/agatan" "~/repos/src/github.com/wantedly/"))
+    :custom ((projectile-project-search-path . '("~/repos/src/github.com/agatan" "~/repos/src/github.com/bw-company/"))
              (projectile-mode . t))
     :bind (("C-c p" . projectile-command-map))
     :init
@@ -303,6 +301,9 @@
       :ensure t)
 
     (leaf markdown-mode
+      :ensure t)
+
+    (leaf csv-mode
       :ensure t)
 
     (leaf yaml-mode
