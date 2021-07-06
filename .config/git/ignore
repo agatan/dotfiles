@@ -4,6 +4,8 @@
 .emacs.d/smex-items
 .emacs.d/.lsp-session-v1
 \#*\#
+.\#*
+tags
 
 .vim/black
 vim/view/
