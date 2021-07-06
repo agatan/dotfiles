@@ -243,3 +243,12 @@ vnoremap q; q:
 
 " F#, fsharp
 autocmd BufNewFile,BufRead *.fs,*.fsi,*.fsx set filetype=fsharp
+
+" Windows Subsystem for Linux で、ヤンクでクリップボードにコピー
+" https://oki2a24.com/2019/04/04/yank-to-clipbord-in-wsl-vim/
+if system('uname -a | grep microsoft') != ''
+  augroup myYank
+    autocmd!
+    autocmd TextYankPost * :call system('clip.exe', @")
+  augroup END
+endif
