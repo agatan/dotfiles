@@ -1,3 +1,6 @@
+# Avoid registering duplicated path entries.
+typeset -U path cdpath fpath manpath
+
 executable() {
   type "$1" >/dev/null 2>&1
 }

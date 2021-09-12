@@ -16,13 +16,9 @@
   clean = git-lfs clean -- %f
 [credential]
   helper = osxkeychain
-[url "git@github.com:"]
-	insteadOf = "https://github.com/"
-[url "git@github.com:"]
-	insteadOf = "git://github.com/"
-[url "https://github.com"]
-	insteadOf = git://github.com
-[url "ssh://git@github.com"]
-	insteadOf = https://github.com
+# [url "git@github.com:"]
+# 	insteadOf = "https://github.com/"
+# [url "git@github.com:"]
+# 	insteadOf = "git://github.com/"
 [init]
 	defaultBranch = main

@@ -49,3 +49,5 @@ telepresence.log
 .node-version
 
 serviceAccountKey.json
+
+.bin/
