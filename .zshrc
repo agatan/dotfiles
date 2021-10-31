@@ -26,9 +26,13 @@ elif [[ $ARCH == x86_64 ]]; then
   [ -x /usr/local/bin/brew ] && eval $(/usr/local/bin/brew shellenv)
 fi
 
-if [ -d $HOME/.anyenv ]; then
-  export PATH=$HOME/.anyenv/bin:$PATH
-  eval "$(anyenv init - zsh)"
+if [ ! -r $HOME/.asdf/asdf.sh ]; then
+  echo "asdf is not installed." >&2
+  echo "\tgit clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1" >&2
+fi
+if [ -r $HOME/.asdf/asdf.sh ]; then
+  . $HOME/.asdf/asdf.sh
+  fpath=(${ASDF_DIR}/completions $fpath)
 fi
 
 if which direnv > /dev/null; then
@@ -59,10 +63,6 @@ fi
 if [ -d $HOME/.pub-cache/bin ]; then
   export PATH=$HOME/.pub-cache/bin:$PATH
 fi
-
-# nvm
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
 # deno
 if [ -d $HOME/.deno/bin ]; then
@@ -169,7 +169,3 @@ if [ -r $HOME/.zsh/local.zsh ]; then
 fi
 
 export PATH="$HOME/.poetry/bin:$PATH"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
