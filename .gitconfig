@@ -4,6 +4,9 @@
 [alias]
   st = status
   co = checkout
+  cof = !git branch --all | fzf | xargs git switch
+  dbf = !git branch --all | fzf | xargs git branch -D
+  branch = branch --sort=authordate
 [ghq]
   root = ~/repos/src
 [github]
@@ -22,3 +25,8 @@
 # 	insteadOf = "git://github.com/"
 [init]
 	defaultBranch = main
+[merge]
+	conflictstyle = diff3
+[core]
+	quotepath = false
+	autocrlf = false

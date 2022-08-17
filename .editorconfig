@@ -48,3 +48,6 @@ indent_size = 4
 
 [*.gradle]
 indent_size = 4
+
+[*.hs]
+indent_size = 2
