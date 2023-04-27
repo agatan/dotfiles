@@ -1,7 +1,7 @@
 #!/usr/bin/env oil
 
 git branch --merged | while read --line {
-  var line = $_line.strip()
+  var line = _line.strip()
   if (line !== 'main' and line !== 'develop' and line !== 'master' and not line.startswith('*')) {
     echo $line
   }
