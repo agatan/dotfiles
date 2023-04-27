@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -eCu
+
+CONFIGURATION=$(gcloud config configurations list --format="value(name)" | fzf)
+gcloud config configurations activate $CONFIGURATION
