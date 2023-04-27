@@ -5,7 +5,9 @@ executable() {
   type "$1" >/dev/null 2>&1
 }
 
-if executable vim; then
+if executable nvim; then
+  export EDITOR=nvim
+elif executable vim; then
   export EDITOR=vim
 elif executable vi; then
   export EDITOR=vi
@@ -77,6 +79,7 @@ fi
 # basis
 setopt ignoreeof  # Ignore Ctrl-D
 unsetopt LIST_BEEP  # 補完時にベルを鳴らさない
+setopt nonomatch  # glob の暴発を防ぐ
 
 setopt SHARE_HISTORY  # 即座に history を書き出す
 bindkey "^P" history-beginning-search-backward
@@ -84,7 +87,6 @@ bindkey "^N" history-beginning-search-forward
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^X^E' edit-command-line
-
 
 # 補完
 autoload -U compinit
@@ -110,39 +112,8 @@ zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:
 setopt prompt_subst
 autoload -Uz colors
 colors
-PROMPT='%{$fg[blue]%}$(uname -m) %{$fg[green]%}$(basename $(pwd))%{${reset_color}%} %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%}%(1j. %{$fg[red]%}(%j)%{$reset_color%}.) $ '
 
-git-current-status() {
-  if [ ! -d ".git" ]; then
-    return
-  fi
-  local branch_name=$(git rev-parse --abbrev-ref HEAD 2> /dev/null)
-  local st=$(git status 2> /dev/null)
-  if [[ -n $(echo "$st" | grep "^nothing to") ]]; then
-    # 全てcommitされてクリーンな状態
-    branch_status="%{$fg[green]%}"
-  elif [[ -n $(echo "$st" | grep "^Untracked files") ]]; then
-    # gitに管理されていないファイルがある状態
-    branch_status="%{$fg[red]%}?"
-  elif [[ -n $(echo "$st" | grep "^Changes not staged for commit") ]]; then
-    # git addされていないファイルがある状態
-    branch_status="%{$fg[red]%}+"
-  elif [[ -n $(echo "$st" | grep "^Changes to be committed") ]]; then
-    # git commitされていないファイルがある状態
-    branch_status="%{$fg[yellow]%}!"
-  elif [[ -n $(echo "$st" | grep "^rebase in progress") ]]; then
-    # コンフリクトが起こった状態
-    echo "%{$fg[red]%}!(no branch)%{${reset_color}%}"
-    return
-  else
-    # 上記以外の状態の場合は青色で表示させる
-    branch_status="%{$fg[blue]%}"
-  fi
-  # ブランチ名を色付きで表示する
-  echo "${branch_status}[$branch_name]%{${reset_color}%}"
-}
-RPROMPT='$(git-current-status)'
-
+PROMPT='%{$fg[blue]%}$(uname -m) %{$fg[green]%}$(basename $(pwd))%{${reset_color}%} $(git_super_status) %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%}%(1j. %{$fg[red]%}(%j)%{$reset_color%}.) $ '
 
 # fzf
 export FZF_LEGACY_KEYBINDINGS=0
@@ -170,3 +141,39 @@ if [ -r $HOME/.zsh/local.zsh ]; then
 fi
 
 export PATH="$HOME/.poetry/bin:$PATH"
+
+# zsh plugins
+if type brew &>/dev/null; then
+  if [ ! -d $(brew --prefix)/share/zsh-completions ]; then
+    brew install zsh-completions
+  fi
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  if [ ! -r $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    brew install zsh-autosuggestions
+  fi
+  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+  if [ ! -r $(brew --prefix)/opt/zsh-git-prompt/zshrc.sh ]; then
+    brew install zsh-git-prompt
+  fi
+  source $(brew --prefix)/opt/zsh-git-prompt/zshrc.sh
+  ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg[cyan]%}"
+  ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}%{✔%G%}"
+
+  autoload -Uz compinit
+  compinit
+fi
+
+# precmd
+add_newline() {
+  if [[ -z $PS1_NEWLINE_LOGIN ]]; then
+    PS1_NEWLINE_LOGIN=true
+  else
+    printf '\n'
+  fi
+}
+
+precmd() {
+  add_newline
+}
