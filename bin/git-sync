@@ -17,12 +17,7 @@ do
   fi
 done
 
-if [ $branch != 'master' ] && [ $branch != 'main' ] && [ $branch != 'develop' ]; then
-    if [ `git branch --merged | grep ${branch} | wc -l` -eq 1 ]
-    then
-        git branch -d ${branch}
-    else
-        git checkout ${branch}
-    fi
-fi
+git del-merged
+
 if [ $modified -gt 0 ] ; then git stash pop ; fi
+git checkout $branch
