@@ -133,7 +133,7 @@ bindkey '^r' fzf-select-history
 
 
 # aliases
-alias ls='eza -F -G'
+alias ls='ls -F -G'
 
 g() {
   local src=$(ghq list | fzf --preview "ls -lTp $(ghq root)/{} | tail -n+2 | awk '{print \$9\"/\"\$6\"/\"\$7 \" \" \$10}'")

@@ -1,0 +1,42 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+${directory}${custom.arch}${git_branch}${git_status}${gcloud}${jobs}
+${character}\\$ """
+
+add_newline = false
+
+[character] 
+success_symbol = '[:\)](bold green)' 
+error_symbol = '[:\(](bold red)'
+
+[cmd_duration]
+format = '[$duration](italic 75)'
+
+[directory]
+style = '115'
+
+[gcloud]
+format = 'on [$symbol$active]($style) '
+style = '75'
+
+[git_branch]
+style = '115'
+
+[git_status]
+style = '75'
+modified = '[!\($count\)](red)'
+staged = '[+\($count\)](red)'
+
+[memory_usage]
+disabled = false
+
+[jobs]
+format = '[\($number\)]($style) '
+number_threshold = 1
+style = 'red'
+
+[custom.arch]
+command = "uname -m"
+format = '($output)'
