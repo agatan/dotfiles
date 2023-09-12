@@ -2,5 +2,10 @@
 
 set -eCu
 
-CONFIGURATION=$(gcloud config configurations list --format="value(name)" | fzf)
+if [ $# -eq 0 ]; then
+  CONFIGURATION=$(gcloud config configurations list --format="value(name)" | fzf --select-1)
+else
+  CONFIGURATION=$(gcloud config configurations list --format="value(name)" | fzf -q "$1" --select-1)
+fi
+
 gcloud config configurations activate $CONFIGURATION

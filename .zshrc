@@ -78,34 +78,36 @@ fi
 
 # basis
 setopt ignoreeof  # Ignore Ctrl-D
-unsetopt LIST_BEEP  # 補完時にベルを鳴らさない
+unsetopt list_beep  # 補完時にベルを鳴らさない
 setopt nonomatch  # glob の暴発を防ぐ
 
-setopt SHARE_HISTORY  # 即座に history を書き出す
+HISTSIZE=100000
+SAVEHIST=100000
+setopt share_history  # 即座に history を書き出す
+setopt hist_ignore_dups
+setopt hist_ignore_all_dups
 bindkey "^P" history-beginning-search-backward
 bindkey "^N" history-beginning-search-forward
 autoload -Uz edit-command-line
 zle -N edit-command-line
 bindkey '^X^E' edit-command-line
 
-# 補完
-autoload -U compinit
-compinit -u
-
-# ↓ 補完の表示強化
-zstyle ':completion:*' verbose yes
-zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
-zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
-zstyle ':completion:*:warnings' format '%F{RED}No matches for:''%F{YELLOW} %d'$DEFAULT
-zstyle ':completion:*:descriptions' format '%F{YELLOW}completing %B%d%b'$DEFAULT
-zstyle ':completion:*:options' description 'yes'
-zstyle ':completion:*:descriptions' format '%F{yellow}Completing %B%d%b%f'$DEFAULT
-
-zstyle ':completion:*:default' menu select=2  # 選択中の候補をハイライト
-export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}  # 補完時の色
-
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
+# # 補完
+# 
+# # ↓ 補完の表示強化
+# zstyle ':completion:*' verbose yes
+# zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
+# zstyle ':completion:*:messages' format '%F{YELLOW}%d'$DEFAULT
+# zstyle ':completion:*:warnings' format '%F{RED}No matches for:''%F{YELLOW} %d'$DEFAULT
+# zstyle ':completion:*:descriptions' format '%F{YELLOW}completing %B%d%b'$DEFAULT
+# zstyle ':completion:*:options' description 'yes'
+# zstyle ':completion:*:descriptions' format '%F{yellow}Completing %B%d%b%f'$DEFAULT
+# 
+# zstyle ':completion:*:default' menu select=2  # 選択中の候補をハイライト
+# export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
+# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}  # 補完時の色
+# 
+# zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
 
 
 # prompt
@@ -113,7 +115,7 @@ setopt prompt_subst
 autoload -Uz colors
 colors
 
-PROMPT='%{$fg[blue]%}$(uname -m) %{$fg[green]%}$(basename $(pwd))%{${reset_color}%} $(git_super_status) %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%}%(1j. %{$fg[red]%}(%j)%{$reset_color%}.) $ '
+PROMPT='%{$fg[blue]%}$(uname -m) %{$fg[green]%}$(basename $(pwd))%{${reset_color}%} %(?/%{$fg_bold[green]%}:)/%{$fg_bold[red]%}:()%{${reset_color}%}%(1j. %{$fg[red]%}(%j)%{$reset_color%}.) $ '
 
 # fzf
 export FZF_LEGACY_KEYBINDINGS=0
@@ -121,11 +123,17 @@ export FZF_DEFAULT_COMMAND="rg --files --hidden --follow --glob '!.git/*'"
 export FZF_FIND_FILE_COMMAND=$FZF_DEFAULT_COMMAND
 export FZF_DEFAULT_OPTS='--extended --ansi --multi --height 40% --reverse --bind=ctrl-u:page-up --bind=ctrl-d:page-down --bind=ctrl-z:toggle-all --reverse --height 40%'
 
+fzf-select-history() {
+    BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+zle -N fzf-select-history
+bindkey '^r' fzf-select-history
+
 
 # aliases
-alias ls='ls -F -G'
-alias ec=envchain
-alias e='code -a'
+alias ls='eza -F -G'
 
 g() {
   local src=$(ghq list | fzf --preview "ls -lTp $(ghq root)/{} | tail -n+2 | awk '{print \$9\"/\"\$6\"/\"\$7 \" \" \$10}'")
@@ -134,35 +142,9 @@ g() {
   fi
 }
 
-
 # Read the local configurations.
 if [ -r $HOME/.zsh/local.zsh ]; then
   . $HOME/.zsh/local.zsh
-fi
-
-export PATH="$HOME/.poetry/bin:$PATH"
-
-# zsh plugins
-if type brew &>/dev/null; then
-  if [ ! -d $(brew --prefix)/share/zsh-completions ]; then
-    brew install zsh-completions
-  fi
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-
-  if [ ! -r $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    brew install zsh-autosuggestions
-  fi
-  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-  if [ ! -r $(brew --prefix)/opt/zsh-git-prompt/zshrc.sh ]; then
-    brew install zsh-git-prompt
-  fi
-  source $(brew --prefix)/opt/zsh-git-prompt/zshrc.sh
-  ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg[cyan]%}"
-  ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}%{✔%G%}"
-
-  autoload -Uz compinit
-  compinit
 fi
 
 # precmd
@@ -175,5 +157,12 @@ add_newline() {
 }
 
 precmd() {
-  add_newline
+  # add_newline
 }
+
+eval "$(sheldon source)"
+eval "$(starship init zsh)"
+
+
+# ======== Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

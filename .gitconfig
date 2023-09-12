@@ -30,3 +30,5 @@
 [core]
 	quotepath = false
 	autocrlf = false
+[commit]
+	verbose = true
