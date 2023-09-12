@@ -7,8 +7,8 @@ ${character}\\$ """
 
 add_newline = false
 
-[character] 
-success_symbol = '[:\)](bold green)' 
+[character]
+success_symbol = '[:\)](bold green)'
 error_symbol = '[:\(](bold red)'
 
 [cmd_duration]
@@ -25,9 +25,19 @@ style = '75'
 style = '115'
 
 [git_status]
+format = '([$all_status$ahead_behind]($style) )'
 style = '75'
-modified = '[!\($count\)](red)'
-staged = '[+\($count\)](red)'
+conflicted = ''
+ahead = ''
+behind = ''
+diverged = ''
+up_to_date = '✓'
+untracked = ''
+stashed = ''
+modified = '[+](red)'
+staged = ''
+renamed = ''
+deleted = ''
 
 [memory_usage]
 disabled = false
