@@ -93,7 +93,7 @@ zle -N edit-command-line
 bindkey '^X^E' edit-command-line
 
 # # 補完
-# 
+#
 # # ↓ 補完の表示強化
 # zstyle ':completion:*' verbose yes
 # zstyle ':completion:*' completer _expand _complete _match _prefix _approximate _list _history
@@ -102,11 +102,11 @@ bindkey '^X^E' edit-command-line
 # zstyle ':completion:*:descriptions' format '%F{YELLOW}completing %B%d%b'$DEFAULT
 # zstyle ':completion:*:options' description 'yes'
 # zstyle ':completion:*:descriptions' format '%F{yellow}Completing %B%d%b%f'$DEFAULT
-# 
+#
 # zstyle ':completion:*:default' menu select=2  # 選択中の候補をハイライト
 # export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30:tw=42;30:ow=43;30'
 # zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}  # 補完時の色
-# 
+#
 # zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}' '+m:{[:upper:]}={[:lower:]}'
 
 
@@ -163,6 +163,10 @@ precmd() {
 eval "$(sheldon source)"
 eval "$(starship init zsh)"
 
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# ======== Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+

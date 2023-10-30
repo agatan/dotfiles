@@ -4,6 +4,7 @@
 [alias]
   st = status
   co = checkout
+  cp = cherry-pick
   cof = !git branch --all | fzf | xargs git switch
   dbf = !git branch --all | fzf | xargs git branch -D
   branch = branch --sort=authordate
@@ -30,5 +31,6 @@
 [core]
 	quotepath = false
 	autocrlf = false
+	pager = less -x1,3,5,7
 [commit]
 	verbose = true
